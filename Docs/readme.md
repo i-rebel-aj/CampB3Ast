@@ -149,6 +149,21 @@ Introduction contains follow sub categories
 - Low latency with chatting microservice, high availability
 - Flexible architecture for future integrations 
 
+### External Interface Requirements
+### User Interfaces
+- The UI Should be responsive across multiple viewports, fo facilitate smooth cross browser and cross device design.
+- UI should be static, i.e with minimal or no animation, (however transitions are allowed) for better performance.
+- Proposed UI us as follows
+    - **Home Page**
+    ![](./assets/Home.png)
+    - **Login**
+    ![](./assets/Login.jpg)
+    - **Signup**
+    ![](./assets/Signup.jpg)
+    - **Forums**
+    ![](./assets/Forums.png)
+    - **Chat**
+    ![](./assets/Chat.png)
 ### Software Tools
 - **Database Server**- MongoDB 
 - **Client**- Web Browser
