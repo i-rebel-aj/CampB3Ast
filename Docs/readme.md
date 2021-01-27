@@ -153,6 +153,7 @@ Introduction contains follow sub categories
 ### User Interfaces
 - The UI Should be responsive across multiple viewports, fo facilitate smooth cross browser and cross device design.
 - UI should be static, i.e with minimal or no animation, (however transitions are allowed) for better performance.
+<!--
 - Proposed UI us as follows
     - **Home Page**
     ![](./assets/Home.png)
@@ -164,6 +165,7 @@ Introduction contains follow sub categories
     ![](./assets/Forums.png)
     - **Chat**
     ![](./assets/Chat.png)
+-->
 ### Software Tools
 - **Database Server**- MongoDB 
 - **Client**- Web Browser
