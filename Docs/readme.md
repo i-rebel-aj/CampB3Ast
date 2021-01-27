@@ -93,7 +93,7 @@ Introduction contains follow sub categories
   - Each chat Model
 
 ```javascript
-    //To and from is username demoralized
+    //To and from is username denormalized
     {
         content: String,
         to: String,
