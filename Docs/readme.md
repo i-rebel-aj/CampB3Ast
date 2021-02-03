@@ -41,12 +41,15 @@ Introduction contains follow sub categories
 - User
   - Registration/Sign up Functionality
   - Create Forums
-  - If students then, get added to classes
-  - If teacher ability to create Classes 
-  - Proposed elements
+  - Users Shall be distinguishable by the **Type** of user i.e faculty or user
+  - Faculty Specific
+    - Select A group of students and add them to class
+    - Upload CSV of Student Data, including roll Number Marks
+  - Student Specific
+    - All students must be distinguishable from group names
+    - Student shall be added to classroom by the faculty
+    
 ```javascript
-    Discriminator key
-    isFaculty: Boolean
     Content
     {
         common:{
@@ -151,9 +154,8 @@ Introduction contains follow sub categories
 
 ### External Interface Requirements
 ### User Interfaces
-- The UI Should be responsive across multiple viewports, fo facilitate smooth cross browser and cross device design.
+- The UI Should be responsive across multiple viewports, to facilitate smooth cross browser and cross device design.
 - UI should be static, i.e with minimal or no animation, (however transitions are allowed) for better performance.
-<!--
 - Proposed UI us as follows
     - **Home Page**
     ![](./assets/Home.png)
@@ -165,7 +167,6 @@ Introduction contains follow sub categories
     ![](./assets/Forums.png)
     - **Chat**
     ![](./assets/Chat.png)
--->
 ### Software Tools
 - **Database Server**- MongoDB 
 - **Client**- Web Browser
