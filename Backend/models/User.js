@@ -1,4 +1,6 @@
 const mongoose=require("mongoose")
+const studentSchema=require("./Schemas/Student")
+const facultySchema=require("./Schemas/Faculty")
 const options={discriminatorKey: 'Type'}
 const userSchema=new mongoose.Schema(
     {
@@ -33,6 +35,10 @@ const userSchema=new mongoose.Schema(
             type: String,
             required: true
         },
+        departmentCode:{
+            type: String,
+            required: true
+        },
         enrolledDate:{
             type: Date,
             required: true
@@ -53,5 +59,20 @@ const userSchema=new mongoose.Schema(
 )
 const User=mongoose.model('User', userSchema)
 const Student=User.discriminator('Student', studentSchema)
-const test=new Student(testuser1)
+const Faculty=User.discriminator('Faculty', facultySchema)
+
+module.exports={User, Student, Faculty}
+/*
+For Testing
+const {testStudent, testFaculty}=require("../unitTests/variables")
+const test=new Faculty(testFaculty)
+//const test=new Student(testStudent)
 console.log(test)
+test.save((err)=>{
+    if(err){
+        console.log(err)
+    }else{
+        console.log("Saved Successfully")
+    }
+})
+*/

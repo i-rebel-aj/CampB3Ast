@@ -1,4 +1,4 @@
-exposts.testStudent={
+exports.testStudent={
     username: "i_rebel_aj",
     password: "akshay",
     name: "Akshay Jain",
@@ -21,5 +21,6 @@ exports.testFaculty={
     collegeName: "IIIT Guwahati",
     email: "swain.srinivas@iiitg.ac.in",
     department: "Computer Science and Engineering",
+    registrationNumber: "123457",
     enrolledDate: new Date("2019-11-01")
 }
