@@ -22,7 +22,7 @@ const userSchema=new mongoose.Schema(
             type: String,
             required: true
         },
-        collegeName:{
+        collegeId:{
             type: String,
             required: true
         },

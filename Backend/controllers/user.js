@@ -1,4 +1,5 @@
 const {User, Student, Faculty}=require("../models/User")
+const Group=require("../models/Groups")
 const bcrypt = require('bcrypt');
 
 exports.getUserById=async (req, res)=>{
@@ -44,8 +45,57 @@ exports.addUser= async (req, res)=>{
     }
 
 }
-/*
-exports.getUserByGroup=async (req, res)=>{
-    User.find()
+exports.addGroupToUser=async (req, res)=>{
+    const groupId=req.body.groupId
+    const userId=req.body.userId
+    const foundGroup=await Group.find({groupId: groupId})
+    if(!foundGroup){
+        return res.status(404).json({message: "This group doesnt exist please create one"})
+    }
+    User.findOne({_id:userId})
+    .then((student)=>{
+        if(student.collegeGroup.find((group)=>{group===groupId})){
+            return res.status(200).json({message: "This student already exists in the specified group"})    
+        }
+        student.collegeGroup.push(groupId)
+        student.save()
+        return res.status(200).json({message: "Group Added Successfully"})
+    })
+    .catch((err)=>{return res.status(404).json({message: "Invalid UserID"})})
 }
-*/
+exports.removeGroupFromUser=async (req, res)=>{
+    const groupId=req.body.groupId
+    const userId=req.body.userId
+    User.findOne({_id: userId, collegeGroup: groupId})
+    .then((student)=>{
+        for(const i=0;i<student.collegeGroup.length;i++){
+            if(student.collegeGroup[i]===groupId){
+                student.collegeGroup.splice(i, 1);
+            }
+        }
+        return res.status(200).json({message: "Success, Group removed successfully"})
+    })
+    .catch(err=>{
+        //For better error handling
+        console.log(err)
+        return res.status(400).json({message: "Something went wrong"})
+    })
+}
+exports.getUsersByGroup=async (req, res)=>{
+    //Pass College Name and Group Name
+    const groupId=req.body.groupId
+    const collegeID=req.body.collegeId
+    const foundGroup= await Group.findById(groupId)
+    if(!foundGroup){
+        return res.status(401).json({message: "No such group exists"})
+    }
+    User.find({groupId: groupId, collegeId: collegeID})
+    .then((students)=>{
+        return res.status(200).json(students)
+    })
+    .catch((err)=>{
+        //For better error handling
+        console.log(err)
+        return res.status(400).json({message: "Something went wrong"})
+    })
+}
