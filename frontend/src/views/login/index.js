@@ -1,7 +1,15 @@
+import { LoginForm } from "../../components";
+
 const Login = () => {
   return (
-    <div>
-      <h2>Login</h2>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <LoginForm />
     </div>
   );
 };
