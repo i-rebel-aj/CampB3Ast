@@ -1,6 +1,12 @@
+import React, { useState } from "react";
 import { LoginForm } from "../../components";
 
 const Login = () => {
+  const [values, updateValue] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
     <div
       style={{
@@ -9,7 +15,7 @@ const Login = () => {
         alignItems: "center",
       }}
     >
-      <LoginForm />
+      <LoginForm values={values} handleSubmit={updateValue} />
     </div>
   );
 };
