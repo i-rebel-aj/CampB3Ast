@@ -35,10 +35,6 @@ const userSchema=new mongoose.Schema(
             type: String,
             required: true
         },
-        departmentCode:{
-            type: String,
-            required: true
-        },
         enrolledDate:{
             type: Date,
             required: true
