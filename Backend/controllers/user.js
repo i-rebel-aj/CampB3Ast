@@ -2,8 +2,8 @@ const {User, Student, Faculty}=require("../models/User")
 const Group=require("../models/Groups")
 const bcrypt = require('bcrypt');
 
-exports.getUserById=async (req, res)=>{
-     User.findById({_id: req.params.id}).then((doc)=>{
+exports.getUserByUsername=async (req, res)=>{
+     User.findOne({username: req.query.username}).then((doc)=>{
         return res.status(200).json(doc)
      }).catch((err)=>{
         return res.status(404).json({message: "Invalid ID"})
@@ -106,8 +106,8 @@ exports.getUsersByGroup=async (req, res)=>{
     })
 }
 exports.getUsersByCollege= async (req, res)=>{
-    const collgId= req.body.collegeId
-    const Type= req.body.Type
+    const collgId= req.query.collegeId
+    const Type= req.query.Type
     User.find({collegeId: collgId, Type: Type})
     .then((user)=>{
         return res.status(200).json({message: `Returned ${Type}`, user})
