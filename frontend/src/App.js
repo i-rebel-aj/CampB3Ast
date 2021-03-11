@@ -1,10 +1,9 @@
 import "./App.css";
-import { NavBar, CustomRouter } from "./components";
+import { CustomRouter } from "./components";
 
 function App() {
   return (
     <>
-      <NavBar />
       <CustomRouter />
     </>
   );
