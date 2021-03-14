@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 import {
   Home,
+  Form,
   Login,
   Profile,
   AdminSeeUsers,
@@ -15,6 +16,9 @@ function CustomRouter() {
       <Route exact path="/" component>
         <NavBar />
         <Home />
+      </Route>
+      <Route exact path="/register" component>
+        <Form />
       </Route>
       <Route path="/login">
         <NavBar />

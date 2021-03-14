@@ -18,6 +18,9 @@ function NavBar() {
               <Nav.Link href="/login">Login</Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link href="/register">Sign Up</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link href="/profile">Profile</Nav.Link>
             </Nav.Item>
           </Nav>
@@ -26,7 +29,7 @@ function NavBar() {
               <Button variant="outline-primary">Login</Button>
             </Nav.Link>
 
-            <Nav.Link href="">
+            <Nav.Link href="/register">
               <Button variant="primary">Sign Up</Button>
             </Nav.Link>
           </Nav>
