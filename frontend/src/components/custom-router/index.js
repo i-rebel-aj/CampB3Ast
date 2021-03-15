@@ -7,6 +7,7 @@ import {
   AdminSeeUsers,
   AdminAddUsers,
   AdminUpdateUsers,
+  ForumCreatePost,
 } from "../../views";
 import { NavBar } from "../../components";
 
@@ -39,6 +40,9 @@ function CustomRouter() {
       </Route>
       <Route exact path="/admin/update">
         <AdminUpdateUsers />
+      </Route>
+      <Route path="/forum/:id/post/create">
+        <ForumCreatePost />
       </Route>
     </>
   );
