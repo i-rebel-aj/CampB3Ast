@@ -1,43 +1,43 @@
-import React, { useState } from "react";
-import {
-  Jumbotron,
-  Nav,
-  Image,
-  Row,
-  Col,
-  Container,
-  Table,
-} from "react-bootstrap";
-import image2 from "../../assets/images/Campus-B34st.png";
+import React, { useState, useEffect } from "react";
+import { Nav, Row, Col, Table, Button } from "react-bootstrap";
 import "../../css/MyDashboard.css";
 import api from "../../API/api";
 
 const AdminSeeUsers = () => {
   const [listItems, updateList] = useState([]);
-  api
-    .seeUser("IIIT G", "Student")
-    .then((response) => {
-      console.log({ ...response });
-      let myList = [...response.data.user];
-      let tempList = [];
-      for (const [key, value] of Object.entries(myList)) {
-        tempList.push(
-          <tr>
-            <td>{key}</td>
-            <td>{value.name}</td>
-            <td>{value.collegeId}</td>
-            <td>{value.course}</td>
-            <td>{value.department}</td>
-            <td>{value.enrolledDate}</td>
-            <td>{value.gender}</td>
-          </tr>
-        );
-      }
-      updateList(tempList);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  useEffect(() => {
+    api
+      .getUsers("IIIT G", "Student")
+      .then((response) => {
+        console.log({ ...response });
+        let myList = [...response.data.user];
+        let tempList = [];
+        for (const [key, value] of Object.entries(myList)) {
+          let profile = `/profile/${value.username}`;
+          tempList.push(
+            <tr>
+              <td>{key}</td>
+              <td>{value.name}</td>
+              <td>{value.collegeId}</td>
+              <td>{value.course}</td>
+              <td>{value.batch}</td>
+              <td>{value.department}</td>
+              <td>{value.enrolledDate}</td>
+              <td>{value.gender}</td>
+              <td>
+                <Button href={profile} variant="outline-info">
+                  Info
+                </Button>
+              </td>
+            </tr>
+          );
+        }
+        updateList(tempList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <Row>
@@ -74,9 +74,11 @@ const AdminSeeUsers = () => {
                 <th>Name</th>
                 <th>College</th>
                 <th>Course</th>
+                <th>Batch</th>
                 <th>Branch</th>
                 <th>Enrolled Date</th>
                 <th>Gender</th>
+                <th>Details</th>
               </tr>
             </thead>
             <tbody>{listItems}</tbody>

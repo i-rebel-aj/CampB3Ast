@@ -25,7 +25,7 @@ function CustomRouter() {
         <NavBar />
         <Login />
       </Route>
-      <Route path="/profile">
+      <Route path="/profile/:username">
         <NavBar />
         <Profile />
       </Route>
