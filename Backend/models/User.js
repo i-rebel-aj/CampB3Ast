@@ -1,6 +1,7 @@
 const mongoose=require("mongoose")
 const studentSchema=require("./Schemas/Student")
 const facultySchema=require("./Schemas/Faculty")
+const bcrypt = require("bcrypt");
 const options={discriminatorKey: 'Type'}
 const userSchema=new mongoose.Schema(
     {
@@ -53,9 +54,24 @@ const userSchema=new mongoose.Schema(
         }],
     },options,{timestamps: true}
 )
+
+userSchema.methods = {
+    authenticate: function  (plainpassword) {
+      const isValidPass = bcrypt.compareSync(plainpassword, this.password);
+      console.log(plainpassword)
+      console.log(isValidPass)
+      if(isValidPass){
+        return true;
+      }else{
+        return false;
+      }
+    }
+}
+
 const User=mongoose.model('User', userSchema)
 const Student=User.discriminator('Student', studentSchema)
 const Faculty=User.discriminator('Faculty', facultySchema)
+
 
 module.exports={User, Student, Faculty}
 /*

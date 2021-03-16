@@ -1,8 +1,9 @@
 const express= require('express')
-const cors = require('cors');
+const cors = require('cors')
+const cookieParser=require('cookie-parser')
+
 const app=express()
-app.use(cors())
-cors({credentials: true, origin: true})
+
 const mongoose=require("mongoose")
 require('dotenv').config()
 //Mongo DB Connection
@@ -13,12 +14,16 @@ mongoose.connect(process.env.DB_Production, {useNewUrlParser: true, useUnifiedTo
 .catch(err=>{console.log(err)})
 //Using Middlewares
 app.use(express.json())
+app.use(cookieParser())
+app.use(cors())
+cors({credentials: true, origin: true})
 
 //Using Routes
-//const authRoutes=require("./routes/auth-route")
+const authRoutes=require("./routes/auth-route")
 //const forumRoute=require("./routes/forums")
 const userRoutes=require("./routes/user")
 app.use("/api/user", userRoutes)
+app.use('/api/user/auth', authRoutes)
 app.listen(3000, ()=>{
     console.log("Server Has Started")
 })

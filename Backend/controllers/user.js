@@ -9,48 +9,7 @@ exports.getUserByUsername=async (req, res)=>{
         return res.status(404).json({message: "Invalid ID"})
      })
 }
-exports.addUser= async (req, res)=>{
-    const type=req.body.Type
-    const newUser=req.body
-    try{
-        if(type==="Student"){
-            const existingUser= await User.find({rollNumber: newUser.rollNumber, collegeId: newUser.collegeId, batch: newUser.batch, department: newUser.department})
-            if(existingUser.length>0){
-                return res.status(409).json({message: "Student with same rollNo exists in this department in this batch"})
-            }
-            const newStudent =new Student(newUser)
-            const salt = bcrypt.genSaltSync(10);
-            newStudent.password= bcrypt.hashSync(newUser.password, salt);
-            await newStudent.save()
-            return res.status(200).json({message: "Student added successfully"})
-        }else if(type==="Faculty"){
-            const existingUser= await User.find({registrationNumber: newUser.registrationNumber, collegeId: newUser.collegeId})
-            if(existingUser.length>0){
-                return res.status(409).json({message: "Faculty with same registeration number already exists in this college"})
-            }
-            const newFaculty =new Faculty(newUser)
-            const salt = bcrypt.genSaltSync(10);
-            newFaculty.password= bcrypt.hashSync(newUser.password, salt);
-            await newFaculty.save()
-            return res.status(200).json({message: "Faculty added successfully"})
-        }else{
-            return res.status(400).json({message: "Not the right type"})
-        }
-    }catch(err){
-        console.log(err)
-        //MongoDB throws an error of status code 11000 if repetions exist 
-        if(err.code===11000){
-            if(err.keyValue.username){
-                return res.status(409).json({message: "User with this username already exists"})
-            }
-            if(err.keyValue.email){
-                return res.status(409).json({message: "User with this email already exists"})
-            }
-        }
-        res.status(500).json({message: "Something went wrong"})
-    }
 
-}
 exports.addGroupToUser=async (req, res)=>{
     const groupId=req.body.groupId
     const userId=req.body.userId
@@ -60,6 +19,9 @@ exports.addGroupToUser=async (req, res)=>{
     }
     User.findOne({_id:userId})
     .then((student)=>{
+        if(student.Type!=='Student'){
+            return res.status(400).json({message: "Following user is not a student"})
+        }
         if(student.collegeGroup.find((group)=>{group===groupId})){
             return res.status(200).json({message: "This student already exists in the specified group"})    
         }
@@ -67,7 +29,7 @@ exports.addGroupToUser=async (req, res)=>{
         student.save()
         return res.status(200).json({message: "Group Added Successfully"})
     })
-    .catch((err)=>{return res.status(404).json({message: "Invalid UserID"})})
+    .catch((err)=>{return res.status(404).json({message: "Invalid UserID", err: err})})
 }
 exports.removeGroupFromUser=async (req, res)=>{
     const groupId=req.body.groupId
