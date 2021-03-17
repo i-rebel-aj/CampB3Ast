@@ -2,6 +2,56 @@ import React, { useState, useEffect } from "react";
 import { Nav, Row, Col, Table, Button } from "react-bootstrap";
 import "../../css/MyDashboard.css";
 import api from "../../API/api";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
+
+function buttonFormatter(cell, row) {
+  let profile = `/profile/${cell}`;
+  return (
+    <Button href={profile} variant="outline-info">
+      Click
+    </Button>
+  );
+}
+
+const columns = [
+  {
+    dataField: "name",
+    text: "Name",
+    filter: textFilter(),
+  },
+  {
+    dataField: "collegeId",
+    text: "College",
+    filter: textFilter(),
+  },
+  {
+    dataField: "course",
+    text: "Course",
+  },
+  {
+    dataField: "batch",
+    text: "Batch",
+  },
+  {
+    dataField: "department",
+    text: "Department",
+  },
+  {
+    dataField: "enrolledDate",
+    text: "Date of Enrollment",
+  },
+  {
+    dataField: "gender",
+    text: "Gender",
+  },
+  {
+    dataField: "username",
+    text: "More",
+    formatter: buttonFormatter,
+  },
+];
 
 const AdminSeeUsers = () => {
   const [listItems, updateList] = useState([]);
@@ -10,9 +60,8 @@ const AdminSeeUsers = () => {
       .getUsers("IIIT G", "Student")
       .then((response) => {
         console.log({ ...response });
-        let myList = [...response.data.user];
-        let tempList = [];
-        for (const [key, value] of Object.entries(myList)) {
+        let tempList = [...response.data.user];
+        /*         for (const [key, value] of Object.entries(myList)) {
           let profile = `/profile/${value.username}`;
           tempList.push(
             <tr>
@@ -31,7 +80,7 @@ const AdminSeeUsers = () => {
               </td>
             </tr>
           );
-        }
+        } */
         updateList(tempList);
       })
       .catch((error) => {
@@ -67,22 +116,13 @@ const AdminSeeUsers = () => {
           </Nav>
         </Col>
         <Col>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>College</th>
-                <th>Course</th>
-                <th>Batch</th>
-                <th>Branch</th>
-                <th>Enrolled Date</th>
-                <th>Gender</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>{listItems}</tbody>
-          </Table>
+          <BootstrapTable
+            keyField="username"
+            data={listItems}
+            columns={columns}
+            pagination={paginationFactory()}
+            filter={filterFactory()}
+          />
         </Col>
       </Row>
     </>
