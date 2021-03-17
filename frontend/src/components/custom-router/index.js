@@ -19,6 +19,7 @@ function CustomRouter() {
         <Home />
       </Route>
       <Route exact path="/register" component>
+        <NavBar />
         <Form />
       </Route>
       <Route path="/login">
@@ -30,18 +31,23 @@ function CustomRouter() {
         <Profile />
       </Route>
       <Route exact path="/admin">
+        <NavBar />
         <AdminSeeUsers />
       </Route>
       <Route exact path="/admin/see">
+        <NavBar />
         <AdminSeeUsers />
       </Route>
       <Route exact path="/admin/add">
+        <NavBar />
         <AdminAddUsers />
       </Route>
       <Route exact path="/admin/update">
+        <NavBar />
         <AdminUpdateUsers />
       </Route>
       <Route path="/forum/:id/post/create">
+        <NavBar />
         <ForumCreatePost />
       </Route>
     </>
