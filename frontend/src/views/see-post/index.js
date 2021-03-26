@@ -1,34 +1,61 @@
 import React, { Component } from "react";
 import ReactPaginate from "react-paginate";
+import { Card, Button, Container } from "react-bootstrap";
 var util = require("util");
 
 var dataArr = [];
+const variants = [
+  "Primary",
+  "Secondary",
+  "Success",
+  "Danger",
+  "Warning",
+  "Info",
+  "Light",
+  "Dark",
+];
 
 for (var i = 0; i < 200; i++) {
   dataArr.push({
-    name: util.format("user-%s", i),
-    description: util.format("This is the comment #%d", i),
+    name: util.format("Post-%s", i),
+    description: util.format("This is the description #%d", i),
   });
 }
 
 const CommentList = (props) => {
   let commentNodes = props.data.map(function (item, index) {
-    if (index > props.offset && index < props.offset + 10)
+    let variant = variants[Math.floor(Math.random() * variants.length)];
+    if (index > props.offset && index <= props.offset + 10)
       return (
-        <div key={index}>
-          {item.name}
-          {item.description}
+        <div>
+          <Card
+            bg={variant.toLowerCase()}
+            key={index}
+            text={variant.toLowerCase() === "light" ? "dark" : "white"}
+            style={{ width: "100%", alignSelf: "center" }}
+            className="mb-2"
+          >
+            <Card.Header>Post - {index}</Card.Header>
+            <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>{item.description}</Card.Text>
+            </Card.Body>
+          </Card>
         </div>
       );
+    else return null;
   });
 
   return (
-    <div>
-      <div>{props.offset}</div>
-      <div>
-        <ul>{commentNodes}</ul>
-      </div>
-    </div>
+    <Container
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        flex: "column",
+      }}
+    >
+      {commentNodes}
+    </Container>
   );
 };
 
@@ -63,7 +90,11 @@ class SeePost extends Component {
   render() {
     return (
       <div className="commentBox">
-        <CommentList data={this.state.data} offset={this.state.offset} />
+        <CommentList
+          data={this.state.data}
+          offset={this.state.offset}
+          style={{}}
+        />
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
