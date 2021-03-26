@@ -89,12 +89,14 @@ class SeePost extends Component {
 
   render() {
     return (
-      <div className="commentBox">
-        <CommentList
-          data={this.state.data}
-          offset={this.state.offset}
-          style={{}}
-        />
+      <Container
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          flex: "column",
+        }}
+      >
+        <CommentList data={this.state.data} offset={this.state.offset} />
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
@@ -107,7 +109,7 @@ class SeePost extends Component {
           containerClassName={"pagination"}
           activeClassName={"active"}
         />
-      </div>
+      </Container>
     );
   }
 }
