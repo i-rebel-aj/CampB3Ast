@@ -24,7 +24,7 @@ function NavBar() {
               <Nav.Link href="/profile">Profile</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/forum">Create Forum</Nav.Link>
+              <Nav.Link href="/forum/create">Create Forum</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link href="/forum/:id/post/create">Post Creation</Nav.Link>
@@ -38,7 +38,7 @@ function NavBar() {
             <Nav.Link href="/register">
               <Button variant="primary">Sign Up</Button>
             </Nav.Link>
-            <Nav.Link href="/forum">
+            <Nav.Link href="/forum/create">
               <Button variant="primary">Create Forum</Button>
             </Nav.Link>
             <Nav.Link href="/forum/:id/post/create">

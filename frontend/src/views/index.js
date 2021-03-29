@@ -6,7 +6,9 @@ import AdminSeeUsers from "./admin-see-users";
 import AdminAddUsers from "./admin-add-users";
 import AdminUpdateUsers from "./admin-update-users";
 import Post from "./Post";
-import Forum from "./Forum"
+import Forum from "./forum-create"
+import SeeForum from "./see-forum"
+import SeePost from "./see-post"
 
 export {
   Home,
@@ -18,4 +20,6 @@ export {
   AdminUpdateUsers,
   Post,
   Forum,
+  SeePost,
+  SeeForum,
 };
