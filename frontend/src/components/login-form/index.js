@@ -50,6 +50,7 @@ function LoginForm({ handleSubmit }) {
           handleSubmit({
             username: currentData.username,
             password: currentData.password,
+            isSubmitted: true
           });
         }}
       >

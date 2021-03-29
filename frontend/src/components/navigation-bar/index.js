@@ -23,6 +23,12 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link href="/profile">Profile</Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/forum">Create Forum</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/forum/:id/post/create">Post Creation</Nav.Link>
+            </Nav.Item>
           </Nav>
           <Nav>
             <Nav.Link href="/login">
@@ -31,6 +37,12 @@ function NavBar() {
 
             <Nav.Link href="/register">
               <Button variant="primary">Sign Up</Button>
+            </Nav.Link>
+            <Nav.Link href="/forum">
+              <Button variant="primary">Create Forum</Button>
+            </Nav.Link>
+            <Nav.Link href="/forum/:id/post/create">
+              <Button variant="primary">Post Creation</Button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

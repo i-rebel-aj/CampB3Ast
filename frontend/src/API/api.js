@@ -21,4 +21,14 @@ export default {
         username: username,
       },
     }),
+    login: (username, password) => 
+    axios({
+      method: "POST",
+      url: `${BASE_URL}${USER_API}`,
+      headers: {},
+      params: {
+        username: username,
+        password: password
+      },
+    })
 };

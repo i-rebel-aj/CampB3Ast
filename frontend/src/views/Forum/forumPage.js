@@ -9,7 +9,7 @@ function ForumPage ({ handleSubmit, values }){
         forumDescription: "",
         forumType: ""
     });
-    console.log(values.forumType);
+    //console.log(values.forumType);
     return (
       <div>
         <div>
@@ -58,11 +58,13 @@ function ForumPage ({ handleSubmit, values }){
     <Form.Label><strong>Form Type</strong></Form.Label>
     <Form.Control as="select"
     value={currentData.forumType}
-    onChange={(e) =>
+    onChange={(e) =>{
       updateCurrentData({
         ...currentData,
         forumType: e.target.value,
-      })
+      });
+     // console.log(currentData)
+    }
     }
     >
       <option value = "Public">Public</option>
@@ -73,9 +75,18 @@ function ForumPage ({ handleSubmit, values }){
 <Button
 onClick={() => {
   handleSubmit({
-    forumName: currentData.forumName,
-    forumDescription: currentData.forumDescription,
+    Type: currentData.Type,
+    username: currentData.username,
+    password: currentData.password,
+    name: currentData.name,
+    collegeId: currentData.collegeId,
+    department: currentData.department,
+    gender: currentData.gender,
+    registrationNumber: currentData.registrationNumber,
+    enrolledDate: currentData.enrolledDate,
+
   });
+  console.log(currentData)
 }}
 >
 Submit form

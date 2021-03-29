@@ -1,87 +1,293 @@
-import React from 'react';
-import validate from './validateInfo';
-import useForm from './useForm';
-import './Form.css';
-import Selectbar from './selectbar';
+import React, { useState } from "react";
+import { Form, Col, Button, InputGroup } from "react-bootstrap";
 
 
 
-const FormSignup = ({ submitForm }) => {
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    submitForm,
-    validate
-  );
+const FormSignup = ({ handleSubmit }) => {
+  const [currentData, updateCurrentData] = useState({
+    Type: "",
+    username: "",
+    password: "",
+    name: "",
+    collegeId: "",
+    department: "",
+    gender: "",
+    registrationNumber: "",
+    enrolledDate: "",
+    rollNumber: "",
+    course: "",
+    courseDuration: "",
+
+  });
 
   return (
-    <div className='form-content-right'>
-      <form onSubmit={handleSubmit} className='form' noValidate>
-        <h1>
-          Get started with us today! Create your account by filling out the
-          information below.
-        </h1>
-        <div>
-          <label className='form-label'>Username</label>
-          <input
-            className='form-input'
-            type='text'
-            name='username'
-            placeholder='Enter your username'
-            value={values.username}
-            onChange={handleChange}
-          />
-          {errors.username && <p>{errors.username}</p>}
-        </div>
-        <div>
-          <label className='form-label'>Email</label>
-          <input
-            className='form-input'
-            type='email'
-            name='email'
-            placeholder='Enter your email'
-            value={values.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-        <div>
-          <label className='form-label'>Password</label>
-          <input
-            className='form-input'
-            type='password'
-            name='password'
-            placeholder='Enter your password'
-            value={values.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p>{errors.password}</p>}
-        </div>
-        <div>
-          <label className='form-label'>Confirm Password</label>
-          <input
-            className='form-input'
-            type='password'
-            name='password2'
-            placeholder='Confirm your password'
-            value={values.password2}
-            onChange={handleChange}
-          />
-          {errors.password2 && <p>{errors.password2}</p>}
-        </div>
+    <Form>
 
-            {/*Add a tag with two references student and faculty*/}
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormikUsername">
+          <Form.Label>Username</Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              value={currentData.username}
+              onChange={(e) =>
+                updateCurrentData({
+                  ...currentData,
+                  username: e.target.value,
+                })
+              }
+            />
+          </InputGroup>
+        </Form.Group>
+      </Form.Row>
 
-        <Selectbar />
-  
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik03">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={currentData.password}
+            onChange={(e) =>
+              updateCurrentData({
+                ...currentData,
+                password: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+      </Form.Row>
+
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik03">
+          <Form.Label>Name</Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend>
+            </InputGroup.Prepend>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              value={currentData.name}
+              onChange={(e) =>
+                updateCurrentData({
+                  ...currentData,
+                  name: e.target.value,
+                })
+              }
+            />
+          </InputGroup>
+        </Form.Group>
+      </Form.Row>
+
+
+
+      <Form.Group controlId="exampleForm.ControlSelect1">
+
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik03">
+            <Form.Label>College ID</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+              </InputGroup.Prepend>
+              <Form.Control
+                type="text"
+                placeholder="College ID"
+                value={currentData.collegeId}
+                onChange={(e) =>
+                  updateCurrentData({
+                    ...currentData,
+                    collegeId: e.target.value,
+                  })
+                }
+              />
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
+
+
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik03">
+            <Form.Label>Department</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend>
+              </InputGroup.Prepend>
+              <Form.Control
+                type="text"
+                placeholder="Department"
+                value={currentData.department}
+                onChange={(e) =>
+                  updateCurrentData({
+                    ...currentData,
+                    department: e.target.value,
+                  })
+                }
+              />
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
+
+
+        <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Enrolled Date</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                </InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Enrolled Date"
+                  value={currentData.enrolledDate}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      enrolledDate: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+        <Form.Label><strong>Choose who you are</strong></Form.Label>
+        <Form.Control as="select"
+          value={currentData.Type}
+          onChange={(e) => {
+            updateCurrentData({
+              ...currentData,
+              Type: e.target.value,
+            });
+          }
+          }
+        >
+          <option value="Student">Student</option>
+          <option value="Faculty">Faculty</option>
+        </Form.Control>
+      </Form.Group>
+
+    
+
+      {currentData.Type === 'Student' &&
+
+        <Form>
+
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Roll Number</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                </InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Roll Number"
+                  value={currentData.rollNumber}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      rollNumber: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Course</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                </InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Course"
+                  value={currentData.course}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      course: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Course Duration</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                </InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Course Duration"
+                  value={currentData.courseDuration}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      courseDuration: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+
+
           
-        <button className='form-input-btn' type='submit'>
-          Sign up
-        </button>
-        <span className='form-input-login'>
-          Already have an account? Login <a href='#'>here</a>
-        </span>
-      </form>
-    </div>
+
+        </Form>
+      }
+
+      {currentData.Type === 'Faculty' &&
+        <Form>
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Registration Number</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend>
+                </InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Registration Number"
+                  value={currentData.registrationNumber}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      registrationNumber: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+        </Form>
+
+      }
+
+
+      <Button
+        onClick={() => {
+          handleSubmit({
+            username: currentData.username,
+            password: currentData.password,
+            isSubmitted: true
+          });
+          console.log(currentData);
+        }
+
+        }
+      >
+        Submit form
+      </Button>
+    </Form>
   );
-};
+}
 
 export default FormSignup;
