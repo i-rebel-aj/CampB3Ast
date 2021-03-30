@@ -12,7 +12,10 @@ const groupSchema= new mongoose.Schema(
             type: String,
             required: true
         },
-        collegeID:{}
+        collegeID:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'College'
+        }
     }, {timestamps: true}
 )
 const Group=mongoose.model('Group', groupSchema)

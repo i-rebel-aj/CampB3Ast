@@ -1,5 +1,4 @@
 const {User, Student, Faculty}=require("../models/User")
-const Group=require("../models/Groups")
 const bcrypt = require('bcrypt');
 
 exports.getUserByUsername=async (req, res)=>{

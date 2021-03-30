@@ -8,7 +8,7 @@ exports.requireAuth= (req, res, next)=>{
             if(err){
                 res.status(404).json({message : "Something went wrong"})
             }else{
-                //console.log(decoded)
+                console.log(decoded)
                 next()
             }
         })

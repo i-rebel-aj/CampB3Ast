@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User, Student, Faculty } = require("../models/User");
+const { User, Student, Faculty, Admin } = require("../models/User");
 const Group = require("../models/Groups");
 const bcrypt = require("bcrypt");
 const {getLoggedInId}=require('../lib/helper')
@@ -130,4 +130,11 @@ exports.getLoggedInUser= async (req, res)=>{
     }else{
         res.status(400).json({message: 'User not found'})
     }
+}
+
+
+//This is the controller to create College Admin
+exports.createCollegeAdmin= async(req, res)=>{
+  const {name, email, pass, collegeId}=req.body
+
 }
