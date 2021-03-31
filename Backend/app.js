@@ -17,7 +17,6 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
 cors({credentials: true, origin: true})
-
 //Using Routes
 const authRoutes=require("./routes/auth-route")
 //const forumRoute=require("./routes/forums")
@@ -26,6 +25,6 @@ const collegeRoutes=require('./routes/collegeRoute')
 app.use("/api/user", userRoutes)
 app.use('/api/user/auth', authRoutes)
 app.use('/api/college', collegeRoutes)
-app.listen(3000, ()=>{
+app.listen(5000, ()=>{
     console.log("Server Has Started")
 })

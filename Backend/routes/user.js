@@ -19,5 +19,5 @@ router.get("/", getUserByUsername)
     @Desc   To get students from a college
     @Access Public (Should be admin only)
 */
-router.get("/college",requireAuth, getUsersByCollege)
+router.get("/college", getUsersByCollege)
 module.exports=router

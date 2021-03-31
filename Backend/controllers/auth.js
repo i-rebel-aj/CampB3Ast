@@ -2,14 +2,15 @@ const jwt = require("jsonwebtoken");
 const { User, Student, Faculty, Admin } = require("../models/User");
 const Group = require("../models/Groups");
 const bcrypt = require("bcrypt");
-const {getLoggedInId}=require('../lib/helper')
-//3 Days validity of jwt
-const maxjwtAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.jwtSecret, {
-    expiresIn: maxjwtAge,
-  });
-};
+const {getUserId}=require('../lib/helper')
+const {issueJWT}= require('../lib/utils')
+// //3 Days validity of jwt
+// const maxjwtAge = 3 * 24 * 60 * 60;
+// const createToken = (id) => {
+//   return jwt.sign({ id }, process.env.jwtSecret, {
+//     expiresIn: maxjwtAge,
+//   });
+// };
 exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
@@ -33,11 +34,9 @@ exports.addUser = async (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       newStudent.password = bcrypt.hashSync(newUser.password, salt);
       await newStudent.save();
-      const token = createToken(newStudent._id);
-      res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
-      return res
-        .status(200)
-        .json({ message: "Student added successfully", token: token });
+      //const token = createToken(newStudent._id);
+      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
+      return res.status(200).json({ message: "Student added successfully"});
     } else if (type === "Faculty") {
       const existingUser = await User.find({
         registrationNumber: newUser.registrationNumber,
@@ -55,11 +54,11 @@ exports.addUser = async (req, res) => {
       const salt = bcrypt.genSaltSync(10);
       newFaculty.password = bcrypt.hashSync(newUser.password, salt);
       await newFaculty.save();
-      const token = createToken(newFaculty._id);
-      res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
+      //const token = createToken(newFaculty._id);
+      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
       return res
         .status(200)
-        .json({ message: "Faculty added successfully", token: token });
+        .json({ message: "Faculty added successfully" });
     } else {
       return res.status(400).json({ message: "Not the right type" });
     }
@@ -91,14 +90,13 @@ exports.userLogin = async (req, res) => {
         throw Error('User not found')
     }
     if (!user.authenticate(pass)) {
-      //console.log("Invalid Username/password");
       return res.status(400).json({ message: "Invalid Username / Password" });
     } else {
-      const token = createToken(user._id);
-      res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
-      return res
-        .status(200)
-        .json({ message: "User logged in successfully", token: token });
+      const tokenObject = issueJWT(user);
+      //Check for CORS, as cookies are not set with react
+      res.cookie("token", tokenObject.token, { expiresIn: tokenObject.expires });
+      console.log("Logged in successfully");
+      return res.status(200).json({ token:tokenObject.token, user:user});
     }
   } catch (err) {
     console.log(err);
@@ -107,28 +105,27 @@ exports.userLogin = async (req, res) => {
 };
 
 exports.logout = async(req,res)=>{
-    res.clearCookie("jwt");
-    res.json({
+  res.clearCookie("token");
+  res.json({
     msg: "User logout Successfully",
   });
 };
 exports.getLoggedInUser= async (req, res)=>{
-    //const decoded=await getLoggedInId(req.cookies.jwt)
-    //console.log(decoded)
-    let id
-    jwt.verify(req.cookies.jwt, process.env.jwtSecret, (err, decoded)=>{
-        if(err){
-            res.status(404).json({message : "Something went wrong"})
-        }else{
-            id = decoded.id;
+  console.log('Get Loggen in User Route')
+    try{
+        req._id=getUserId(req, res)
+        console.log(req._id)
+        if(req._id===null){
+          throw new Error('Token Not Found')
         }
-    })
-    //console.log(id)
-    const user= await User.findById(id)
-    if(user){
-        res.status(200).json({user: user})
-    }else{
-        res.status(400).json({message: 'User not found'})
+        const user= await User.findById(req._id)
+        if(!user){
+          throw new Error('User not Found')
+        }
+        return res.status(200).json({message: 'User Found', user: user})
+    }catch(err){
+      //console.log(err)
+      return res.status(500).json({message: 'Server Error'})
     }
 }
 
