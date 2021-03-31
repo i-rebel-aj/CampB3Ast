@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import ForumPage  from "./forumPage";
 
-const Forum = () => {
+const ForumControl = () => {
   const [values, updateValue] = useState({
-    forumName: "",
-    forumDescription: "",
-    forumType: ""
+    Type: "",
+    username: "",
+    password: "",
+    name: "",
+    collegeId: "",
+    department: "",
+    gender: "",
+    registrationNumber: "",
+    enrolledDate: ""
   });
 
   return (
@@ -17,9 +23,9 @@ const Forum = () => {
       }}
     >
       <ForumPage values={values} handleSubmit={updateValue} />
-      
+     
     </div>
   );
 };
 
-export default Forum;
+export default ForumControl;
