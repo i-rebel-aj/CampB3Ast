@@ -133,8 +133,15 @@ exports.getLoggedInUser= async (req, res)=>{
 }
 
 
-//This is the controller to create College Admin
+//This is the controller to create College Admin, access to SUPER Admin Only
 exports.createCollegeAdmin= async(req, res)=>{
-  const {name, email, pass, collegeId}=req.body
-
+  //Do validation later
+  try{
+    const newCollegeAdmin=new Admin(req.body)
+    await newCollegeAdmin.save()
+    return res.status(200).json({message: 'New admin created please assign him to the college'})
+  }catch(err){
+    res.status(500).json({message: 'Server Error'})
+  }
+  
 }

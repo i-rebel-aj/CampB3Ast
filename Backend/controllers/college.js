@@ -28,7 +28,7 @@ exports.assignAdmin=async(req, res)=>{
             throw new Error('This user can\'t be made into admin')
         }
         foundCollege.assignedAdmin= foundUser._id
-        await foundUser.save()
+        await foundCollege.save()
         return res.status(200).json({message: 'Assigned Admin success'})
     }catch(err){
         return res.status(500).json({message: 'Server Error', error: err})

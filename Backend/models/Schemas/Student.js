@@ -1,6 +1,14 @@
 const mongoose=require("mongoose")
 const studentSchema= new mongoose.Schema(
     {
+        department:{
+            type: String,
+            required: true
+        },
+        enrolledDate:{
+            type: Date,
+            required: true
+        },
         rollNumber:{
             type: String,
             required: true

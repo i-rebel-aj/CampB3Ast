@@ -3,16 +3,18 @@ const groupSchema= new mongoose.Schema(
     {
         groupName:{
             type: String,
-            required: true
+            unique: true
         },
         groupDescription:{
-            type: String
-        },
-        groupId:{
             type: String,
             required: true
         },
-        collegeID:{
+        groupId:{
+            type: String,
+            required: true,
+            unique: true
+        },
+        associatedCollegeName:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'College'
         }

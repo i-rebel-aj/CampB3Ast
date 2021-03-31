@@ -6,8 +6,9 @@ exports.requireAuth= (req, res, next)=>{
     if(token){
         jwt.verify(token, process.env.jwtSecret, (err, decoded)=>{
             if(err){
-                res.status(404).json({message : "Something went wrong"})
+                res.status(500).json({message : "Server Error"})
             }else{
+                console.log('Decoded object from jwt is (middleware)')
                 console.log(decoded)
                 next()
             }

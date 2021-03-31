@@ -36,21 +36,13 @@ const userSchema=new mongoose.Schema(
             required: 'Email address is required',
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         },
-        department:{
-            type: String,
-            required: true
-        },
-        enrolledDate:{
-            type: Date,
-            required: true
-        },
         createdPrivateForums:[{
-            _id: Schema.Types.ObjectId,
-            ref: 'Forums'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Forum'
         }],
         joinedPrivateForums:[{
-            _id: Schema.Types.ObjectId,
-            ref: 'Forums'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Forum'
         }],
     },options,{timestamps: true}
 )
