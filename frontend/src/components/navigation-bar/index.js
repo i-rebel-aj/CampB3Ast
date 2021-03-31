@@ -1,7 +1,9 @@
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import api from "../../API/api";
 
 function NavBar() {
+  const history = useHistory();
   return (
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">
@@ -15,12 +17,6 @@ function NavBar() {
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/login">Login</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/register">Sign Up</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
               <Nav.Link href="/profile">Profile</Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -31,19 +27,33 @@ function NavBar() {
             </Nav.Item>
           </Nav>
           <Nav>
-            <Nav.Link href="/login">
-              <Button variant="outline-primary">Login</Button>
-            </Nav.Link>
-
-            <Nav.Link href="/register">
-              <Button variant="primary">Sign Up</Button>
-            </Nav.Link>
-            <Nav.Link href="/forum/create">
-              <Button variant="primary">Create Forum</Button>
-            </Nav.Link>
-            <Nav.Link href="/forum/:id/post/create">
-              <Button variant="primary">Post Creation</Button>
-            </Nav.Link>
+            {localStorage.getItem("jwt") ? (
+              <>
+                {" "}
+                <Nav.Item>
+                  <Nav.Link href="/forum/create">Create Forum</Nav.Link>
+                </Nav.Item>
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    api.logout();
+                    history.push("/");
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Nav.Link href="/login">
+                  <Button variant="outline-primary">Login</Button>
+                </Nav.Link>
+                <Nav.Link href="/register">
+                  <Button variant="primary">Sign Up</Button>
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
