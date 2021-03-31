@@ -10,7 +10,8 @@ const issueJWT = (user) => {
       expiresIn: expiresIn,
     });
     return {
-      token: "Bearer " + signedToken,
+      //This is Bearer Token
+      token: signedToken,
       expires: expiresIn,
     };
   };

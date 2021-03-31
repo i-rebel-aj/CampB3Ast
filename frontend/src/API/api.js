@@ -1,12 +1,12 @@
 import axios from "axios";
-import { BASE_URL, USER_API, USERS_OF_A_COLLEGE } from "../constants";
+import { BASE_URL, USER_API, USERS_OF_A_COLLEGE, TEST_URL } from "../constants";
 import { BehaviorSubject } from "rxjs";
 
 export default {
   getUsers: (collegeId, Type) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${USER_API}${USERS_OF_A_COLLEGE}`,
+      url: `${TEST_URL}${USER_API}${USERS_OF_A_COLLEGE}`,
       headers: {},
       params: {
         collegeId: collegeId,
@@ -16,14 +16,14 @@ export default {
   getUser: (username) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${USER_API}`,
+      url: `${TEST_URL}${USER_API}`,
       headers: {},
       params: {
         username: username,
       },
     }),
   login: (username, password) =>
-    fetch(`${BASE_URL}${USER_API}/auth/login`, {
+    fetch(`${TEST_URL}${USER_API}/auth/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -48,17 +48,19 @@ export default {
     localStorage.removeItem("jwt");
     console.log("Logged out");
   },
-  currentUserValue: () => {
-    if (localStorage.getItem("jwt"))
-      return JSON.parse(localStorage.getItem("jwt"));
-    else return null;
-  },
+  // currentUserValue: () => {
+  //   if (localStorage.getItem("jwt"))
+  //     return JSON.parse(localStorage.getItem("jwt"));
+  //   else return null;
+  // },
   getLoggedInUser: (token) =>
-    fetch(`${BASE_URL}${USER_API}/auth/loggedinuser`, {
+    fetch(`${TEST_URL}${USER_API}/auth/loggedinuser`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
+        'Authorization': 'bearer',
+        'x-auth-token': token,
+        'Content-Type': 'application/json'
+      }
     })
       .then((response) => {
         return response.json();

@@ -20,9 +20,9 @@ const Login = (props) => {
       api
         .login(values.username, values.password)
         .then((response) => {
-          console.log("Tokennn", response["token"]);
+          console.log(response)
+          //console.log("Tokennn", response["token"]);
           localStorage.setItem("jwt", response["token"]);
-
           return response;
         })
         .catch((error) => {
@@ -31,7 +31,8 @@ const Login = (props) => {
     }
     if (localStorage.getItem("jwt")) {
       let token = localStorage.getItem("jwt");
-      console.log(`Bearer ${token}`);
+      //console.log(`Bearer ${token}`);
+      console.log(token)
       api
         .getLoggedInUser(token)
         .then((response) => {
