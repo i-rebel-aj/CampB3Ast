@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
-import FormSignup from './FormSignup';
-import FormSuccess from './FormSuccess';
+import React, { useState } from "react";
+import FormSignup  from "./FormSignup";
 
-const Form = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+const Login = () => {
+  const [values, updateValue] = useState({
+    username: "",
+    password: "",
+    isSubmitted: false
+  });
 
-  function submitForm() {
-    setIsSubmitted(true);
-  }
-  return ( 
-      <div className='form-container'>
-        <span className='close-btn'>×</span>
-        <div className='form-content-left'>
-        </div>
-        {!isSubmitted ? (
-          <FormSignup submitForm={submitForm} />
-        ) : (
-          <FormSuccess />
-        )}
-      </div>
-    
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <FormSignup values={values} handleSubmit={updateValue} />
+      
+
+    </div>
   );
 };
 
-export default Form;
+export default Login;
