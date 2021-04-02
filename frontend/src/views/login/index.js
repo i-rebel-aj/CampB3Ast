@@ -3,48 +3,47 @@ import { LoginForm } from "../../components";
 import { Alert, Button } from "react-bootstrap";
 import { BehaviorSubject } from "rxjs";
 import api from "../../API/api";
+import { authenticate, isAutheticated } from "../../_helpers";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authSuccess, authError } from "../../redux/auth/authActions";
 
 const Login = (props) => {
   const [values, updateValue] = useState({
     username: "",
     password: "",
     isSubmitted: false,
+    loggingIn: false,
+    error: false,
   });
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (values.isSubmitted) {
-      console.log(values.username, values.password);
+      updateValue({ ...values, loggingIn: true });
       api
         .login(values.username, values.password)
         .then((response) => {
-          console.log(response)
-          //console.log("Tokennn", response["token"]);
-          localStorage.setItem("jwt", response["token"]);
-          return response;
+          authenticate(response, () => {
+            updateValue({
+              ...values,
+              loggingIn: false,
+              isSubmitted: false,
+            });
+          });
+          dispatch(authSuccess(response["user"]));
         })
         .catch((error) => {
           console.log(error);
+          updateValue({
+            ...values,
+            error: true,
+            isSubmitted: false,
+          });
         });
     }
-    if (localStorage.getItem("jwt")) {
-      let token = localStorage.getItem("jwt");
-      //console.log(`Bearer ${token}`);
-      console.log(token)
-      api
-        .getLoggedInUser(token)
-        .then((response) => {
-          console.log(response);
-
-          return response;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    updateValue({ ...values, isSubmitted: false });
   }, [values.isSubmitted]);
   /* postLoginDataHandler = () => {
     axios.post('');

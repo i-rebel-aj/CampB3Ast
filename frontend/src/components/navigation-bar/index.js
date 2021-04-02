@@ -1,9 +1,12 @@
 import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import api from "../../API/api";
+import { isAutheticated } from "../../_helpers";
+import { useSelector, useDispatch } from "react-redux";
 
 function NavBar() {
   const history = useHistory();
+  const auth = useSelector((state) => state.auth);
   return (
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">
@@ -16,23 +19,31 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/profile">Profile</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/forum/create">Create Forum</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="/forum/:id/post/create">Post Creation</Nav.Link>
-            </Nav.Item>
-          </Nav>
-          <Nav>
-            {localStorage.getItem("jwt") ? (
+            {isAutheticated() ? (
               <>
                 {" "}
                 <Nav.Item>
                   <Nav.Link href="/forum/create">Create Forum</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link href="/profile">Profile</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link href="/forum/create">Create Forum</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link href="/forum/:id/post/create">
+                    Post Creation
+                  </Nav.Link>
+                </Nav.Item>
+              </>
+            ) : null}
+          </Nav>
+          <Nav>
+            {isAutheticated() ? (
+              <>
+                {" "}
+                <Nav.Item>{auth.user.name}</Nav.Item>
                 <Button
                   variant="outline-primary"
                   onClick={() => {

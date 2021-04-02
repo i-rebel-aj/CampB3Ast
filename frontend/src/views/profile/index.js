@@ -58,7 +58,6 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    console.log("ye kya hua");
     api
       .getUser(username)
       .then((response) => {

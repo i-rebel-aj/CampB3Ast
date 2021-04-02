@@ -10,58 +10,61 @@ import {
   Post,
   Forum,
   SeeForum,
-  SeePost
-
+  SeePost,
 } from "../../views";
 import { NavBar } from "../../components";
+import { isAutheticated } from "../../_helpers";
 
 function CustomRouter() {
+  const { user } = isAutheticated();
   return (
     <>
       <Route exact path="/" component>
-        <NavBar />
+        <NavBar user={user} />
         <Home />
       </Route>
       <Route exact path="/register" component>
-        <NavBar />
+        <NavBar user={user} />
         <Form />
       </Route>
       <Route path="/login">
-        <NavBar />
+        <NavBar user={user} />
         <Login />
       </Route>
       <Route path="/profile/:username">
-        <NavBar />
+        <NavBar user={user} />
         <Profile />
       </Route>
       <Route exact path="/admin">
-        <NavBar />
+        <NavBar user={user} />
         <AdminSeeUsers />
       </Route>
       <Route exact path="/admin/see">
-        <NavBar />
+        <NavBar user={user} />
         <AdminSeeUsers />
       </Route>
       <Route exact path="/admin/add">
-        <NavBar />
+        <NavBar user={user} />
         <AdminAddUsers />
       </Route>
       <Route exact path="/admin/update">
-        <NavBar />
+        <NavBar user={user} />
         <AdminUpdateUsers />
       </Route>
       <Route exact path="/forum/create">
+        <NavBar user={user} />
         <Forum />
       </Route>
       <Route exact path="/forum/see">
-        <NavBar />
+        <NavBar user={user} />
         <SeeForum />
       </Route>
-      <Route  path="/forum/:id/post/create" exact>
+      <Route path="/forum/:id/post/create" exact>
+        <NavBar user={user} />
         <Post />
       </Route>
       <Route path="/post/see">
-        <NavBar />
+        <NavBar user={user} />
         <SeePost />
       </Route>
     </>
