@@ -24,7 +24,6 @@ const SeeForum = () => {
     api
       .getUsers("IIIT G", "Student")
       .then((response) => {
-        console.log({ ...response });
         let tempList = [...response.data.user];
         updateList(tempList);
       })

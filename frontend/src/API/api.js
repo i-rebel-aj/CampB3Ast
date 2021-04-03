@@ -1,5 +1,11 @@
 import axios from "axios";
-import { BASE_URL, USER_API, USERS_OF_A_COLLEGE } from "../constants";
+import {
+  BASE_URL,
+  USER_API,
+  USERS_OF_A_COLLEGE,
+  TEST_URL,
+  AUTH_LOGIN,
+} from "../constants";
 import { BehaviorSubject } from "rxjs";
 
 export default {
@@ -23,7 +29,7 @@ export default {
       },
     }),
   login: (username, password) =>
-    fetch(`${BASE_URL}${USER_API}/auth/login`, {
+    fetch(`${BASE_URL}${USER_API}${AUTH_LOGIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -41,23 +47,16 @@ export default {
         return error;
       }),
   logout: () => {
-    /*     var d = new Date();
-    d.setTime(d.getTime() + exMins * 60 * 1000);
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"; */
     localStorage.removeItem("jwt");
     console.log("Logged out");
-  },
-  currentUserValue: () => {
-    if (localStorage.getItem("jwt"))
-      return JSON.parse(localStorage.getItem("jwt"));
-    else return null;
   },
   getLoggedInUser: (token) =>
     fetch(`${BASE_URL}${USER_API}/auth/loggedinuser`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: "bearer",
+        "x-auth-token": token,
+        "Content-Type": "application/json",
       },
     })
       .then((response) => {
