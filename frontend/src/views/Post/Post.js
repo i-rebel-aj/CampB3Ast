@@ -8,7 +8,6 @@ function Post ({ handleSubmit, values }){
         postTitle: "",
         postDescription: "",
     });
-    console.log(values.postTitle, values.postDescription);
     return (
       <div>
         <div>
@@ -60,6 +59,7 @@ onClick={() => {
     postTitle: currentData.postTitle,
     postDescription: currentData.postDescription,
   });  
+  console.log(currentData);
 }
 }
 >

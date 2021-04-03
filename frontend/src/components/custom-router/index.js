@@ -10,8 +10,8 @@ import {
   Post,
   Forum,
   SeeForum,
-  SeePost
-
+  SeePost,
+  AdminCreateGroup
 } from "../../views";
 import { NavBar } from "../../components";
 
@@ -50,6 +50,12 @@ function CustomRouter() {
         <NavBar />
         <AdminUpdateUsers />
       </Route>
+
+      <Route exact path="/admin/create-group">
+        <NavBar />
+        <AdminCreateGroup />
+      </Route>
+
       <Route exact path="/forum/create">
         <Forum />
       </Route>

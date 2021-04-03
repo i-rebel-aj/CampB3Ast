@@ -275,9 +275,18 @@ const FormSignup = ({ handleSubmit }) => {
       <Button
         onClick={() => {
           handleSubmit({
+            Type: currentData.Type,
             username: currentData.username,
             password: currentData.password,
-            isSubmitted: true
+            name: currentData.name,
+            collegeId: currentData.collegeId,
+            department: currentData.department,
+            gender: currentData.gender,
+            registrationNumber: currentData.registrationNumber,
+            enrolledDate: currentData.enrolledDate,
+            rollNumber: currentData.rollNumber,
+            course: currentData.course,
+            courseDuration: currentData.courseDuration
           });
           console.log(currentData);
         }
