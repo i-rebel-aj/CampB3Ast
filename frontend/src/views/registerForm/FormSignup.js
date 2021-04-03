@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
 
-const FormSignup = ({ handleSubmit }) => {
+const FormSignup = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
     Type: "",
     username: "",
     password: "",
     name: "",
     email: "",
+    batch: "",
     collegeId: "",
     department: "",
     gender: "",
@@ -157,37 +158,47 @@ const FormSignup = ({ handleSubmit }) => {
         </Form.Row>
 
         <Form.Row>
-          <Form.Label>
-            <strong>Choose who you are</strong>
-          </Form.Label>
-          <Form.Control
-            as="select"
-            value={currentData.Type}
-            onChange={(e) => {
-              updateCurrentData({
-                ...currentData,
-                Type: e.target.value,
-              });
-            }}
-          >
-            <option value="Student">Student</option>
-            <option value="Faculty">Faculty</option>
-          </Form.Control>
+          <Form.Group as={Col} md="12" controlId="validationFormik0333">
+            <Form.Label>
+              <strong>Choose who you are</strong>
+            </Form.Label>
+            <Form.Control
+              as="select"
+              value={currentData.Type}
+              onChange={(e) => {
+                updateCurrentData({
+                  ...currentData,
+                  Type: e.target.value,
+                });
+              }}
+            >
+              <option value="">Category</option>
+              <option value="Student">Student</option>
+              <option value="Faculty">Faculty</option>
+            </Form.Control>
+          </Form.Group>
         </Form.Row>
+
         <Form.Row>
-          <Form.Control
-            as="select"
-            value={currentData.gender}
-            onChange={(e) => {
-              updateCurrentData({
-                ...currentData,
-                gender: e.target.value,
-              });
-            }}
-          >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Form.Control>
+          <Form.Group as={Col} md="12" controlId="validationFormik0333">
+            <Form.Label>
+              <strong>Gender</strong>
+            </Form.Label>
+            <Form.Control
+              as="select"
+              value={currentData.gender}
+              onChange={(e) => {
+                updateCurrentData({
+                  ...currentData,
+                  gender: e.target.value,
+                });
+              }}
+            >
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Form.Control>
+          </Form.Group>
         </Form.Row>
       </Form.Group>
 
@@ -226,6 +237,26 @@ const FormSignup = ({ handleSubmit }) => {
                     updateCurrentData({
                       ...currentData,
                       course: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Batch</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend></InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Batch"
+                  value={currentData.batch}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      batch: e.target.value,
                     })
                   }
                 />
@@ -300,12 +331,18 @@ const FormSignup = ({ handleSubmit }) => {
             course: currentData.Type === "Faculty" ? "" : currentData.course,
             courseDuration:
               currentData.Type === "Faculty" ? "" : currentData.courseDuration,
+            batch: currentData.Type === "Faculty" ? "" : currentData.batch,
             isSubmitted: true,
           });
         }}
       >
         Submit form
       </Button>
+      {values.message && (
+        <Alert variant={values.isRegistered ? "success" : "danger"}>
+          {values.message}
+        </Alert>
+      )}
     </Form>
   );
 };

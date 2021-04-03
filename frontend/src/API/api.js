@@ -52,7 +52,7 @@ export default {
     console.log("Logged out");
   },
   signIn: (data) =>
-    fetch(`${BASE_URL}${USER_API}${AUTH_SIGNUP}`, {
+    fetch(`${TEST_URL}${USER_API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -67,11 +67,13 @@ export default {
         department: data.department,
         gender: data.gender,
         enrolledDate: data.enrolledDate,
+        email: data.email,
         registrationNumber:
           data.Type === "Faculty" ? data.registrationNumber : "",
         rollNumber: data.Type === "Faculty" ? "" : data.rollNumber,
         course: data.Type === "Faculty" ? "" : data.course,
         courseDuration: data.Type === "Faculty" ? "" : data.courseDuration,
+        batch: data.Type === "Faculty" ? "" : data.batch,
       }),
     })
       .then((response) => {

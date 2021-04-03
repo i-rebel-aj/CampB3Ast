@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FormSignup from "./FormSignup";
-import { Alert } from "react-bootstrap";
+import { Alert, Col, Row } from "react-bootstrap";
 import api from "../../API/api";
 
 const SignUp = () => {
@@ -13,6 +13,7 @@ const SignUp = () => {
     collegeId: "",
     department: "",
     gender: "",
+    batch: "",
     registrationNumber: "",
     enrolledDate: "",
     rollNumber: "",
@@ -38,6 +39,11 @@ const SignUp = () => {
             signingIn: false,
             isSubmitted: false,
             message: response.message,
+            isRegistered:
+              response.message === "Faculty added successfully" ||
+              response.message === "Student added successfully"
+                ? true
+                : false,
           });
         })
         .catch((error) => {
@@ -54,7 +60,7 @@ const SignUp = () => {
   }, [values.isSubmitted]);
 
   return (
-    <div
+    <Col
       style={{
         display: "flex",
         justifyContent: "center",
@@ -62,31 +68,7 @@ const SignUp = () => {
       }}
     >
       <FormSignup values={values} handleSubmit={updateValue} />
-      <Alert variant={"success"}>Succesfully Logged In!</Alert>
-      {values.Type}
-      {"\n username "}
-      {values.username}
-      {" pass "}
-      {values.password}
-      {" namw "}
-      {values.name}
-      {" email "}
-      {values.email}
-      {" roll "}
-      {values.rollNumber}
-      {" Colg id "}
-      {values.collegeId}
-      {" RegNo "}
-      {values.registrationNumber}
-      {" EnDt "}
-      {values.enrolledDate}
-      {" Course "}
-      {values.course}
-      {" Course Dur "}
-      {values.courseDuration}
-      {" Gender "}
-      {values.gender}
-    </div>
+    </Col>
   );
 };
 
