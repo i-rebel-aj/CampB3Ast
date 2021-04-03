@@ -31,7 +31,7 @@ const SignUp = () => {
       updateValue({ ...values, loggingIn: true });
       console.log("Values", values);
       api
-        .signIn(values)
+        .signUp(values)
         .then((response) => {
           console.log("Rgistered ", response);
           updateValue({

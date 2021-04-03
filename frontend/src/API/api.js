@@ -51,7 +51,7 @@ export default {
     localStorage.removeItem("jwt");
     console.log("Logged out");
   },
-  signIn: (data) =>
+  signUp: (data) =>
     fetch(`${TEST_URL}${USER_API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
