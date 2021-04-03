@@ -1,16 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { User, Student, Faculty, Admin } = require("../models/User");
 const Group = require("../models/Groups");
-const bcrypt = require("bcrypt");
 const {getUserId}=require('../lib/helper')
 const {issueJWT}= require('../lib/utils')
-// //3 Days validity of jwt
-// const maxjwtAge = 3 * 24 * 60 * 60;
-// const createToken = (id) => {
-//   return jwt.sign({ id }, process.env.jwtSecret, {
-//     expiresIn: maxjwtAge,
-//   });
-// };
 exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
@@ -31,8 +23,6 @@ exports.addUser = async (req, res) => {
           });
       }
       const newStudent = new Student(newUser);
-      const salt = bcrypt.genSaltSync(10);
-      newStudent.password = bcrypt.hashSync(newUser.password, salt);
       await newStudent.save();
       //const token = createToken(newStudent._id);
       //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
@@ -51,8 +41,6 @@ exports.addUser = async (req, res) => {
           });
       }
       const newFaculty = new Faculty(newUser);
-      const salt = bcrypt.genSaltSync(10);
-      newFaculty.password = bcrypt.hashSync(newUser.password, salt);
       await newFaculty.save();
       //const token = createToken(newFaculty._id);
       //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
