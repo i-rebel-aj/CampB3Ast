@@ -1,6 +1,7 @@
 const express= require('express')
 const cors = require('cors')
 const cookieParser=require('cookie-parser')
+const morgan = require('morgan');
 
 const app=express()
 
@@ -13,6 +14,7 @@ mongoose.connect(process.env.DB_Production, {useNewUrlParser: true, useUnifiedTo
 })
 .catch(err=>{console.log(err)})
 //Using Middlewares
+app.use(morgan('dev'));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
