@@ -5,6 +5,7 @@ import {
   USERS_OF_A_COLLEGE,
   TEST_URL,
   AUTH_LOGIN,
+  AUTH_SIGNUP,
 } from "../constants";
 import { BehaviorSubject } from "rxjs";
 
@@ -50,14 +51,28 @@ export default {
     localStorage.removeItem("jwt");
     console.log("Logged out");
   },
-  getLoggedInUser: (token) =>
-    fetch(`${BASE_URL}${USER_API}/auth/loggedinuser`, {
-      method: "GET",
+  signIn: (data) =>
+    fetch(`${BASE_URL}${USER_API}${AUTH_SIGNUP}`, {
+      method: "POST",
       headers: {
-        Authorization: "bearer",
-        "x-auth-token": token,
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        Type: data.Type,
+        username: data.username,
+        password: data.password,
+        name: data.name,
+        collegeId: data.collegeId,
+        department: data.department,
+        gender: data.gender,
+        enrolledDate: data.enrolledDate,
+        registrationNumber:
+          data.Type === "Faculty" ? data.registrationNumber : "",
+        rollNumber: data.Type === "Faculty" ? "" : data.rollNumber,
+        course: data.Type === "Faculty" ? "" : data.course,
+        courseDuration: data.Type === "Faculty" ? "" : data.courseDuration,
+      }),
     })
       .then((response) => {
         return response.json();

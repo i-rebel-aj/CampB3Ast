@@ -5,12 +5,11 @@ import Profile from "./profile";
 import AdminSeeUsers from "./admin-see-users";
 import AdminAddUsers from "./admin-add-users";
 import AdminUpdateUsers from "./admin-update-users";
-import AdminCreateGroup from "./admin-create-group"
+import AdminCreateGroup from "./admin-create-group";
 import Post from "./Post";
-import Forum from "./forum-create"
-import SeeForum from "./see-forum"
-import SeePost from "./see-post"
-
+import Forum from "./forum-create";
+import SeeForum from "./see-forum";
+import SeePost from "./see-post";
 
 export {
   Home,
@@ -24,5 +23,5 @@ export {
   Forum,
   SeePost,
   SeeForum,
-  AdminCreateGroup
+  AdminCreateGroup,
 };

@@ -1,16 +1,16 @@
-import React, { useState } from "react" 
+import React, { useState } from "react";
 import { Jumbotron, Nav, Image, Row, Col, Container } from "react-bootstrap";
 import image2 from "../../assets/images/Campus-B34st.png";
 import "../../css/MyDashboard.css";
 
-import AdminCreateGroupControl  from "./adminCreateGroup";
+import AdminCreateGroupControl from "./adminCreateGroup";
 
 const AdminCreateGroup = () => {
-    const [values, updateValue] = useState({
-        groupId: "",
-        groupName: "",
-        groupDescription: "",
-      });
+  const [values, updateValue] = useState({
+    groupId: "",
+    groupName: "",
+    groupDescription: "",
+  });
 
   return (
     <>
@@ -47,10 +47,9 @@ const AdminCreateGroup = () => {
         </Col>
       </Row>
 
-      <AdminCreateGroupControl values={values} handleSubmit={updateValue}/>
-      
+      <AdminCreateGroupControl values={values} handleSubmit={updateValue} />
     </>
   );
 };
 
-export default AdminCreateGroupControl;
+export default AdminCreateGroup;

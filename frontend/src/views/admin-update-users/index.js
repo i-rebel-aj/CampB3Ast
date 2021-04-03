@@ -29,6 +29,11 @@ const AdminUpdateUsers = () => {
                 Update Users
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="4" href="/admin/group/add">
+                Add New Group
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
         {/*    <Col style={{ backgroundColor: "red" }}>

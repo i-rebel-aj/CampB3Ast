@@ -11,16 +11,24 @@ import {
   Forum,
   SeeForum,
   SeePost,
-  AdminCreateGroup
+  AdminCreateGroup,
 } from "../../views";
 import { NavBar } from "../../components";
+import { useSelector, useDispatch } from "react-redux";
 import { isAutheticated } from "../../_helpers";
+import { authSuccess, authError } from "../../redux/auth/authActions";
 
 function CustomRouter() {
   const { user } = isAutheticated();
+  const dispatch = useDispatch();
+  dispatch(authSuccess(user));
   return (
     <>
       <Route exact path="/" component>
+        <NavBar user={user} />
+        <Home />
+      </Route>
+      <Route exact path="/home" component>
         <NavBar user={user} />
         <Home />
       </Route>
@@ -28,7 +36,7 @@ function CustomRouter() {
         <NavBar user={user} />
         <Form />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <NavBar user={user} />
         <Login />
       </Route>
@@ -52,12 +60,10 @@ function CustomRouter() {
         <NavBar user={user} />
         <AdminUpdateUsers />
       </Route>
-
-      <Route exact path="/admin/create-group">
-        <NavBar />
+      <Route exact path="/admin/group/add">
+        <NavBar user={user} />
         <AdminCreateGroup />
       </Route>
-
       <Route exact path="/forum/create">
         <NavBar user={user} />
         <Forum />

@@ -2,7 +2,7 @@ import { Jumbotron, Nav, Image, Row, Col, Container } from "react-bootstrap";
 import image2 from "../../assets/images/Campus-B34st.png";
 import "../../css/MyDashboard.css";
 
-const AdminUpdateUsers = () => {
+const AdminAddUsers = () => {
   return (
     <>
       <Row>
@@ -29,6 +29,11 @@ const AdminUpdateUsers = () => {
                 Update Users
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="4" href="/admin/group/add">
+                Add New Group
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
         <Col>
@@ -45,4 +50,4 @@ const AdminUpdateUsers = () => {
   );
 };
 
-export default AdminUpdateUsers;
+export default AdminAddUsers;

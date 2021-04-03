@@ -3,10 +3,14 @@ import { Link, useHistory } from "react-router-dom";
 import api from "../../API/api";
 import { isAutheticated } from "../../_helpers";
 import { useSelector, useDispatch } from "react-redux";
+import { authSuccess, authError } from "../../redux/auth/authActions";
 
 function NavBar() {
   const history = useHistory();
+
   const auth = useSelector((state) => state.auth);
+
+  console.log("AUTH", auth);
   return (
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">
@@ -26,7 +30,9 @@ function NavBar() {
                   <Nav.Link href="/forum/create">Create Forum</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="/profile">Profile</Nav.Link>
+                  <Nav.Link href={`/profile/${auth.user.username}`}>
+                    Profile
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link href="/forum/create">Create Forum</Nav.Link>
@@ -48,7 +54,7 @@ function NavBar() {
                   variant="outline-primary"
                   onClick={() => {
                     api.logout();
-                    history.push("/");
+                    history.push("/home");
                   }}
                 >
                   Logout
