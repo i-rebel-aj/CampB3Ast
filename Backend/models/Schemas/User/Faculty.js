@@ -13,7 +13,11 @@ const facultySchema= new mongoose.Schema(
             type: String,
             required: true
         },
-        createdClasses:[{}]
+        instituteID:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Institute',
+            required: true
+        }
     }
 )
 module.exports=facultySchema

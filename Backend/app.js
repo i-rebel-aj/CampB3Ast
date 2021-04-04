@@ -27,6 +27,6 @@ const collegeRoutes=require('./routes/collegeRoute')
 app.use("/api/user", userRoutes)
 app.use('/api/user/auth', authRoutes)
 app.use('/api/college', collegeRoutes)
-app.listen(5000, ()=>{
-    console.log("Server Has Started")
+app.listen(process.env.PORT, ()=>{
+    console.log(`Server has started at port ${process.env.PORT}`)
 })

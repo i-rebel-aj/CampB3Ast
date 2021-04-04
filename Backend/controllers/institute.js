@@ -1,36 +1,36 @@
 //This is for the access of super admin ONLY
-const College=require('../models/College')
+const Institute=require('../models/Institute')
 const {User}=require('../models/User')
-exports.addCollege= async(req, res)=>{
+exports.addInstitute= async(req, res)=>{
     try{
-        const newCollege=new College(req.body)
-        await newCollege.save()
-        return res.status(200).json({message: 'College added successfully'})
+        const newInstitute=new Institute(req.body)
+        await newInstitute.save()
+        return res.status(200).json({message: 'Institute added successfully'})
     }catch(err){
         console.log(err)
         if (err.code === 11000) {
-            return res.status(500).json({message: 'College Already Exisits'})
+            return res.status(500).json({message: 'Institute Already Exisits'})
         }
         return res.status(500).json({message: 'Server Error'})
     }
 }
-
 exports.assignAdmin=async(req, res)=>{
     try{
-        const {collegeName, email}= req.body
-        const foundCollege=await College.findOne({collegeName: collegeName})
+        const {instituteName, email}= req.body
+        const foundInstitute=await Institute.findOne({instituteName: instituteName})
         const foundUser= await User.findOne({email: email})
         //Make sure that admin already doesnt exist
-        if(foundCollege.assignedAdmin){
+        if(foundInstitute.assignedAdmin){
             throw new Error('Admin already exists')
         }
         if(foundUser.Type!=='Admin'){
             throw new Error('This user can\'t be made into admin')
         }
-        foundCollege.assignedAdmin= foundUser._id
-        await foundCollege.save()
+        foundInstitute.assignedAdmin= foundUser._id
+        await foundInstitute.save()
         return res.status(200).json({message: 'Assigned Admin success'})
     }catch(err){
         return res.status(500).json({message: 'Server Error', error: err})
     }
 }
+

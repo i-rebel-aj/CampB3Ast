@@ -1,5 +1,5 @@
-const {User, Student, Faculty}=require("../models/User")
-const bcrypt = require('bcrypt');
+const Group = require("../models/Groups")
+const {User}=require("../models/User")
 
 exports.getUserByUsername=async (req, res)=>{
      User.findOne({username: req.query.username}).then((doc)=>{
@@ -8,28 +8,37 @@ exports.getUserByUsername=async (req, res)=>{
         return res.status(404).json({message: "Invalid ID"})
      })
 }
-
+//To add group to a single user
 exports.addGroupToUser=async (req, res)=>{
-    const groupId=req.body.groupId
-    const userId=req.body.userId
-    const foundGroup=await Group.find({groupId: groupId})
-    if(foundGroup.length<0){
-        return res.status(404).json({message: "This group doesnt exist please create one"})
+    const {username, groupName}=req.body
+    try{
+        const foundUser=await User.findOne({username: username})
+        const foundGroup=await Group.findOne({groupName: groupName})
+        //Sanity Check
+        if(!foundGroup){
+            throw new Error('User Not Found')
+        }
+        if(!foundGroup){
+            throw new Error('Group Not Found')
+        }
+        if(foundUser.Type!=='Student'){
+            throw new Error('Group can be added to students only')
+        }
+        //Replace following segment with mongoose operation
+        for (const goupId of foundUser.groupsEnrolled) {
+            if(groupId===foundGroup._id){
+                throw new Error('Group Already Exists')
+            }
+        }
+        foundUser.groupsEnrolled.push(foundGroup._id)
+        await foundUser.save()
+        return res.status(200).json({message: 'Group added Successfully'})
+    }catch(err){
+        console.log(err)
+        return res.status(500).json({message: 'Server Error'})
     }
-    User.findOne({_id:userId})
-    .then((student)=>{
-        if(student.Type!=='Student'){
-            return res.status(400).json({message: "Following user is not a student"})
-        }
-        if(student.collegeGroup.find((group)=>{group===groupId})){
-            return res.status(200).json({message: "This student already exists in the specified group"})    
-        }
-        student.collegeGroup.push(groupId)
-        student.save()
-        return res.status(200).json({message: "Group Added Successfully"})
-    })
-    .catch((err)=>{return res.status(404).json({message: "Invalid UserID", err: err})})
 }
+
 exports.removeGroupFromUser=async (req, res)=>{
     const groupId=req.body.groupId
     const userId=req.body.userId
@@ -66,10 +75,10 @@ exports.getUsersByGroup=async (req, res)=>{
         return res.status(400).json({message: "Something went wrong"})
     })
 }
-exports.getUsersByCollege= async (req, res)=>{
-    const collgId= req.query.collegeId
+exports.getUsersByInstitute= async (req, res)=>{
+    const instituteName= req.query.instituteName
     const Type= req.query.Type
-    User.find({collegeId: collgId, Type: Type})
+    User.find({instituteName: instituteName, Type: Type})
     .then((user)=>{
         return res.status(200).json({message: `Returned ${Type}`, user})
     })

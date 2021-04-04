@@ -25,8 +25,15 @@ const studentSchema= new mongoose.Schema(
             type: Number,
             required: true
         },
-        classEnrolled:[{}],
-        collegeGroup:[]
+        instituteID:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Institute',
+            required: true
+        },
+        groupsEnrolled:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Group'
+        }]
     }
 )
 module.exports=studentSchema

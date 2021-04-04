@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const { User, Student, Faculty, Admin } = require("../models/User");
 const Group = require("../models/Groups");
 const {getUserId}=require('../lib/helper')
-const {issueJWT}= require('../lib/utils')
+const {issueJWT}= require('../lib/utils');
+const Institute = require("../models/Institute");
 exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
@@ -24,8 +25,6 @@ exports.addUser = async (req, res) => {
       }
       const newStudent = new Student(newUser);
       await newStudent.save();
-      //const token = createToken(newStudent._id);
-      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
       return res.status(200).json({ message: "Student added successfully"});
     } else if (type === "Faculty") {
       const existingUser = await User.find({
@@ -33,20 +32,11 @@ exports.addUser = async (req, res) => {
         collegeId: newUser.collegeId,
       });
       if (existingUser.length > 0) {
-        return res
-          .status(409)
-          .json({
-            message:
-              "Faculty with same registeration number already exists in this college",
-          });
+        return res.status(409).json({message:"Faculty with same registeration number already exists in this college"});
       }
       const newFaculty = new Faculty(newUser);
       await newFaculty.save();
-      //const token = createToken(newFaculty._id);
-      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
-      return res
-        .status(200)
-        .json({ message: "Faculty added successfully" });
+      return res.status(200).json({ message: "Faculty added successfully" });
     } else {
       return res.status(400).json({ message: "Not the right type" });
     }
@@ -99,7 +89,7 @@ exports.logout = async(req,res)=>{
   });
 };
 exports.getLoggedInUser= async (req, res)=>{
-  console.log('Get Loggen in User Route')
+  console.log('Get Logged in User Route')
     try{
         req._id=getUserId(req, res)
         console.log(req._id)
@@ -119,14 +109,26 @@ exports.getLoggedInUser= async (req, res)=>{
 
 
 //This is the controller to create College Admin, access to SUPER Admin Only
-exports.createCollegeAdmin= async(req, res)=>{
-  //Do validation later
+exports.createInstituteAdmin= async(req, res)=>{
   try{
-    const newCollegeAdmin=new Admin(req.body)
-    await newCollegeAdmin.save()
+    const {instituteName}=req.body.instituteName
+    const foundInstitute= await Institute.findOne({instituteName: instituteName})
+    if(!foundInstitute){
+      throw new Error('No Institute Found')
+    }
+    const newAdmin={
+      username: req.body.username,
+      password: req.body.password,
+      name: req.body.name,
+      gender: req.body.gender,
+      email: req.body.email
+    }
+    const newInstituteAdmin=new Admin(newAdmin)
+    await newInstituteAdmin.save()
     return res.status(200).json({message: 'New admin created please assign him to the college'})
   }catch(err){
-    res.status(500).json({message: 'Server Error'})
+    console.log(err)
+    return res.status(500).json({message: 'Server Error'})
   }
   
 }
