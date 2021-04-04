@@ -6,6 +6,8 @@ import AdminSeeUsers from "./admin-see-users";
 import AdminAddUsers from "./admin-add-users";
 import AdminUpdateUsers from "./admin-update-users";
 import AdminCreateGroup from "./admin-create-group";
+import SuperAdminCreateAdmin from "./super-admin-create-admin";
+import SuperAdminAddCollege from "./super-admin-add-college";
 import Post from "./Post";
 import Forum from "./forum-create";
 import SeeForum from "./see-forum";
@@ -24,4 +26,6 @@ export {
   SeePost,
   SeeForum,
   AdminCreateGroup,
+  SuperAdminAddCollege,
+  SuperAdminCreateAdmin,
 };

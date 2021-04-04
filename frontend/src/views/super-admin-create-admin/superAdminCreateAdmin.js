@@ -1,0 +1,158 @@
+import React, { useState } from "react";
+import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
+
+const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
+  const [currentData, updateCurrentData] = useState({
+    username: "",
+    password: "",
+    name: "",
+    email: "",
+    collegeId: "",
+    gender: "",
+  });
+
+  return (
+    <Form>
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormikUsername">
+          <Form.Label>Username</Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+            </InputGroup.Prepend>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              value={currentData.username}
+              onChange={(e) =>
+                updateCurrentData({
+                  ...currentData,
+                  username: e.target.value,
+                })
+              }
+            />
+          </InputGroup>
+        </Form.Group>
+      </Form.Row>
+
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik03">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={currentData.password}
+            onChange={(e) =>
+              updateCurrentData({
+                ...currentData,
+                password: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik033">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            value={currentData.email}
+            onChange={(e) =>
+              updateCurrentData({
+                ...currentData,
+                email: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+      </Form.Row>
+
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik03">
+          <Form.Label>Name</Form.Label>
+          <InputGroup>
+            <InputGroup.Prepend></InputGroup.Prepend>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              value={currentData.name}
+              onChange={(e) =>
+                updateCurrentData({
+                  ...currentData,
+                  name: e.target.value,
+                })
+              }
+            />
+          </InputGroup>
+        </Form.Group>
+      </Form.Row>
+
+      <Form.Group controlId="exampleForm.ControlSelect1">
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik03">
+            <Form.Label>College ID</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend></InputGroup.Prepend>
+              <Form.Control
+                type="text"
+                placeholder="College ID"
+                value={currentData.collegeId}
+                onChange={(e) =>
+                  updateCurrentData({
+                    ...currentData,
+                    collegeId: e.target.value,
+                  })
+                }
+              />
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik0333">
+            <Form.Label>
+              <strong>Gender</strong>
+            </Form.Label>
+            <Form.Control
+              as="select"
+              value={currentData.gender}
+              onChange={(e) => {
+                updateCurrentData({
+                  ...currentData,
+                  gender: e.target.value,
+                });
+              }}
+            >
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
+      </Form.Group>
+
+      <Button
+        onClick={() => {
+          handleSubmit({
+            username: currentData.username,
+            password: currentData.password,
+            name: currentData.name,
+            email: currentData.email,
+            collegeId: currentData.collegeId,
+            gender: currentData.gender,
+            isSubmitted: true,
+          });
+        }}
+      >
+        Add Admin
+      </Button>
+      {values.message && (
+        <Alert variant={values.isCreated ? "success" : "danger"}>
+          {values.message}
+        </Alert>
+      )}
+    </Form>
+  );
+};
+
+export default SuperAdminCreateAdminControl;
