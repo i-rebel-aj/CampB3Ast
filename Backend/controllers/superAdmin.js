@@ -1,4 +1,4 @@
-const College=require('../models/College')
+const College=require('../models/Institute')
 const Institute = require('../models/Institute')
 //To add the user to the Database 
 exports.addInstituteAdmin = async (req, res) => {

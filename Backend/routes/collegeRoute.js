@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router();
-const {addCollege, assignAdmin}=require('../controllers/college')
+const {addCollege, assignAdmin}=require('../controllers/institute')
 /*
     @Route  POST /api/college/add
     @Desc   For Super Admin to add Colleges
