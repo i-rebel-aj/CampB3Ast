@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router();
-const {getUserByUsername, addGroupToUser, removeGroupFromUser, getUsersByGroup, getUsersByCollege}=require("../controllers/user")
+const {getUserByUsername, addGroupToUser, removeGroupFromUser, getUsersByGroup, getUsersByInstitute}=require("../controllers/user")
 const {requireAuth}=require('../middleware/auth-middleware')
 /*
     @Route  GET /api/user
@@ -19,5 +19,5 @@ router.get("/", getUserByUsername)
     @Desc   To get students from a college
     @Access Public (Should be admin only)
 */
-router.get("/college", getUsersByCollege)
+router.get("/college", getUsersByInstitute)
 module.exports=router

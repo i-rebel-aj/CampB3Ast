@@ -8,20 +8,22 @@ exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
   try {
+    const foundInstitute= await Institute.findOne({instituteName: req.body.instituteName})
+    //If there was no institute found
+    if(!foundInstitute){
+      throw new Error('Institute is not registered with the CampB34st')
+    }
+    newUser.instituteID=foundInstitute._id
     if (type === "Student") {
       const existingUser = await User.find({
-        rollNumber: newUser.rollNumber,
-        collegeId: newUser.collegeId,
-        batch: newUser.batch,
-        department: newUser.department,
+        rollNumber: req.body.rollNumber,
+        collegeId: req.body.collegeId,
+        batch: req.body.batch,
+        department: req.body.department,
+        instituteID: foundInstitute._id
       });
       if (existingUser.length > 0) {
-        return res
-          .status(409)
-          .json({
-            message:
-              "Student with same rollNo exists in this department in this batch",
-          });
+        return res.status(409).json({message:"Student with same rollNo exists in this department in this batch"});
       }
       const newStudent = new Student(newUser);
       await newStudent.save();
@@ -29,7 +31,7 @@ exports.addUser = async (req, res) => {
     } else if (type === "Faculty") {
       const existingUser = await User.find({
         registrationNumber: newUser.registrationNumber,
-        collegeId: newUser.collegeId,
+        instituteID: foundInstitute._id
       });
       if (existingUser.length > 0) {
         return res.status(409).json({message:"Faculty with same registeration number already exists in this college"});
@@ -55,7 +57,7 @@ exports.addUser = async (req, res) => {
           .json({ message: "User with this email already exists" });
       }
     }
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong", error: err.message });
   }
 };
 

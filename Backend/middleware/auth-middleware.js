@@ -29,7 +29,7 @@ exports.requireAuth= (req, res, next)=>{
       return res.status(404).json({message : "token not found"})
     }
 }
-const isAdmin = (req, res, next)=>{
+exports.isAdmin = async (req, res, next)=>{
   try{
     req._id=getUserId(req, res)
     const foundUser=await User.findById(req._id)
@@ -42,7 +42,7 @@ const isAdmin = (req, res, next)=>{
     return res.status(404).json({message : "User is not an Admin"})
   }
 }
-const isFaculty = (req, res, next)=>{
+exports.isFaculty = async (req, res, next)=>{
   try{
     req._id=getUserId(req, res)
     const foundUser=await User.findById(req._id)
@@ -55,7 +55,7 @@ const isFaculty = (req, res, next)=>{
     return res.status(404).json({message : "User is not a Faculty"})
   }
 }
-const isStudent = (req, res, next)=>{
+exports.isStudent = async (req, res, next)=>{
   try{
     req._id=getUserId(req, res)
     const foundUser=await User.findById(req._id)
@@ -68,7 +68,7 @@ const isStudent = (req, res, next)=>{
     return res.status(404).json({message : "User is not a Student"})
   }
 }
-const isSuperAdmin = (req, res, next)=>{
+exports.isSuperAdmin = async (req, res, next)=>{
   try{
     req._id=getUserId(req, res)
     const foundUser=await User.findById(req._id)

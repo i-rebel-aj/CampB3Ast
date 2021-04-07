@@ -5,6 +5,10 @@ const adminSchema= new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Institute',
             required: true
+        },
+        isAssigned:{
+            type: Boolean,
+            default: false
         }
     }
 )
