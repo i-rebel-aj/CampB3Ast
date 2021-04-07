@@ -14,7 +14,7 @@ mongoose.connect(process.env.DB_Production, {useNewUrlParser: true, useUnifiedTo
 })
 .catch(err=>{console.log(err)})
 //Using Middlewares
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
@@ -29,6 +29,7 @@ app.use("/api/user", userRoutes)
 app.use('/api/user/auth', authRoutes)
 app.use('/api/institute', instituteRoutes)
 app.use('/api/superuser', superUserRoutes)
-app.listen(process.env.PORT, ()=>{
+const server= app.listen(process.env.PORT, ()=>{
     console.log(`Server has started at port ${process.env.PORT}`)
 })
+module.exports=server

@@ -4,6 +4,8 @@ const Group = require("../models/Groups");
 const {getUserId}=require('../lib/helper')
 const {issueJWT}= require('../lib/utils');
 const Institute = require("../models/Institute");
+
+//Controller For Signup
 exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
@@ -60,7 +62,7 @@ exports.addUser = async (req, res) => {
     res.status(500).json({ message: "Something went wrong", error: err.message });
   }
 };
-
+//Controller For Login
 exports.userLogin = async (req, res) => {
   try {
     const username = req.body.username;
@@ -83,13 +85,14 @@ exports.userLogin = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 };
-
+//Controller to logout
 exports.logout = async(req,res)=>{
   res.clearCookie("token");
   res.json({
     msg: "User logout Successfully",
   });
 };
+//Controller to get info about logged in user
 exports.getLoggedInUser= async (req, res)=>{
   console.log('Get Logged in User Route')
     try{
@@ -107,30 +110,4 @@ exports.getLoggedInUser= async (req, res)=>{
       //console.log(err)
       return res.status(500).json({message: 'Server Error'})
     }
-}
-
-
-//This is the controller to create College Admin, access to SUPER Admin Only
-exports.createInstituteAdmin= async(req, res)=>{
-  try{
-    const {instituteName}=req.body.instituteName
-    const foundInstitute= await Institute.findOne({instituteName: instituteName})
-    if(!foundInstitute){
-      throw new Error('No Institute Found')
-    }
-    const newAdmin={
-      username: req.body.username,
-      password: req.body.password,
-      name: req.body.name,
-      gender: req.body.gender,
-      email: req.body.email
-    }
-    const newInstituteAdmin=new Admin(newAdmin)
-    await newInstituteAdmin.save()
-    return res.status(200).json({message: 'New admin created please assign him to the college'})
-  }catch(err){
-    console.log(err)
-    return res.status(500).json({message: 'Server Error'})
-  }
-  
 }

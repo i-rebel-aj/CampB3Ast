@@ -26,11 +26,5 @@ router.post('/logout', requireAuth, logout)
     @Access Private
 */
 router.get('/loggedinuser', requireAuth, getLoggedInUser)
-/*
-    @Route  POST  /api/user/auth/addcollegeadmin
-    @Desc   For Users to register
-    @Access Private (Currently Public Fix it Later)
-*/
-router.post('/addcollegeadmin', createInstituteAdmin)
 
 module.exports=router
