@@ -5,6 +5,7 @@ import api from "../../API/api";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
+import { authenticate, isAutheticated } from "../../_helpers";
 
 function buttonFormatter(cell, row) {
   let profile = `/profile/${cell}`;
@@ -55,9 +56,10 @@ const columns = [
 
 const AdminSeeUsers = () => {
   const [listItems, updateList] = useState([]);
+  const { token } = isAutheticated();
   useEffect(() => {
     api
-      .getUsers("IIIT G", "Student")
+      .getUsers("IIIT G", "Student", token)
       .then((response) => {
         console.log({ ...response });
         let tempList = [...response.data.user];
@@ -109,12 +111,7 @@ const AdminSeeUsers = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="3" href="/admin/update">
-                Update Users
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="4" href="/admin/group/add">
+              <Nav.Link eventKey="3" href="/admin/group/add">
                 Add New Group
               </Nav.Link>
             </Nav.Item>

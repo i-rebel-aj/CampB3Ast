@@ -30,7 +30,7 @@ function NavBar() {
                   <Nav.Link href="/forum/create">Create Forum</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href={`/profile/${auth.user.username}`}>
+                  <Nav.Link href={`/profile/${auth.user?.username}`}>
                     Profile
                   </Nav.Link>
                 </Nav.Item>
@@ -49,7 +49,7 @@ function NavBar() {
             {isAutheticated() ? (
               <>
                 {" "}
-                <Nav.Item>{auth.user.name}</Nav.Item>
+                <Nav.Item>{auth.user?.name}</Nav.Item>
                 <Button
                   variant="outline-primary"
                   onClick={() => {

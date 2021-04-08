@@ -22,7 +22,7 @@ const AdminCreateGroup = () => {
           }}
           className="bg-light"
         >
-          <Nav justify variant="pills" activeKey="2" className="d-md-block">
+          <Nav justify variant="pills" activeKey="3" className="d-md-block">
             <Nav.Item>
               <Nav.Link eventKey="1" href="/admin/see">
                 See Users
@@ -34,8 +34,8 @@ const AdminCreateGroup = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="3" href="/admin/update">
-                Update Users
+              <Nav.Link eventKey="3" href="/admin/group/add">
+                Add New Group
               </Nav.Link>
             </Nav.Item>
           </Nav>

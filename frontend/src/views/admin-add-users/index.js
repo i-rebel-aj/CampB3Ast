@@ -1,6 +1,7 @@
 import { Jumbotron, Nav, Image, Row, Col, Container } from "react-bootstrap";
 import image2 from "../../assets/images/Campus-B34st.png";
 import "../../css/MyDashboard.css";
+import Form from "../registerForm";
 
 const AdminAddUsers = () => {
   return (
@@ -25,27 +26,16 @@ const AdminAddUsers = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="3" href="/admin/update">
-                Update Users
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="4" href="/admin/group/add">
+              <Nav.Link eventKey="3" href="/admin/group/add">
                 Add New Group
               </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
         <Col>
-          {/*       <Container>
-            <Image src={image2} style={{ marginRight: 50 }} />
-          </Container> */}
+          <Form />
         </Col>
       </Row>
-
-      
-
-      
     </>
   );
 };

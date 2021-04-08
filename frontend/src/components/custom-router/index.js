@@ -6,7 +6,6 @@ import {
   Profile,
   AdminSeeUsers,
   AdminAddUsers,
-  AdminUpdateUsers,
   Post,
   Forum,
   SeeForum,
@@ -61,10 +60,6 @@ function CustomRouter() {
         <NavBar user={user} />
         <AdminAddUsers />
       </Route>
-      <Route exact path="/admin/update">
-        <NavBar user={user} />
-        <AdminUpdateUsers />
-      </Route>
       <Route exact path="/admin/group/add">
         <NavBar user={user} />
         <AdminCreateGroup />
@@ -74,6 +69,10 @@ function CustomRouter() {
         <SuperAdminAddCollege />
       </Route>
       <Route exact path="/super-admin/institute/see">
+        <NavBar user={user} />
+        <SuperAdminSeeCollege />
+      </Route>
+      <Route exact path="/super-admin">
         <NavBar user={user} />
         <SuperAdminSeeCollege />
       </Route>

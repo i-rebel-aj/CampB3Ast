@@ -16,11 +16,11 @@ import {
 import { BehaviorSubject } from "rxjs";
 
 export default {
-  getUsers: (collegeId, Type) =>
+  getUsers: (collegeId, Type, token) =>
     axios({
       method: "GET",
       url: `${TEST_URL}${API}${USERS_OF_A_COLLEGE}`,
-      headers: {},
+      headers: { "x-auth-token": token },
       params: {
         collegeId: collegeId,
         Type: Type,
@@ -69,7 +69,7 @@ export default {
         username: data.username,
         password: data.password,
         name: data.name,
-        collegeId: data.collegeId,
+        instituteName: data.collegeId,
         department: data.department,
         gender: data.gender,
         enrolledDate: data.enrolledDate,

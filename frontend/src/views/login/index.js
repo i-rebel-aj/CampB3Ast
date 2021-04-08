@@ -48,7 +48,7 @@ const Login = (props) => {
   /* postLoginDataHandler = () => {
     axios.post('');
   } */
-
+  const { user } = isAutheticated();
   return (
     <div
       style={{
@@ -57,15 +57,29 @@ const Login = (props) => {
         alignItems: "center",
       }}
     >
-      {localStorage.getItem("jwt") ? (
+      {isAutheticated() ? (
         <>
-          <Alert variant={"success"}>Succesfully Logged In!</Alert>
+          <Alert
+            variant={"success"}
+          >{`${user?.Type} ${user?.name} logged into Campus B34st!`}</Alert>
           <Button
             onClick={() => {
-              history.push("/");
+              let path =
+                user?.Type == "Super Admin"
+                  ? "/super-admin"
+                  : user?.Type == "Admin"
+                  ? "/admin"
+                  : "/";
+              history.push(path);
             }}
           >
-            Goto Home
+            {`Goto ${
+              user?.Type == "Super Admin"
+                ? "Super Admin Panel"
+                : user?.Type == "Admin"
+                ? "Admin Panel"
+                : "Home"
+            }`}
           </Button>
         </>
       ) : (
