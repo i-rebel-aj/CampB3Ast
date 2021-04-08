@@ -19,7 +19,7 @@ export default {
   getUsers: (collegeId, Type) =>
     axios({
       method: "GET",
-      url: `${BEST_URL}${API}${USERS_OF_A_COLLEGE}`,
+      url: `${TEST_URL}${API}${USERS_OF_A_COLLEGE}`,
       headers: {},
       params: {
         collegeId: collegeId,
@@ -29,14 +29,14 @@ export default {
   getUser: (username) =>
     axios({
       method: "GET",
-      url: `${BEST_URL}${API}${GET_USER}`,
+      url: `${TEST_URL}${API}${GET_USER}`,
       headers: {},
       params: {
         username: username,
       },
     }),
   login: (username, password) =>
-    fetch(`${BEST_URL}${API}${AUTH_LOGIN}`, {
+    fetch(`${TEST_URL}${API}${AUTH_LOGIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -58,7 +58,7 @@ export default {
     console.log("Logged out");
   },
   signUp: (data) =>
-    fetch(`${BEST_URL}${API}${AUTH_SIGNUP}`, {
+    fetch(`${TEST_URL}${API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -89,7 +89,7 @@ export default {
         return error;
       }),
   addCollege: (instituteName, instituteDescription, token) =>
-    fetch(`${BEST_URL}${API}${ADD_COLLEGE}`, {
+    fetch(`${TEST_URL}${API}${ADD_COLLEGE}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -108,7 +108,7 @@ export default {
         return error;
       }),
   createAdmin: (data, token) =>
-    fetch(`${BEST_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -132,7 +132,7 @@ export default {
         return error;
       }),
   getInstitutes: (token) =>
-    fetch(`${BEST_URL}${API}${GET_INSTITUTE}`, {
+    fetch(`${TEST_URL}${API}${GET_INSTITUTE}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -147,7 +147,7 @@ export default {
         return error;
       }),
   getAdmins: (token) =>
-    fetch(`${BEST_URL}${API}${GET_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${GET_ADMIN}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -162,7 +162,7 @@ export default {
         return error;
       }),
   assignAdmin: (instituteName, email, token) =>
-    fetch(`${BEST_URL}${API}${ASSIGN_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${ASSIGN_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",

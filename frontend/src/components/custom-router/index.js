@@ -15,6 +15,8 @@ import {
   SuperAdminCreateAdmin,
   SuperAdminAddCollege,
   SuperAdminAssignAdmin,
+  SuperAdminSeeAdmin,
+  SuperAdminSeeCollege,
 } from "../../views";
 import { NavBar } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
@@ -70,6 +72,14 @@ function CustomRouter() {
       <Route exact path="/super-admin/institute/add">
         <NavBar user={user} />
         <SuperAdminAddCollege />
+      </Route>
+      <Route exact path="/super-admin/institute/see">
+        <NavBar user={user} />
+        <SuperAdminSeeCollege />
+      </Route>
+      <Route exact path="/super-admin/admin/see">
+        <NavBar user={user} />
+        <SuperAdminSeeAdmin />
       </Route>
       <Route exact path="/super-admin/admin/create">
         <NavBar user={user} />

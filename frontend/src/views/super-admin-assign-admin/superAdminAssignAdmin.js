@@ -38,6 +38,7 @@ const SuperAdminAssignAdminControl = ({ handleSubmit, values }) => {
           institutes: tempInstitutes,
           admins: response.admins,
         });
+        console.log("INS ", currentData.institutes, currentData.admins);
       })
       .catch((error) => {
         console.log(error);

@@ -69,6 +69,16 @@ const SuperAdminAssignAdmin = () => {
               Assign Admin
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="4" href="/super-admin/admin/see">
+              See Admins
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="5" href="/super-admin/institute/see">
+              See Institutes
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
       </Col>
       <Col
