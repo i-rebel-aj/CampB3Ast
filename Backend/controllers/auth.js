@@ -2,51 +2,45 @@ const jwt = require("jsonwebtoken");
 const { User, Student, Faculty, Admin } = require("../models/User");
 const Group = require("../models/Groups");
 const {getUserId}=require('../lib/helper')
-const {issueJWT}= require('../lib/utils')
+const {issueJWT}= require('../lib/utils');
+const Institute = require("../models/Institute");
+
+//Controller For Signup
 exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
   try {
+    const foundInstitute= await Institute.findOne({instituteName: req.body.instituteName})
+    //If there was no institute found
+    if(!foundInstitute){
+      throw new Error('Institute is not registered with the CampB34st')
+    }
+    newUser.instituteID=foundInstitute._id
     if (type === "Student") {
       const existingUser = await User.find({
-        rollNumber: newUser.rollNumber,
-        collegeId: newUser.collegeId,
-        batch: newUser.batch,
-        department: newUser.department,
+        rollNumber: req.body.rollNumber,
+        collegeId: req.body.collegeId,
+        batch: req.body.batch,
+        department: req.body.department,
+        instituteID: foundInstitute._id
       });
       if (existingUser.length > 0) {
-        return res
-          .status(409)
-          .json({
-            message:
-              "Student with same rollNo exists in this department in this batch",
-          });
+        return res.status(409).json({message:"Student with same rollNo exists in this department in this batch"});
       }
       const newStudent = new Student(newUser);
       await newStudent.save();
-      //const token = createToken(newStudent._id);
-      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
       return res.status(200).json({ message: "Student added successfully"});
     } else if (type === "Faculty") {
       const existingUser = await User.find({
         registrationNumber: newUser.registrationNumber,
-        collegeId: newUser.collegeId,
+        instituteID: foundInstitute._id
       });
       if (existingUser.length > 0) {
-        return res
-          .status(409)
-          .json({
-            message:
-              "Faculty with same registeration number already exists in this college",
-          });
+        return res.status(409).json({message:"Faculty with same registeration number already exists in this college"});
       }
       const newFaculty = new Faculty(newUser);
       await newFaculty.save();
-      //const token = createToken(newFaculty._id);
-      //res.cookie("jwt", token, { httpOnly: true, maxAge: maxjwtAge * 1000 });
-      return res
-        .status(200)
-        .json({ message: "Faculty added successfully" });
+      return res.status(200).json({ message: "Faculty added successfully" });
     } else {
       return res.status(400).json({ message: "Not the right type" });
     }
@@ -65,10 +59,10 @@ exports.addUser = async (req, res) => {
           .json({ message: "User with this email already exists" });
       }
     }
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong", error: err.message });
   }
 };
-
+//Controller For Login
 exports.userLogin = async (req, res) => {
   try {
     const username = req.body.username;
@@ -91,15 +85,16 @@ exports.userLogin = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 };
-
+//Controller to logout
 exports.logout = async(req,res)=>{
   res.clearCookie("token");
   res.json({
     msg: "User logout Successfully",
   });
 };
+//Controller to get info about logged in user
 exports.getLoggedInUser= async (req, res)=>{
-  console.log('Get Loggen in User Route')
+  console.log('Get Logged in User Route')
     try{
         req._id=getUserId(req, res)
         console.log(req._id)
@@ -115,18 +110,4 @@ exports.getLoggedInUser= async (req, res)=>{
       //console.log(err)
       return res.status(500).json({message: 'Server Error'})
     }
-}
-
-
-//This is the controller to create College Admin, access to SUPER Admin Only
-exports.createCollegeAdmin= async(req, res)=>{
-  //Do validation later
-  try{
-    const newCollegeAdmin=new Admin(req.body)
-    await newCollegeAdmin.save()
-    return res.status(200).json({message: 'New admin created please assign him to the college'})
-  }catch(err){
-    res.status(500).json({message: 'Server Error'})
-  }
-  
 }

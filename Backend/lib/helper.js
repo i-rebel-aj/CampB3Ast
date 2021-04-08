@@ -5,7 +5,6 @@ exports.getUserId = (req, res) => {
     try {
         const token = req.header("x-auth-token");
         if (!token) {
-        //   console.log("No token authorization denied");
            throw new Error('No token authorization denied')
         }
         const decoded = jwt.verify(token, config.SECRET_KEY);

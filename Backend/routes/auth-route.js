@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router();
-const {addUser, userLogin, logout, getLoggedInUser, createCollegeAdmin}=require('../controllers/auth')
+const {addUser, userLogin, logout, getLoggedInUser, createInstituteAdmin}=require('../controllers/auth')
 const {requireAuth}= require('../middleware/auth-middleware')
 /*
     @Route  POST  /api/user/auth/signup
@@ -26,11 +26,5 @@ router.post('/logout', requireAuth, logout)
     @Access Private
 */
 router.get('/loggedinuser', requireAuth, getLoggedInUser)
-/*
-    @Route  POST  /api/user/auth/addcollegeadmin
-    @Desc   For Users to register
-    @Access Private (Currently Public Fix it Later)
-*/
-router.post('/addcollegeadmin', createCollegeAdmin)
 
 module.exports=router

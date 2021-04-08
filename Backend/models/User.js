@@ -1,7 +1,8 @@
 const mongoose=require("mongoose")
-const studentSchema=require("./Schemas/Student")
-const facultySchema=require("./Schemas/Faculty")
-const adminSchema=require('./Schemas/Admin')
+const studentSchema=require("./Schemas/User/Student")
+const facultySchema=require("./Schemas/User/Faculty")
+const adminSchema=require('./Schemas/User/Admin')
+const superAdminSchema=require('./Schemas/User/SuperAdmin')
 const bcrypt = require("bcrypt");
 const options={discriminatorKey: 'Type'}
 const userSchema=new mongoose.Schema(
@@ -24,10 +25,6 @@ const userSchema=new mongoose.Schema(
             type: String,
             required: true
         },
-        collegeId:{
-            type: String,
-            required: true
-        },
         email:{
             type: String,
             trim: true,
@@ -36,10 +33,11 @@ const userSchema=new mongoose.Schema(
             required: 'Email address is required',
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
         },
-        createdPrivateForums:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Forum'
-        }],
+        // Rediscuss about 2-way dependency
+        // createdPrivateForums:[{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Forum'
+        // }],
         joinedPrivateForums:[{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Forum'
@@ -79,5 +77,6 @@ const User=mongoose.model('User', userSchema)
 const Student=User.discriminator('Student', studentSchema)
 const Faculty=User.discriminator('Faculty', facultySchema)
 const Admin=User.discriminator('Admin', adminSchema)
+const SuperAdmin=User.discriminator('Super Admin', superAdminSchema)
 
-module.exports={User, Student, Faculty, Admin}
+module.exports={User, Student, Faculty, Admin, SuperAdmin}
