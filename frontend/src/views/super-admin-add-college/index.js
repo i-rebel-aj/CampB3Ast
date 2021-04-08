@@ -5,11 +5,12 @@ import image2 from "../../assets/images/Campus-B34st.png";
 import "../../css/MyDashboard.css";
 
 import SuperAdminAddCollegeControl from "./superAdminAddCollege";
+import { authenticate, isAutheticated } from "../../_helpers";
 
 const SuperAdminAddCollege = () => {
   const [values, updateValue] = useState({
-    collegeName: "",
-    collegeDescription: "",
+    instituteName: "",
+    instituteDescription: "",
     isSubmitted: false,
     addingCollege: true,
     error: false,
@@ -19,17 +20,19 @@ const SuperAdminAddCollege = () => {
   useEffect(() => {
     if (values.isSubmitted) {
       updateValue({ ...values, addingCollege: true });
+      const { token } = isAutheticated();
       api
-        .addCollege(values.collegeName, values.collegeDescription)
+        .addCollege(values.instituteName, values.instituteDescription, token)
         .then((response) => {
-          console.log("Added Clg ", response);
           updateValue({
             ...values,
             addingCollege: false,
             isSubmitted: false,
             message: response.message,
             isAdded:
-              response.message === "College added successfully" ? true : false,
+              response.message === "Institute added successfully"
+                ? true
+                : false,
           });
         })
         .catch((error) => {
@@ -55,13 +58,18 @@ const SuperAdminAddCollege = () => {
         >
           <Nav justify variant="pills" activeKey="1" className="d-md-block">
             <Nav.Item>
-              <Nav.Link eventKey="1" href="/super-admin/college/add">
-                Add College
+              <Nav.Link eventKey="1" href="/super-admin/institute/add">
+                Add Institute
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="2" href="/super-admin/admin/create">
                 Create Admin
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="3" href="/super-admin/admin/assign">
+                Assign Admin
               </Nav.Link>
             </Nav.Item>
           </Nav>

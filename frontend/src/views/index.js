@@ -7,6 +7,7 @@ import AdminAddUsers from "./admin-add-users";
 import AdminUpdateUsers from "./admin-update-users";
 import AdminCreateGroup from "./admin-create-group";
 import SuperAdminCreateAdmin from "./super-admin-create-admin";
+import SuperAdminAssignAdmin from "./super-admin-assign-admin";
 import SuperAdminAddCollege from "./super-admin-add-college";
 import Post from "./Post";
 import Forum from "./forum-create";
@@ -28,4 +29,5 @@ export {
   AdminCreateGroup,
   SuperAdminAddCollege,
   SuperAdminCreateAdmin,
+  SuperAdminAssignAdmin,
 };

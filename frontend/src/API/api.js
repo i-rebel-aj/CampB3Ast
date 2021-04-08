@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  BASE_URL,
   API,
   USERS_OF_A_COLLEGE,
   TEST_URL,
@@ -8,7 +7,11 @@ import {
   AUTH_SIGNUP,
   GET_USER,
   ADD_COLLEGE,
-  AUTH_ADD_COLLEGE_ADMIN,
+  ADD_INSTITUTE_ADMIN,
+  GET_INSTITUTE,
+  GET_ADMIN,
+  ASSIGN_ADMIN,
+  BASE_URL,
 } from "../constants";
 import { BehaviorSubject } from "rxjs";
 
@@ -16,7 +19,7 @@ export default {
   getUsers: (collegeId, Type) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${API}${USERS_OF_A_COLLEGE}`,
+      url: `${BEST_URL}${API}${USERS_OF_A_COLLEGE}`,
       headers: {},
       params: {
         collegeId: collegeId,
@@ -26,14 +29,14 @@ export default {
   getUser: (username) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${API}${GET_USER}`,
+      url: `${BEST_URL}${API}${GET_USER}`,
       headers: {},
       params: {
         username: username,
       },
     }),
   login: (username, password) =>
-    fetch(`${BASE_URL}${API}${AUTH_LOGIN}`, {
+    fetch(`${BEST_URL}${API}${AUTH_LOGIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -55,7 +58,7 @@ export default {
     console.log("Logged out");
   },
   signUp: (data) =>
-    fetch(`${BASE_URL}${API}${AUTH_SIGNUP}`, {
+    fetch(`${BEST_URL}${API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -85,16 +88,17 @@ export default {
       .catch((error) => {
         return error;
       }),
-  addCollege: (collegeName, collegeDescription) =>
-    fetch(`${BASE_URL}${API}${ADD_COLLEGE}`, {
+  addCollege: (instituteName, instituteDescription, token) =>
+    fetch(`${BEST_URL}${API}${ADD_COLLEGE}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify({
-        collegeName: collegeName,
-        collegeDescription: collegeDescription,
+        instituteName: instituteName,
+        instituteDescription: instituteDescription,
       }),
     })
       .then((response) => {
@@ -103,20 +107,71 @@ export default {
       .catch((error) => {
         return error;
       }),
-  createAdmin: (data) =>
-    fetch(`${BASE_URL}${API}${AUTH_ADD_COLLEGE_ADMIN}`, {
+  createAdmin: (data, token) =>
+    fetch(`${BEST_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "x-auth-token": token,
       },
       body: JSON.stringify({
         username: data.username,
         password: data.password,
+        confirmpass: data.confirmpass,
         name: data.name,
-        collegeId: data.collegeId,
+        instituteName: data.instituteName,
         gender: data.gender,
         email: data.email,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getInstitutes: (token) =>
+    fetch(`${BEST_URL}${API}${GET_INSTITUTE}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getAdmins: (token) =>
+    fetch(`${BEST_URL}${API}${GET_ADMIN}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  assignAdmin: (instituteName, email, token) =>
+    fetch(`${BEST_URL}${API}${ASSIGN_ADMIN}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        instituteName: instituteName,
+        email: email,
       }),
     })
       .then((response) => {

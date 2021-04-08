@@ -5,9 +5,10 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
     username: "",
     password: "",
+    confirmpass: "",
     name: "",
     email: "",
-    collegeId: "",
+    instituteName: "",
     gender: "",
   });
 
@@ -46,6 +47,22 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
               updateCurrentData({
                 ...currentData,
                 password: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik03">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm Password"
+            value={currentData.confirmpass}
+            onChange={(e) =>
+              updateCurrentData({
+                ...currentData,
+                confirmpass: e.target.value,
               })
             }
           />
@@ -91,17 +108,17 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Row>
           <Form.Group as={Col} md="12" controlId="validationFormik03">
-            <Form.Label>College ID</Form.Label>
+            <Form.Label>Institute Name</Form.Label>
             <InputGroup>
               <InputGroup.Prepend></InputGroup.Prepend>
               <Form.Control
                 type="text"
                 placeholder="College ID"
-                value={currentData.collegeId}
+                value={currentData.instituteName}
                 onChange={(e) =>
                   updateCurrentData({
                     ...currentData,
-                    collegeId: e.target.value,
+                    instituteName: e.target.value,
                   })
                 }
               />
@@ -136,9 +153,10 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
           handleSubmit({
             username: currentData.username,
             password: currentData.password,
+            confirmpass: currentData.confirmpass,
             name: currentData.name,
             email: currentData.email,
-            collegeId: currentData.collegeId,
+            instituteName: currentData.instituteName,
             gender: currentData.gender,
             isSubmitted: true,
           });

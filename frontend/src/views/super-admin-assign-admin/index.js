@@ -1,41 +1,34 @@
 import React, { useEffect, useState } from "react";
-import SuperAdminCreateAdminControl from "./superAdminCreateAdmin";
+import SuperAdminAssignAdminControl from "./superAdminAssignAdmin";
 import { Alert, Col, Row, Nav } from "react-bootstrap";
 import api from "../../API/api";
 import { authenticate, isAutheticated } from "../../_helpers";
 
-const SuperAdminCreateAdmin = () => {
+const SuperAdminAssignAdmin = () => {
   const [values, updateValue] = useState({
-    username: "",
-    password: "",
-    confirmpass: "",
-    name: "",
     email: "",
     instituteName: "",
-    gender: "",
     isSubmitted: false,
-    isCreated: false,
-    isCreating: false,
+    isAssigned: false,
+    isAssigning: false,
     message: "",
     error: false,
   });
 
   useEffect(() => {
     if (values.isSubmitted) {
-      updateValue({ ...values, isCreating: true });
+      updateValue({ ...values, isAssigning: true });
       const { token } = isAutheticated();
       api
-        .createAdmin(values, token)
+        .assignAdmin(values.instituteName, values.email, token)
         .then((response) => {
           updateValue({
             ...values,
             isCreating: false,
             isSubmitted: false,
             message: response.message,
-            isCreated:
-              response.message === "Institute Admin added Success"
-                ? true
-                : false,
+            isAssigned:
+              response.message === "Assigned Admin success" ? true : false,
           });
         })
         .catch((error) => {
@@ -44,7 +37,7 @@ const SuperAdminCreateAdmin = () => {
             ...values,
             error: true,
             isSubmitted: false,
-            isCreating: false,
+            isAssigning: false,
             message: error,
           });
         });
@@ -60,7 +53,7 @@ const SuperAdminCreateAdmin = () => {
         }}
         className="bg-light"
       >
-        <Nav justify variant="pills" activeKey="2" className="d-md-block">
+        <Nav justify variant="pills" activeKey="3" className="d-md-block">
           <Nav.Item>
             <Nav.Link eventKey="1" href="/super-admin/institute/add">
               Add Institute
@@ -85,7 +78,7 @@ const SuperAdminCreateAdmin = () => {
           marginTop: 100,
         }}
       >
-        <SuperAdminCreateAdminControl
+        <SuperAdminAssignAdminControl
           values={values}
           handleSubmit={updateValue}
         />
@@ -94,4 +87,4 @@ const SuperAdminCreateAdmin = () => {
   );
 };
 
-export default SuperAdminCreateAdmin;
+export default SuperAdminAssignAdmin;

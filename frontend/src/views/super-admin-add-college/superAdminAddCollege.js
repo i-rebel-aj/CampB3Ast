@@ -3,32 +3,32 @@ import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
 
 const SuperAdminAddCollegeControl = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
-    collegeName: "",
-    collegeDescription: "",
+    instituteName: "",
+    instituteDescription: "",
   });
 
   //console.log(values.forumType);
   return (
     <div>
       <div>
-        <h1>Add a College</h1>
+        <h1>Add a Institute</h1>
       </div>
       <div>
         <Form>
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormikUsername">
               <Form.Label>
-                <strong>College Name</strong>
+                <strong>Institute Name</strong>
               </Form.Label>
               <InputGroup>
                 <Form.Control
                   type="text"
                   placeholder="College Name"
-                  value={currentData.collegeName}
+                  value={currentData.instituteName}
                   onChange={(e) =>
                     updateCurrentData({
                       ...currentData,
-                      collegeName: e.target.value,
+                      instituteName: e.target.value,
                     })
                   }
                 />
@@ -39,18 +39,18 @@ const SuperAdminAddCollegeControl = ({ handleSubmit, values }) => {
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>
-                <strong>College Description</strong>
+                <strong>Institute Description</strong>
               </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 type="text"
                 placeholder="College Description"
-                value={currentData.collegeDescription}
+                value={currentData.instituteDescription}
                 onChange={(e) =>
                   updateCurrentData({
                     ...currentData,
-                    collegeDescription: e.target.value,
+                    instituteDescription: e.target.value,
                   })
                 }
               />
@@ -60,8 +60,8 @@ const SuperAdminAddCollegeControl = ({ handleSubmit, values }) => {
           <Button
             onClick={() => {
               handleSubmit({
-                collegeName: currentData.collegeName,
-                collegeDescription: currentData.collegeDescription,
+                instituteName: currentData.instituteName,
+                instituteDescription: currentData.instituteDescription,
                 isSubmitted: true,
               });
               console.log(currentData);
