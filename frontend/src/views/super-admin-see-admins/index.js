@@ -30,7 +30,6 @@ const columns = [
   {
     dataField: "gender",
     text: "Gender",
-    filter: textFilter(),
   },
 
   {
