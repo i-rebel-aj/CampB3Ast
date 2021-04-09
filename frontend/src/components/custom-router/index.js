@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import {
   Home,
   Form,
@@ -27,16 +27,16 @@ function CustomRouter() {
   const dispatch = useDispatch();
   dispatch(authSuccess(user));
   return (
-    <>
-      <Route exact path="/" component>
+    <BrowserRouter>
+      <Route exact path="/">
         <NavBar user={user} />
         <Home />
       </Route>
-      <Route exact path="/home" component>
+      <Route exact path="/home">
         <NavBar user={user} />
         <Home />
       </Route>
-      <Route exact path="/register" component>
+      <Route exact path="/register">
         <NavBar user={user} />
         <Form />
       </Route>
@@ -104,7 +104,7 @@ function CustomRouter() {
         <NavBar user={user} />
         <SeePost />
       </Route>
-    </>
+    </BrowserRouter>
   );
 }
 
