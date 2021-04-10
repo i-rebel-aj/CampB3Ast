@@ -82,7 +82,7 @@ exports.userLogin = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "User not found" , err: err.message});
   }
 };
 //Controller to logout
