@@ -1,4 +1,12 @@
-import { Jumbotron, Button, Image, Row, Col, Carousel } from "react-bootstrap";
+import {
+  Jumbotron,
+  Button,
+  Image,
+  Row,
+  Col,
+  Carousel,
+  Alert,
+} from "react-bootstrap";
 import { THEME } from "../../constants";
 import CustomCard from "../../components/home";
 import image from "../../assets/images/home-page.jpg";
@@ -86,30 +94,57 @@ const Home = () => {
           </Carousel.Item>
         </Carousel>
       </Jumbotron>
-      <Row
-        style={{
-          marginLeft: 100,
-          height: window.innerHeight * 0.4,
-        }}
-      >
-        <Col>
-          <CustomCard
-            title={"Login"}
-            text={"Login to access all the features"}
-            goto={"/login"}
-          />
-        </Col>
-        <Col>
-          <CustomCard
-            title={"Profile"}
-            text={"Check your profile"}
-            goto={`/profile/${user.username}`}
-          />
-        </Col>
-        <Col>
-          <CustomCard title={"Chat"} text={"Coming Soon"} goto={"/"} />
-        </Col>
-      </Row>
+      {user ? (
+        <Row
+          style={{
+            marginLeft: 100,
+            height: window.innerHeight * 0.4,
+          }}
+        >
+          <Col>
+            <CustomCard
+              title={"Explore"}
+              text={
+                user?.Type == "Super Admin"
+                  ? "Visit Super Admin Panel"
+                  : user?.Type == "Admin"
+                  ? "Visit Admin Panel"
+                  : "Welcome to Home"
+              }
+              goto={
+                user?.Type == "Super Admin"
+                  ? "/super-admin"
+                  : user?.Type == "Admin"
+                  ? "/admin"
+                  : "/"
+              }
+            />
+          </Col>
+          <Col>
+            <CustomCard
+              title={"Profile"}
+              text={"Check your profile"}
+              goto={`/profile/${user.username}`}
+            />
+          </Col>
+          <Col>
+            <CustomCard title={"Chat"} text={"Coming Soon"} goto={"/"} />
+          </Col>
+        </Row>
+      ) : (
+        <div
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          <Alert variant="warning">
+            <Alert.Link href="/login">Login</Alert.Link> to enjoy all the
+            features.
+          </Alert>
+        </div>
+      )}
     </>
   );
 };
