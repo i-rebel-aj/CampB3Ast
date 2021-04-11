@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Row, Col, Table, Button } from "react-bootstrap";
+import { Nav, Row, Col, Table, Button, Spinner } from "react-bootstrap";
 import "../../css/MyDashboard.css";
 import api from "../../API/api";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -28,13 +28,19 @@ const columns = [
 ];
 
 const SuperAdminSeeInstitutes = () => {
-  const [listItems, updateList] = useState([]);
+  const [currentState, updateList] = useState({
+    isLoading: true,
+    listItems: [],
+  });
   const { token } = isAutheticated();
   useEffect(() => {
     api
       .getInstitutes(token)
       .then((response) => {
-        updateList(response.institute);
+        updateList({
+          isLoading: false,
+          listItems: response.institute,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -47,10 +53,11 @@ const SuperAdminSeeInstitutes = () => {
           xs={1}
           style={{
             height: window.innerHeight,
+            paddingTop: 5,
           }}
           className="bg-light"
         >
-          <Nav justify variant="pills" activeKey="5" className="d-md-block">
+          <Nav justify fill variant="tabs" activeKey="5" className="d-md-block">
             <Nav.Item>
               <Nav.Link eventKey="1" href="/super-admin/institute/add">
                 Add Institute
@@ -78,14 +85,30 @@ const SuperAdminSeeInstitutes = () => {
             </Nav.Item>
           </Nav>
         </Col>
-        <Col>
-          <BootstrapTable
-            keyField="instituteName"
-            data={listItems}
-            columns={columns}
-            pagination={paginationFactory()}
-            filter={filterFactory()}
-          />
+        <Col
+          style={{
+            padding: 20,
+          }}
+        >
+          {currentState.isLoading ? (
+            <Row
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
+              <Spinner animation="border" variant="warning" style={{}} />
+            </Row>
+          ) : (
+            <BootstrapTable
+              keyField="instituteName"
+              data={currentState.listItems}
+              columns={columns}
+              pagination={paginationFactory()}
+              filter={filterFactory()}
+            />
+          )}
         </Col>
       </Row>
     </>

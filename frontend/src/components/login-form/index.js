@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
 
-function LoginForm({ handleSubmit }) {
+function LoginForm({ handleSubmit, values }) {
   const [currentData, updateCurrentData] = useState({
     username: "",
     password: "",
   });
   return (
-    <Form>
+    <Form
+    /*       style={{
+        backgroundColor: "red",
+        height: window.innerHeight * 0.5,
+        padding: 50,
+      }} */
+    >
       <Form.Row>
         <Form.Group as={Col} md="12" controlId="validationFormikUsername">
           <Form.Label>Username</Form.Label>
@@ -46,16 +52,20 @@ function LoginForm({ handleSubmit }) {
         </Form.Group>
       </Form.Row>
       <Button
+        variant="warning"
         onClick={() => {
           handleSubmit({
             username: currentData.username,
             password: currentData.password,
-            isSubmitted: true
+            isSubmitted: true,
           });
         }}
       >
         Submit form
       </Button>
+      {values.message ? (
+        <Alert variant={"danger"}>{values.message}</Alert>
+      ) : null}
     </Form>
   );
 }

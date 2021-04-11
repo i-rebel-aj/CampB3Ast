@@ -12,3 +12,7 @@ export const GET_INSTITUTE = "/institute";
 export const GET_ADMIN = "/institute/admin";
 export const ASSIGN_ADMIN = "/institute/assignadmin";
 export const GET_USER = "/user";
+
+export const THEME = {
+  turquoiseBlue: "#00C5CA",
+};

@@ -1,11 +1,13 @@
 import { Jumbotron, Button, Image, Row, Col, Carousel } from "react-bootstrap";
+import { THEME } from "../../constants";
 import CustomCard from "../../components/home";
 import image from "../../assets/images/home-page.jpg";
 import imageA from "../../assets/images/1-connectivity.png";
 import imageB from "../../assets/images/2-bulb-idea.jpg";
 import imageC from "../../assets/images/3-innovation.jpg";
 import image2 from "../../assets/images/Campus-B34st.png";
-
+import { isAutheticated } from "../../_helpers";
+const { user } = isAutheticated();
 const Home = () => {
   console.log(image);
   return (
@@ -17,7 +19,7 @@ const Home = () => {
           justifyContent: "space-between",
           width: "100%",
           height: window.innerHeight * 0.6,
-          backgroundColor: "#00C5CA",
+          backgroundColor: THEME.turquoiseBlue,
         }}
       >
         <Carousel>
@@ -101,7 +103,7 @@ const Home = () => {
           <CustomCard
             title={"Profile"}
             text={"Check your profile"}
-            goto={"/profile"}
+            goto={`/profile/${user.username}`}
           />
         </Col>
         <Col>

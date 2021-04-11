@@ -56,7 +56,13 @@ const SuperAdminAddCollege = () => {
           }}
           className="bg-light"
         >
-          <Nav justify variant="pills" activeKey="1" className="d-md-block">
+          <Nav
+            justify
+            vfill
+            variant="tabs"
+            activeKey="1"
+            className="d-md-block"
+          >
             <Nav.Item>
               <Nav.Link eventKey="1" href="/super-admin/institute/add">
                 Add Institute

@@ -133,7 +133,7 @@ const AdminSeeUsers = () => {
             }}
           >
             {currentState.isLoading ? (
-              <Spinner animation="grow" variant="primary" style={{}} />
+              <Spinner animation="border" variant="warning" style={{}} />
             ) : (
               <BootstrapTable
                 keyField="username"
@@ -141,7 +141,6 @@ const AdminSeeUsers = () => {
                 columns={columns}
                 pagination={paginationFactory()}
                 filter={filterFactory()}
-                style={{ backgroundColor: "red" }}
               />
             )}
           </Row>

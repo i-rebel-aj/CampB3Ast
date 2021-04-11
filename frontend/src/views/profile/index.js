@@ -55,17 +55,28 @@ const Profile = () => {
     collegeName: "",
     collegeGroups: [],
     department: "",
+    Type: "",
+    batch: "",
+    course: "",
+    rollNumber: "",
+    enrolledDate: "",
   });
 
   useEffect(() => {
     api
       .getUser(username)
       .then((response) => {
+        console.log("USER DATA", response.data);
         updateProfile({
           username: response.data.username,
           name: response.data.name,
           email: response.data.email,
-          collegeName: response.data.collegeId,
+          courseDuration: response.data.courseDuration,
+          Type: response.data.Type,
+          batch: response.data.batch,
+          course: response.data.course,
+          rollNumber: response.data.rollNumber,
+          enrolledDate: response.data.enrolledDate,
           collegeGroup: [
             "cse",
             "gaming",
@@ -85,16 +96,36 @@ const Profile = () => {
   }, []);
   return (
     <div>
-      <Jumbotron fluid>
+      <Jumbotron>
         <Container>
-          <h1>{profileState.name}</h1>
+          <h1>
+            {profileState.Type} {profileState.name}
+          </h1>
           <Row>
             <Col>Username: {profileState.username}</Col>
             <Col>Email: {profileState.email}</Col>
           </Row>
           <Row>
-            <Col>Department: {profileState.department}</Col>
-            <Col>College: {profileState.collegeName}</Col>
+            {profileState.rollNumber ? (
+              <Col>Roll Number: {profileState.rollNumber}</Col>
+            ) : null}
+            {profileState.enrolledDate ? (
+              <Col>Enrolled Date: {profileState.enrolledDate}</Col>
+            ) : null}
+          </Row>
+          <Row>
+            {profileState.department ? (
+              <Col>Department: {profileState.department}</Col>
+            ) : null}
+            {profileState.batch ? <Col>Batch: {profileState.batch}</Col> : null}
+          </Row>
+          <Row>
+            {profileState.course ? (
+              <Col>Course: {profileState.course}</Col>
+            ) : null}
+            {profileState.courseDuration ? (
+              <Col>Course Duration: {profileState.courseDuration}</Col>
+            ) : null}
           </Row>
           <br />
           <Row>{myFunction(profileState.collegeGroup)}</Row>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoginForm } from "../../components";
 import { Alert, Button } from "react-bootstrap";
+import { THEME } from "../../constants";
 import { BehaviorSubject } from "rxjs";
 import api from "../../API/api";
 import { authenticate, isAutheticated } from "../../_helpers";
@@ -15,6 +16,8 @@ const Login = (props) => {
     isSubmitted: false,
     loggingIn: false,
     error: false,
+    isLoggedIn: false,
+    message: "",
   });
 
   const history = useHistory();
@@ -26,14 +29,24 @@ const Login = (props) => {
       api
         .login(values.username, values.password)
         .then((response) => {
-          authenticate(response, () => {
-            updateValue({
-              ...values,
-              loggingIn: false,
-              isSubmitted: false,
-            });
-          });
-          dispatch(authSuccess(response["user"]));
+          console.log("LOGIN RESPONSE ", response);
+          response.token
+            ? authenticate(response, () => {
+                updateValue({
+                  ...values,
+                  loggingIn: false,
+                  isSubmitted: false,
+                  isLoggedIn: true,
+                });
+                dispatch(authSuccess(response["user"]));
+              })
+            : updateValue({
+                ...values,
+                loggingIn: false,
+                isSubmitted: false,
+                isLoggedIn: false,
+                message: response.message,
+              });
         })
         .catch((error) => {
           console.log(error);
@@ -53,38 +66,52 @@ const Login = (props) => {
     <div
       style={{
         display: "flex",
+        height: window.innerHeight * 0.95,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: THEME.turquoiseBlue,
       }}
     >
-      {isAutheticated() ? (
-        <>
-          <Alert
-            variant={"success"}
-          >{`${user?.Type} ${user?.name} logged into Campus B34st!`}</Alert>
-          <Button
-            onClick={() => {
-              let path =
-                user?.Type == "Super Admin"
-                  ? "/super-admin"
+      {" "}
+      <div
+        style={{
+          backgroundColor: "white",
+          height: window.innerHeight * 0.5,
+          width: window.innerWidth * 0.5,
+          padding: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        {isAutheticated() ? (
+          <>
+            <Alert variant={"success"}>
+              {`${user?.Type} ${user?.name} logged into Campus B34st!`}
+              {"\n"}
+              <Alert.Link
+                href={
+                  user?.Type == "Super Admin"
+                    ? "/super-admin"
+                    : user?.Type == "Admin"
+                    ? "/admin"
+                    : "/"
+                }
+              >
+                Goto
+                {user?.Type == "Super Admin"
+                  ? " Super Admin Panel"
                   : user?.Type == "Admin"
-                  ? "/admin"
-                  : "/";
-              history.push(path);
-            }}
-          >
-            {`Goto ${
-              user?.Type == "Super Admin"
-                ? "Super Admin Panel"
-                : user?.Type == "Admin"
-                ? "Admin Panel"
-                : "Home"
-            }`}
-          </Button>
-        </>
-      ) : (
-        <LoginForm values={values} handleSubmit={updateValue} />
-      )}
+                  ? " Admin Panel"
+                  : " Home"}
+              </Alert.Link>
+              .
+            </Alert>
+          </>
+        ) : (
+          <LoginForm values={values} handleSubmit={updateValue} />
+        )}
+      </div>
     </div>
   );
 };

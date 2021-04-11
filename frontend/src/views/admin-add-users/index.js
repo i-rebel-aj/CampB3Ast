@@ -32,8 +32,16 @@ const AdminAddUsers = () => {
             </Nav.Item>
           </Nav>
         </Col>
-        <Col>
-          <Form />
+        <Col
+          style={{ display: "flex", justifyContent: "center", marginTop: 50 }}
+        >
+          {" "}
+          <div>
+            <div>
+              <h1>Create a new user</h1>
+            </div>
+            <Form />
+          </div>
         </Col>
       </Row>
     </>

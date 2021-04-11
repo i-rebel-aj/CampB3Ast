@@ -60,7 +60,7 @@ const SuperAdminCreateAdmin = () => {
         }}
         className="bg-light"
       >
-        <Nav justify variant="pills" activeKey="2" className="d-md-block">
+        <Nav justify fill variant="tabs" activeKey="2" className="d-md-block">
           <Nav.Item>
             <Nav.Link eventKey="1" href="/super-admin/institute/add">
               Add Institute
