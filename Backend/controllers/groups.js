@@ -53,74 +53,76 @@ exports.getAllGroupsOfAnInstitute=async(req, res)=>{
 /*=====================================
     To assign array of users a group
 =======================================*/
-exports.addGroupToUser=async (req, res)=>{
-    const {username, groupName}=req.body
+exports.assignMultpleUsersToGroup=async(req, res)=>{
+    const {userids, groupName}=req.body
     try{
-        const foundUser=await User.findOne({username: username})
-        const foundGroup=await Group.findOne({groupName: groupName})
-        //Sanity Check
+        const foundGroup= await Group.findOne({groupName: groupName})
         if(!foundGroup){
-            throw new Error('User Not Found')
+            throw new Error('No group by the group name Found')
         }
-        if(!foundGroup){
-            throw new Error('Group Not Found')
-        }
-        if(foundUser.Type!=='Student'){
-            throw new Error('Group can be added to students only')
-        }
-        //Replace following segment with mongoose operation
-        for (const goupId of foundUser.groupsEnrolled) {
-            if(groupId===foundGroup._id){
-                throw new Error('Group Already Exists')
+        let unmatchedUsers=[]
+        for (const userid of userids) {
+            let foundUser=await User.findById(userid)
+            //If Found user's institute and group's institute are of same institute
+            console.log(`Found user institute id ${foundUser.instituteID}, found group asssociated institute id is ${foundGroup.associatedInstituteID}`)
+            if(foundUser.instituteID.equals(foundGroup.associatedInstituteID)){
+                if(foundUser.groupsEnrolled.indexOf(foundGroup._id)===-1){
+                    foundGroup.members.push(foundUser._id)
+                    foundUser.groupsEnrolled.push(foundGroup._id)
+                }else{
+                    unmatchedUsers.push(foundUser)
+                }
+            }else{
+                unmatchedUsers.push(foundUser)
             }
+            await foundUser.save()
         }
-        foundUser.groupsEnrolled.push(foundGroup._id)
-        await foundUser.save()
-        return res.status(200).json({message: 'Group added Successfully'})
+        await foundGroup.save()
+        return res.status(200).json({message: 'Success, users added succes',skippedUsers: unmatchedUsers})
     }catch(err){
         console.log(err)
-        return res.status(500).json({message: 'Server Error', err: err.message})
+        return res.status(500).json({message: 'Server Error',err: err.message})
     }
 }
-/*====================================
-    To Remove a student from group
-======================================*/
+/*============================================
+    To Remove an array of students from group
+==============================================*/
 exports.removeGroupFromUser=async (req, res)=>{
-    const groupId=req.body.groupId
-    const userId=req.body.userId
-    User.findOne({_id: userId, collegeGroup: groupId})
-    .then((student)=>{
-        for(const i=0;i<student.collegeGroup.length;i++){
-            if(student.collegeGroup[i]===groupId){
-                student.collegeGroup.splice(i, 1);
-            }
+    const {usernames, groupName}=req.body
+    try{
+        const foundGroup= await Group.findOne({groupName: groupName})
+        for (const username of usernames) {
+            const foundUser=await User.findById(username)
+            foundUser.groupsEnrolled.splice(foundUser.groupsEnrolled.indexOf(foundGroup._id))
+            foundGroup.associatedInstituteID.splice(foundGroup.associatedInstituteID.indexOf(foundUser._id))
         }
-        return res.status(200).json({message: "Success, Group removed successfully"})
-    })
-    .catch(err=>{
-        //For better error handling
-        console.log(err)
-        return res.status(400).json({message: "Something went wrong"})
-    })
+        await foundUser.save()
+        await foundGroup.save()
+        return res.status(200).json({message: 'Success, users added succes',skippedUsers: unmatchedUsers})
+    }catch(err){
+        return res.status(500).json({message: 'Server Error',err: err.message})
+    }
 }
 /*==============================
     To Get users from a group
 ===============================*/
 exports.getUsersByGroup=async (req, res)=>{
-    //Pass College Name and Group Name
-    const groupId=req.body.groupId
-    const collegeID=req.body.collegeId
-    const foundGroup= await Group.findById(groupId)
-    if(!foundGroup){
-        return res.status(401).json({message: "No such group exists"})
-    }
-    User.find({groupId: groupId, collegeId: collegeID})
-    .then((user)=>{
-        return res.status(200).json(user)
-    })
-    .catch((err)=>{
-        //For better error handling
+    const groupName=req.query.groupName
+    try{
+        const foundGroup= await Group.findOne({groupName: groupName})
+        console.log(foundGroup)
+        if(!foundGroup){
+           throw new Error('No group found')
+        }
+        let users=[]
+        for (const member of foundGroup.members) {
+            console.log(member)
+            let foundUser=await User.findById(member._id)
+            users.push(foundUser)
+        }
+        return res.status(200).json({message: 'Success, found users are', users: users})
+    }catch(err){
         console.log(err)
-        return res.status(400).json({message: "Something went wrong"})
-    })
+        return res.status(500).json({message:'Server error', err: err.message})
+    }
 }
