@@ -10,6 +10,7 @@ exports.addUser = async (req, res) => {
   const type = req.body.Type;
   const newUser = req.body;
   try {
+    //Let it be hardcoded too
     const foundInstitute= await Institute.findOne({instituteName: req.body.instituteName})
     //If there was no institute found
     if(!foundInstitute){
@@ -19,7 +20,6 @@ exports.addUser = async (req, res) => {
     if (type === "Student") {
       const existingUser = await User.find({
         rollNumber: req.body.rollNumber,
-        collegeId: req.body.collegeId,
         batch: req.body.batch,
         department: req.body.department,
         instituteID: foundInstitute._id
