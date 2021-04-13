@@ -10,7 +10,7 @@ const SignUp = () => {
     password: "",
     name: "",
     email: "",
-    collegeId: "",
+    instituteName: "",
     department: "",
     gender: "",
     batch: "",

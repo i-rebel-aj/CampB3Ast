@@ -6,6 +6,8 @@ import {
   Profile,
   AdminSeeUsers,
   AdminAddUsers,
+  AdminSeeGroups,
+  AdminAssignGroup,
   Post,
   Forum,
   SeeForum,
@@ -63,6 +65,14 @@ function CustomRouter() {
       <Route exact path="/admin/group/add">
         <NavBar user={user} />
         <AdminCreateGroup />
+      </Route>
+      <Route exact path="/admin/group/see">
+        <NavBar user={user} />
+        <AdminSeeGroups />
+      </Route>
+      <Route exact path="/admin/group/assign">
+        <NavBar user={user} />
+        <AdminAssignGroup />
       </Route>
       <Route exact path="/super-admin/institute/add">
         <NavBar user={user} />

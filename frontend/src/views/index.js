@@ -4,6 +4,8 @@ import Login from "./login";
 import Profile from "./profile";
 import AdminSeeUsers from "./admin-see-users";
 import AdminAddUsers from "./admin-add-users";
+import AdminSeeGroups from "./admin-see-groups";
+import AdminAssignGroup from "./admin-assign-group";
 import AdminCreateGroup from "./admin-create-group";
 import SuperAdminCreateAdmin from "./super-admin-create-admin";
 import SuperAdminSeeAdmin from "./super-admin-see-admins";
@@ -22,6 +24,8 @@ export {
   Profile,
   AdminSeeUsers,
   AdminAddUsers,
+  AdminSeeGroups,
+  AdminAssignGroup,
   Post,
   Forum,
   SeePost,

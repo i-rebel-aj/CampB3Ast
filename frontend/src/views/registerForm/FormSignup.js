@@ -9,7 +9,7 @@ const FormSignup = ({ handleSubmit, values }) => {
     name: "",
     email: "",
     batch: "",
-    collegeId: "",
+    instituteName: "",
     department: "",
     gender: "",
     registrationNumber: "",
@@ -99,17 +99,17 @@ const FormSignup = ({ handleSubmit, values }) => {
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Row>
           <Form.Group as={Col} md="12" controlId="validationFormik03">
-            <Form.Label>College ID</Form.Label>
+            <Form.Label>Institute Name</Form.Label>
             <InputGroup>
               <InputGroup.Prepend></InputGroup.Prepend>
               <Form.Control
                 type="text"
-                placeholder="College ID"
-                value={currentData.collegeId}
+                placeholder="Institute Name"
+                value={currentData.instituteName}
                 onChange={(e) =>
                   updateCurrentData({
                     ...currentData,
-                    collegeId: e.target.value,
+                    instituteName: e.target.value,
                   })
                 }
               />
@@ -318,7 +318,7 @@ const FormSignup = ({ handleSubmit, values }) => {
             password: currentData.password,
             name: currentData.name,
             email: currentData.email,
-            collegeId: currentData.collegeId,
+            instituteName: currentData.instituteName,
             department: currentData.department,
             gender: currentData.gender,
             enrolledDate: currentData.enrolledDate,

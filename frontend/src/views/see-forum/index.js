@@ -22,9 +22,9 @@ const SeeForum = () => {
   const [listItems, updateList] = useState([]);
   useEffect(() => {
     api
-      .getUsers("IIIT G", "Student")
+      .getUsers("Student")
       .then((response) => {
-        let tempList = [...response.data.user];
+        let tempList = [...response.data.users];
         updateList(tempList);
       })
       .catch((error) => {

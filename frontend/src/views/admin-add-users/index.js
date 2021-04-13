@@ -30,6 +30,16 @@ const AdminAddUsers = () => {
                 Add New Group
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="4" href="/admin/group/see">
+                See All Groups
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="5" href="/admin/group/assign">
+                See All Groups
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
         </Col>
         <Col

@@ -62,10 +62,10 @@ const AdminSeeUsers = () => {
   const { token } = isAutheticated();
   useEffect(() => {
     api
-      .getUsers("IIIT G", "Student", token)
+      .getUsers("Student", token)
       .then((response) => {
         console.log({ ...response });
-        let tempList = [...response.data.user];
+        let tempList = [...response.data.users];
         /*         for (const [key, value] of Object.entries(myList)) {
           let profile = `/profile/${value.username}`;
           tempList.push(
@@ -120,6 +120,16 @@ const AdminSeeUsers = () => {
             <Nav.Item>
               <Nav.Link eventKey="3" href="/admin/group/add">
                 Add New Group
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="4" href="/admin/group/see">
+                See All Groups
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="5" href="/admin/group/assign">
+                See All Groups
               </Nav.Link>
             </Nav.Item>
           </Nav>

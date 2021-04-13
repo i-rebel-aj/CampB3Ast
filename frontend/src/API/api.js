@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   API,
-  USERS_OF_A_COLLEGE,
+  USERS_OF_ADMIN_INSTITUTE,
   TEST_URL,
   AUTH_LOGIN,
   AUTH_SIGNUP,
@@ -11,18 +11,19 @@ import {
   GET_INSTITUTE,
   GET_ADMIN,
   ASSIGN_ADMIN,
+  CREATE_GET_GROUP,
+  ASSIGN_GROUP_TO_USERS,
   BASE_URL,
 } from "../constants";
 import { BehaviorSubject } from "rxjs";
 
 export default {
-  getUsers: (collegeId, Type, token) =>
+  getUsers: (Type, token) =>
     axios({
       method: "GET",
-      url: `${TEST_URL}${API}${USERS_OF_A_COLLEGE}`,
+      url: `${TEST_URL}${API}${USERS_OF_ADMIN_INSTITUTE}`,
       headers: { "x-auth-token": token },
       params: {
-        collegeId: collegeId,
         Type: Type,
       },
     }),
@@ -69,7 +70,7 @@ export default {
         username: data.username,
         password: data.password,
         name: data.name,
-        instituteName: data.collegeId,
+        instituteName: data.instituteName,
         department: data.department,
         gender: data.gender,
         enrolledDate: data.enrolledDate,
@@ -172,6 +173,59 @@ export default {
       body: JSON.stringify({
         instituteName: instituteName,
         email: email,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  addGroup: (groupName, groupDescription, token) =>
+    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        groupName: groupName,
+        groupDescription: groupDescription,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getGroups: (token) =>
+    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  assignGroup: (userids, groupName, token) =>
+    fetch(`${TEST_URL}${API}${ASSIGN_GROUP_TO_USERS}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        userids: userids,
+        groupName: groupName,
       }),
     })
       .then((response) => {
