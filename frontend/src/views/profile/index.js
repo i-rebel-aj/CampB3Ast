@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Row, Col, Badge, Container } from "react-bootstrap";
+import {
+  Jumbotron,
+  Row,
+  Col,
+  Badge,
+  Container,
+  Spinner,
+} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import api from "../../API/api";
 
@@ -55,18 +62,29 @@ const Profile = () => {
     collegeName: "",
     collegeGroups: [],
     department: "",
+    Type: "",
+    batch: "",
+    course: "",
+    rollNumber: "",
+    enrolledDate: "",
+    isLoading: true,
   });
 
   useEffect(() => {
-    console.log("ye kya hua");
     api
       .getUser(username)
       .then((response) => {
+        console.log("USER DATA", response.data);
         updateProfile({
           username: response.data.username,
           name: response.data.name,
           email: response.data.email,
-          collegeName: response.data.collegeId,
+          courseDuration: response.data.courseDuration,
+          Type: response.data.Type,
+          batch: response.data.batch,
+          course: response.data.course,
+          rollNumber: response.data.rollNumber,
+          enrolledDate: response.data.enrolledDate,
           collegeGroup: [
             "cse",
             "gaming",
@@ -78,6 +96,7 @@ const Profile = () => {
             "music",
           ],
           department: response.data.department,
+          isLoading: false,
         });
       })
       .catch((error) => {
@@ -86,20 +105,54 @@ const Profile = () => {
   }, []);
   return (
     <div>
-      <Jumbotron fluid>
-        <Container>
-          <h1>{profileState.name}</h1>
-          <Row>
-            <Col>Username: {profileState.username}</Col>
-            <Col>Email: {profileState.email}</Col>
+      <Jumbotron>
+        {profileState.isLoading ? (
+          <Row
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 20,
+            }}
+          >
+            <Spinner animation="border" variant="warning" style={{}} />
           </Row>
-          <Row>
-            <Col>Department: {profileState.department}</Col>
-            <Col>College: {profileState.collegeName}</Col>
-          </Row>
-          <br />
-          <Row>{myFunction(profileState.collegeGroup)}</Row>
-        </Container>
+        ) : (
+          <Container>
+            <h1>
+              {profileState.Type} {profileState.name}
+            </h1>
+            <Row>
+              <Col>Username: {profileState.username}</Col>
+              <Col>Email: {profileState.email}</Col>
+            </Row>
+            <Row>
+              {profileState.rollNumber ? (
+                <Col>Roll Number: {profileState.rollNumber}</Col>
+              ) : null}
+              {profileState.enrolledDate ? (
+                <Col>Enrolled Date: {profileState.enrolledDate}</Col>
+              ) : null}
+            </Row>
+            <Row>
+              {profileState.department ? (
+                <Col>Department: {profileState.department}</Col>
+              ) : null}
+              {profileState.batch ? (
+                <Col>Batch: {profileState.batch}</Col>
+              ) : null}
+            </Row>
+            <Row>
+              {profileState.course ? (
+                <Col>Course: {profileState.course}</Col>
+              ) : null}
+              {profileState.courseDuration ? (
+                <Col>Course Duration: {profileState.courseDuration}</Col>
+              ) : null}
+            </Row>
+            <br />
+            <Row>{myFunction(profileState.collegeGroup)}</Row>
+          </Container>
+        )}
       </Jumbotron>
     </div>
   );

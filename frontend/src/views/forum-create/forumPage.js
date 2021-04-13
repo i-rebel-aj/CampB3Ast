@@ -75,17 +75,11 @@ function ForumPage ({ handleSubmit, values }){
 <Button
 onClick={() => {
   handleSubmit({
-    Type: currentData.Type,
-    username: currentData.username,
-    password: currentData.password,
-    name: currentData.name,
-    collegeId: currentData.collegeId,
-    department: currentData.department,
-    gender: currentData.gender,
-    registrationNumber: currentData.registrationNumber,
-    enrolledDate: currentData.enrolledDate,
-
+        forumName: currentData.forumName,
+        forumDescription: currentData.forumDescription,
+        forumType: currentData.forumType
   });
+
   console.log(currentData)
 }}
 >

@@ -7,7 +7,7 @@ function CustomCard({ title, text, goto }) {
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{text}</Card.Text>
-          <Button variant="primary" href={goto}>
+          <Button variant="outline-warning" href={goto}>
             Click here
           </Button>
         </Card.Body>

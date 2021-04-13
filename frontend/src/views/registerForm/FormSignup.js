@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
 
-
-
-const FormSignup = ({ handleSubmit }) => {
+const FormSignup = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
     Type: "",
     username: "",
     password: "",
     name: "",
-    collegeId: "",
+    email: "",
+    batch: "",
+    instituteName: "",
     department: "",
     gender: "",
     registrationNumber: "",
@@ -17,12 +17,10 @@ const FormSignup = ({ handleSubmit }) => {
     rollNumber: "",
     course: "",
     courseDuration: "",
-
   });
 
   return (
     <Form>
-
       <Form.Row>
         <Form.Group as={Col} md="12" controlId="validationFormikUsername">
           <Form.Label>Username</Form.Label>
@@ -61,13 +59,28 @@ const FormSignup = ({ handleSubmit }) => {
           />
         </Form.Group>
       </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col} md="12" controlId="validationFormik033">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            value={currentData.email}
+            onChange={(e) =>
+              updateCurrentData({
+                ...currentData,
+                email: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
+      </Form.Row>
 
       <Form.Row>
         <Form.Group as={Col} md="12" controlId="validationFormik03">
           <Form.Label>Name</Form.Label>
           <InputGroup>
-            <InputGroup.Prepend>
-            </InputGroup.Prepend>
+            <InputGroup.Prepend></InputGroup.Prepend>
             <Form.Control
               type="text"
               placeholder="Name"
@@ -83,24 +96,20 @@ const FormSignup = ({ handleSubmit }) => {
         </Form.Group>
       </Form.Row>
 
-
-
       <Form.Group controlId="exampleForm.ControlSelect1">
-
         <Form.Row>
           <Form.Group as={Col} md="12" controlId="validationFormik03">
-            <Form.Label>College ID</Form.Label>
+            <Form.Label>Institute Name</Form.Label>
             <InputGroup>
-              <InputGroup.Prepend>
-              </InputGroup.Prepend>
+              <InputGroup.Prepend></InputGroup.Prepend>
               <Form.Control
                 type="text"
-                placeholder="College ID"
-                value={currentData.collegeId}
+                placeholder="Institute Name"
+                value={currentData.instituteName}
                 onChange={(e) =>
                   updateCurrentData({
                     ...currentData,
-                    collegeId: e.target.value,
+                    instituteName: e.target.value,
                   })
                 }
               />
@@ -108,13 +117,11 @@ const FormSignup = ({ handleSubmit }) => {
           </Form.Group>
         </Form.Row>
 
-
         <Form.Row>
           <Form.Group as={Col} md="12" controlId="validationFormik03">
             <Form.Label>Department</Form.Label>
             <InputGroup>
-              <InputGroup.Prepend>
-              </InputGroup.Prepend>
+              <InputGroup.Prepend></InputGroup.Prepend>
               <Form.Control
                 type="text"
                 placeholder="Department"
@@ -130,56 +137,78 @@ const FormSignup = ({ handleSubmit }) => {
           </Form.Group>
         </Form.Row>
 
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik03">
+            <Form.Label>Enrolled Date</Form.Label>
+            <InputGroup>
+              <InputGroup.Prepend></InputGroup.Prepend>
+              <Form.Control
+                type="text"
+                placeholder="Enrolled Date"
+                value={currentData.enrolledDate}
+                onChange={(e) =>
+                  updateCurrentData({
+                    ...currentData,
+                    enrolledDate: e.target.value,
+                  })
+                }
+              />
+            </InputGroup>
+          </Form.Group>
+        </Form.Row>
 
         <Form.Row>
-            <Form.Group as={Col} md="12" controlId="validationFormik03">
-              <Form.Label>Enrolled Date</Form.Label>
-              <InputGroup>
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
-                <Form.Control
-                  type="text"
-                  placeholder="Enrolled Date"
-                  value={currentData.enrolledDate}
-                  onChange={(e) =>
-                    updateCurrentData({
-                      ...currentData,
-                      enrolledDate: e.target.value,
-                    })
-                  }
-                />
-              </InputGroup>
-            </Form.Group>
-          </Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik0333">
+            <Form.Label>
+              <strong>Choose who you are</strong>
+            </Form.Label>
+            <Form.Control
+              as="select"
+              value={currentData.Type}
+              onChange={(e) => {
+                updateCurrentData({
+                  ...currentData,
+                  Type: e.target.value,
+                });
+              }}
+            >
+              <option value="">Category</option>
+              <option value="Student">Student</option>
+              <option value="Faculty">Faculty</option>
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
 
-        <Form.Label><strong>Choose who you are</strong></Form.Label>
-        <Form.Control as="select"
-          value={currentData.Type}
-          onChange={(e) => {
-            updateCurrentData({
-              ...currentData,
-              Type: e.target.value,
-            });
-          }
-          }
-        >
-          <option value="Student">Student</option>
-          <option value="Faculty">Faculty</option>
-        </Form.Control>
+        <Form.Row>
+          <Form.Group as={Col} md="12" controlId="validationFormik0333">
+            <Form.Label>
+              <strong>Gender</strong>
+            </Form.Label>
+            <Form.Control
+              as="select"
+              value={currentData.gender}
+              onChange={(e) => {
+                updateCurrentData({
+                  ...currentData,
+                  gender: e.target.value,
+                });
+              }}
+            >
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
       </Form.Group>
 
-    
-
-      {currentData.Type === 'Student' &&
-
+      {currentData.Type === "Student" && (
         <Form>
-
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Roll Number</Form.Label>
               <InputGroup>
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
+                <InputGroup.Prepend></InputGroup.Prepend>
                 <Form.Control
                   type="text"
                   placeholder="Roll Number"
@@ -199,8 +228,7 @@ const FormSignup = ({ handleSubmit }) => {
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Course</Form.Label>
               <InputGroup>
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
+                <InputGroup.Prepend></InputGroup.Prepend>
                 <Form.Control
                   type="text"
                   placeholder="Course"
@@ -218,10 +246,29 @@ const FormSignup = ({ handleSubmit }) => {
 
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik03">
+              <Form.Label>Batch</Form.Label>
+              <InputGroup>
+                <InputGroup.Prepend></InputGroup.Prepend>
+                <Form.Control
+                  type="text"
+                  placeholder="Batch"
+                  value={currentData.batch}
+                  onChange={(e) =>
+                    updateCurrentData({
+                      ...currentData,
+                      batch: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form.Row>
+
+          <Form.Row>
+            <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Course Duration</Form.Label>
               <InputGroup>
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
+                <InputGroup.Prepend></InputGroup.Prepend>
                 <Form.Control
                   type="text"
                   placeholder="Course Duration"
@@ -236,22 +283,16 @@ const FormSignup = ({ handleSubmit }) => {
               </InputGroup>
             </Form.Group>
           </Form.Row>
-
-
-
-          
-
         </Form>
-      }
+      )}
 
-      {currentData.Type === 'Faculty' &&
+      {currentData.Type === "Faculty" && (
         <Form>
           <Form.Row>
             <Form.Group as={Col} md="12" controlId="validationFormik03">
               <Form.Label>Registration Number</Form.Label>
               <InputGroup>
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
+                <InputGroup.Prepend></InputGroup.Prepend>
                 <Form.Control
                   type="text"
                   placeholder="Registration Number"
@@ -266,28 +307,44 @@ const FormSignup = ({ handleSubmit }) => {
               </InputGroup>
             </Form.Group>
           </Form.Row>
-
         </Form>
-
-      }
-
+      )}
 
       <Button
         onClick={() => {
           handleSubmit({
+            Type: currentData.Type,
             username: currentData.username,
             password: currentData.password,
-            isSubmitted: true
+            name: currentData.name,
+            email: currentData.email,
+            instituteName: currentData.instituteName,
+            department: currentData.department,
+            gender: currentData.gender,
+            enrolledDate: currentData.enrolledDate,
+            registrationNumber:
+              currentData.Type === "Faculty"
+                ? currentData.registrationNumber
+                : "",
+            rollNumber:
+              currentData.Type === "Faculty" ? "" : currentData.rollNumber,
+            course: currentData.Type === "Faculty" ? "" : currentData.course,
+            courseDuration:
+              currentData.Type === "Faculty" ? "" : currentData.courseDuration,
+            batch: currentData.Type === "Faculty" ? "" : currentData.batch,
+            isSubmitted: true,
           });
-          console.log(currentData);
-        }
-
-        }
+        }}
       >
         Submit form
       </Button>
+      {values.message && (
+        <Alert variant={values.isRegistered ? "success" : "danger"}>
+          {values.message}
+        </Alert>
+      )}
     </Form>
   );
-}
+};
 
 export default FormSignup;
