@@ -1,8 +1,8 @@
 import axios from "axios";
+
 import {
   API,
   USERS_OF_ADMIN_INSTITUTE,
-  TEST_URL,
   AUTH_LOGIN,
   AUTH_SIGNUP,
   GET_USER,
@@ -13,15 +13,15 @@ import {
   ASSIGN_ADMIN,
   CREATE_GET_GROUP,
   ASSIGN_GROUP_TO_USERS,
-  BASE_URL,
-} from "../constants";
-import { BehaviorSubject } from "rxjs";
+} from "../constants/apiEndpoints";
 
+import { TEST_URL, BASE_URL } from "../endpoints";
+import { BehaviorSubject } from "rxjs";
 export default {
   getUsers: (Type, token) =>
     axios({
       method: "GET",
-      url: `${TEST_URL}${API}${USERS_OF_ADMIN_INSTITUTE}`,
+      url: `${BASE_URL}${API}${USERS_OF_ADMIN_INSTITUTE}`,
       headers: { "x-auth-token": token },
       params: {
         Type: Type,
@@ -30,14 +30,14 @@ export default {
   getUser: (username) =>
     axios({
       method: "GET",
-      url: `${TEST_URL}${API}${GET_USER}`,
+      url: `${BASE_URL}${API}${GET_USER}`,
       headers: {},
       params: {
         username: username,
       },
     }),
   login: (username, password) =>
-    fetch(`${TEST_URL}${API}${AUTH_LOGIN}`, {
+    fetch(`${BASE_URL}${API}${AUTH_LOGIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -59,7 +59,7 @@ export default {
     console.log("Logged out");
   },
   signUp: (data) =>
-    fetch(`${TEST_URL}${API}${AUTH_SIGNUP}`, {
+    fetch(`${BASE_URL}${API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -90,7 +90,7 @@ export default {
         return error;
       }),
   addCollege: (instituteName, instituteDescription, token) =>
-    fetch(`${TEST_URL}${API}${ADD_COLLEGE}`, {
+    fetch(`${BASE_URL}${API}${ADD_COLLEGE}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -109,7 +109,7 @@ export default {
         return error;
       }),
   createAdmin: (data, token) =>
-    fetch(`${TEST_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
+    fetch(`${BASE_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -133,7 +133,7 @@ export default {
         return error;
       }),
   getInstitutes: (token) =>
-    fetch(`${TEST_URL}${API}${GET_INSTITUTE}`, {
+    fetch(`${BASE_URL}${API}${GET_INSTITUTE}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -148,7 +148,7 @@ export default {
         return error;
       }),
   getAdmins: (token) =>
-    fetch(`${TEST_URL}${API}${GET_ADMIN}`, {
+    fetch(`${BASE_URL}${API}${GET_ADMIN}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -163,7 +163,7 @@ export default {
         return error;
       }),
   assignAdmin: (instituteName, email, token) =>
-    fetch(`${TEST_URL}${API}${ASSIGN_ADMIN}`, {
+    fetch(`${BASE_URL}${API}${ASSIGN_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -182,7 +182,7 @@ export default {
         return error;
       }),
   addGroup: (groupName, groupDescription, token) =>
-    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
+    fetch(`${BASE_URL}${API}${CREATE_GET_GROUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -201,7 +201,7 @@ export default {
         return error;
       }),
   getGroups: (token) =>
-    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
+    fetch(`${BASE_URL}${API}${CREATE_GET_GROUP}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -216,7 +216,7 @@ export default {
         return error;
       }),
   assignGroup: (userids, groupName, token) =>
-    fetch(`${TEST_URL}${API}${ASSIGN_GROUP_TO_USERS}`, {
+    fetch(`${BASE_URL}${API}${ASSIGN_GROUP_TO_USERS}`, {
       method: "POST",
       headers: {
         Accept: "application/json",

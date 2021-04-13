@@ -80,7 +80,7 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
       ) : (
         <div>
           <div>
-            <h1>Assign an Admin</h1>
+            <h1>Assign a Group</h1>
           </div>
           <Form>
             <Form.Row>

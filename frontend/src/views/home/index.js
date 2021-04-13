@@ -13,7 +13,8 @@ import image from "../../assets/images/home-page.jpg";
 import imageA from "../../assets/images/1-connectivity.png";
 import imageB from "../../assets/images/2-bulb-idea.jpg";
 import imageC from "../../assets/images/3-innovation.jpg";
-import image2 from "../../assets/images/Campus-B34st.png";
+import { MESSENGER_URL } from "../../endpoints";
+import { MESSENGER } from "../../constants";
 import { isAutheticated } from "../../_helpers";
 const { user } = isAutheticated();
 const Home = () => {
@@ -88,49 +89,71 @@ const Home = () => {
               alt="Third slide"
             />
             <Carousel.Caption>
-              <h3>Chat</h3>
+              <h3>Messenger</h3>
               <p>Your personal space!</p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
       </Jumbotron>
       {user ? (
-        <Row
-          style={{
-            marginLeft: 100,
-            height: window.innerHeight * 0.4,
-          }}
-        >
-          <Col>
-            <CustomCard
-              title={"Explore"}
-              text={
-                user?.Type == "Super Admin"
-                  ? "Visit Super Admin Panel"
-                  : user?.Type == "Admin"
-                  ? "Visit Admin Panel"
-                  : "Welcome to Home"
-              }
-              goto={
-                user?.Type == "Super Admin"
-                  ? "/super-admin"
-                  : user?.Type == "Admin"
-                  ? "/admin"
-                  : "/"
-              }
-            />
-          </Col>
-          <Col>
-            <CustomCard
-              title={"Profile"}
-              text={"Check your profile"}
-              goto={`/profile/${user.username}`}
-            />
-          </Col>
-          <Col>
-            <CustomCard title={"Chat"} text={"Coming Soon"} goto={"/"} />
-          </Col>
-        </Row>
+        user?.Type != "Super Admin" ? (
+          <Row
+            style={{
+              marginLeft: 100,
+              height: window.innerHeight * 0.4,
+            }}
+          >
+            <Col>
+              <CustomCard
+                title={"Explore"}
+                text={
+                  user?.Type == "Super Admin"
+                    ? "Visit Super Admin Panel"
+                    : user?.Type == "Admin"
+                    ? "Visit Admin Panel"
+                    : "Welcome to Home"
+                }
+                goto={
+                  user?.Type == "Super Admin"
+                    ? "/super-admin"
+                    : user?.Type == "Admin"
+                    ? "/admin"
+                    : "/"
+                }
+              />
+            </Col>
+            <Col>
+              <CustomCard
+                title={"Profile"}
+                text={"Check your profile"}
+                goto={`/profile/${user.username}`}
+              />
+            </Col>
+            <Col>
+              <CustomCard
+                title={"Messenger"}
+                text={"Live private conversations."}
+                goto={`${MESSENGER_URL}${MESSENGER}?userId=${user?._id}`}
+              />
+            </Col>
+          </Row>
+        ) : (
+          <div
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            <Alert variant="warning">
+              Welcome Super Admin!{" "}
+              <Alert.Link href="/super-admin">
+                Goto Super Admin Panel
+              </Alert.Link>
+              .
+            </Alert>
+          </div>
+        )
       ) : (
         <div
           style={{
