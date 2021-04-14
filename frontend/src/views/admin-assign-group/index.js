@@ -78,7 +78,7 @@ const AdminAssignGroup = () => {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="5" href="/admin/group/assign">
-              See All Groups
+              Assign a group
             </Nav.Link>
           </Nav.Item>
         </Nav>

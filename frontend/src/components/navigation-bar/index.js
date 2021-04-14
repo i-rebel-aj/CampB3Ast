@@ -3,7 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import api from "../../API/api";
 import { isAutheticated } from "../../_helpers";
 import { useSelector, useDispatch } from "react-redux";
-import { authSuccess, authError } from "../../redux/auth/authActions";
+import { MESSENGER_URL } from "../../endpoints";
+import { MESSENGER } from "../../constants";
 import { PersonBoundingBox } from "react-bootstrap-icons";
 
 function NavBar() {
@@ -24,15 +25,26 @@ function NavBar() {
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
             {isAutheticated() ? (
-              <>
-                {" "}
-                <Nav.Item>
-                  <Nav.Link href="/forum/create">Create Forum</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link href="/forum/:id/post/create">Create Post</Nav.Link>
-                </Nav.Item>
-              </>
+              auth.user?.Type === "Super Admin" ? null : (
+                <>
+                  {" "}
+                  <Nav.Item>
+                    <Nav.Link href="/forum/create">Create Forum</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link href="/forum/:id/post/create">
+                      Create Post
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      href={`${MESSENGER_URL}${MESSENGER}?userId=${auth.user?._id}`}
+                    >
+                      Messenger
+                    </Nav.Link>
+                  </Nav.Item>
+                </>
+              )
             ) : null}
           </Nav>
           <Nav>

@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/src/endpoints.js
 /.pnp
 .pnp.js
 
@@ -22,4 +23,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .eslintcache
-
