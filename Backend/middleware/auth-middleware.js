@@ -26,7 +26,7 @@ exports.requireAuth= (req, res, next)=>{
         next()
     } catch (err) {
       console.log(err)
-      return res.status(404).json({message : "token not found"})
+      return res.status(404).json({message : "token not found", err: err.message})
     }
 }
 exports.isAdmin = async (req, res, next)=>{

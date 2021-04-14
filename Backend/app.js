@@ -14,25 +14,26 @@ mongoose.connect(process.env.DB_Production, {useNewUrlParser: true, useUnifiedTo
 })
 .catch(err=>{console.log(err)})
 //Using Middlewares
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
 cors({credentials: true, origin: true})
 //Using Routes
 const authRoutes=require("./routes/auth-route")
-//const forumRoute=require("./routes/forums")
 const userRoutes=require("./routes/user")
 const instituteRoutes=require('./routes/instituteRoute')
 const superUserRoutes=require('./routes/superAdmin')
 const instituteAdminRoutes=require('./routes/instituteAdmin')
 const groupRoutes=require('./routes/group')
+const forumRoutes=require('./routes/forums')
 app.use("/api/user", userRoutes)
 app.use('/api/user/auth', authRoutes)
 app.use('/api/institute', instituteRoutes)
 app.use('/api/superuser', superUserRoutes)
 app.use('/api/admin', instituteAdminRoutes)
 app.use('/api/group', groupRoutes)
+app.use('/api/forum', forumRoutes)
 const server= app.listen(process.env.PORT, ()=>{
     console.log(`Server has started at port ${process.env.PORT}`)
 })
