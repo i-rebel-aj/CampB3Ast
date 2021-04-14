@@ -1,6 +1,7 @@
 const mongoose=require("mongoose")
 const privateForumSchema=require('./Schemas/Private_Forum')
 const publicForumSchema=require('./Schemas/Public_Forum')
+const options={discriminatorKey: 'Type'}
 const forumSchema= new mongoose.Schema(
     {
         forumName:{
@@ -11,11 +12,17 @@ const forumSchema= new mongoose.Schema(
             type: String,
             required: true
         },
-        isPublic:{
-            type: Boolean,
+        associatedInstituteID:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Institute',
+            required: true
+        },
+        createdBy:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true
         }
-    }, {timestamps: true}
+    },options, {timestamps: true}
 )
 const Forum=mongoose.model('Forum', forumSchema)
 const privateForum=Forum.discriminator('Private', privateForumSchema)
