@@ -10,6 +10,8 @@ export const ASSIGN_ADMIN = "/institute/assignadmin";
 export const GET_USER = "/user";
 export const CREATE_GET_GROUP = "/group";
 export const ASSIGN_GROUP_TO_USERS = "/group/user";
+export const CREATE_FORUM = "/forum";
+export const FORUMS_OF_LOGGEDIN_USER = "/forum/user";
 
 export const MESSENGER = "/chatlogin-test";
 

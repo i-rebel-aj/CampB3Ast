@@ -13,6 +13,8 @@ import {
   ASSIGN_ADMIN,
   CREATE_GET_GROUP,
   ASSIGN_GROUP_TO_USERS,
+  CREATE_FORUM,
+  FORUMS_OF_LOGGEDIN_USER,
 } from "../constants/apiEndpoints";
 
 import { TEST_URL, BASE_URL } from "../endpoints";
@@ -227,6 +229,42 @@ export default {
         userids: userids,
         groupName: groupName,
       }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  createForum: (forumName, forumDescription, Type, memberLimit, token) =>
+    fetch(`${BASE_URL}${API}${CREATE_FORUM}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        forumName: forumName,
+        forumDescription: forumDescription,
+        Type: Type,
+        memberLimit: memberLimit,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getForumsOfLoggedInUser: (token) =>
+    fetch(`${BASE_URL}${API}${FORUMS_OF_LOGGEDIN_USER}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
     })
       .then((response) => {
         return response.json();
