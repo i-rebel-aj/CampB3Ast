@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
-const privateForumSchema=require('./Schemas/Private_Forum')
-const publicForumSchema=require('./Schemas/Public_Forum')
+const privateForumSchema=require('./Schemas/Forum/Private_Forum')
+const publicForumSchema=require('./Schemas/Forum/Public_Forum')
 const options={discriminatorKey: 'Type'}
 const forumSchema= new mongoose.Schema(
     {
