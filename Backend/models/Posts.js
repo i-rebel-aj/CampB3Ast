@@ -20,10 +20,6 @@ const postsSchema= new mongoose.Schema(
             type: Number,
             default: 0
         },
-        isPublic:{
-            type: Boolean,
-            required: true
-        },
         createdBy:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
@@ -35,4 +31,4 @@ const postsSchema= new mongoose.Schema(
     }, {timestamps: true}
 )
 const Post=mongoose.model('Post', postsSchema)
-module.exports=Post
+module.exports={Post}

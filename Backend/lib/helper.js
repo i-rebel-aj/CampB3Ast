@@ -1,6 +1,7 @@
 // Add any helper function here
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
+const { Forum } = require("../models/Forums");
 exports.getUserId = (req, res) => {
     try {
         const token = req.header("x-auth-token");
@@ -14,3 +15,11 @@ exports.getUserId = (req, res) => {
       return null
     }
 };
+//Check if given member is in form or not
+exports.isForumMember=(foundForum, userId)=>{
+    if(foundForum.members.indexOf(userId)===-1){
+      return false
+    }else{
+      return true
+    }  
+}
