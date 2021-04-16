@@ -1,11 +1,17 @@
 const express=require("express")
 const router=express.Router();
-const {getUserByUsername, addGroupToUser, removeGroupFromUser, getUsersByGroup, getUsersByInstitute}=require("../controllers/user")
+const {getUserByUsername, getAllLoggedInInstituteUser}=require("../controllers/user")
 const {requireAuth}=require('../middleware/auth-middleware')
 /*
     @Route  GET /api/user
     @Desc   To view a particular user by username
-    @Access Public
+    @Access Private
 */
-router.get("/", getUserByUsername)
+router.get("/",[requireAuth], getUserByUsername)
+/*
+    @Route  GET /api/user/all
+    @Desc   To view all users associated with the logged in user
+    @Access Private
+*/
+router.get('/all', [requireAuth], getAllLoggedInInstituteUser)
 module.exports=router
