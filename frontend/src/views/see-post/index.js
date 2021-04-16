@@ -15,14 +15,15 @@ const variants = [
   "Dark",
 ];
 
-for (var i = 0; i < 200; i++) {
+/* for (var i = 0; i < 200; i++) {
   dataArr.push({
     name: util.format("Post-%s", i),
     description: util.format("This is the description #%d", i),
   });
-}
+} */
 
-const CommentList = (props) => {
+const PostList = (props) => {
+  console.log("Yoooooo,", props);
   let commentNodes = props.data.map(function (item, index) {
     let variant = variants[Math.floor(Math.random() * variants.length)];
     if (index > props.offset && index <= props.offset + 10)
@@ -37,8 +38,8 @@ const CommentList = (props) => {
           >
             <Card.Header>Post - {index}</Card.Header>
             <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Title>{item.postName}</Card.Title>
+              <Card.Text>{item.postDescription}</Card.Text>
             </Card.Body>
           </Card>
         </div>
@@ -64,7 +65,7 @@ class SeePost extends Component {
     super(props);
 
     this.state = {
-      data: [],
+      data: props.posts,
       offset: 0,
     };
   }
@@ -76,7 +77,7 @@ class SeePost extends Component {
   }
 
   componentDidMount() {
-    this.loadCommentsFromServer();
+    // this.loadCommentsFromServer();
   }
 
   handlePageClick = (data) => {
@@ -96,7 +97,7 @@ class SeePost extends Component {
           flex: "column",
         }}
       >
-        <CommentList data={this.state.data} offset={this.state.offset} />
+        <PostList data={this.state.data} offset={this.state.offset} />
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}

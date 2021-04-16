@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from "react";
-import ForumPage from "./forumPage";
+import { useParams } from "react-router-dom";
 import { authenticate, isAutheticated } from "../../_helpers";
 import api from "../../API/api";
 
-const ForumControl = () => {
+import Post from "./Post";
+
+const PostControl = () => {
+  const { id } = useParams();
   const [values, updateValue] = useState({
-    forumName: "",
-    forumDescription: "",
-    Type: "",
-    memberLimit: "",
+    postName: "",
+    postDescription: "",
+    parentForumId: id,
+    isPosted: false,
     isSubmitted: false,
-    message: "",
-    isCreated: "",
   });
 
   useEffect(() => {
+    console.log("ID", values.parentForumId);
     if (values.isSubmitted) {
-      //updateValue({ ...values, addingCollege: true });
       const { token } = isAutheticated();
-      console.log("Token", token);
+
       api
-        .createForum(
-          values.forumName,
-          values.forumDescription,
-          values.Type,
-          values.memberLimit,
+        .createPost(
+          values.postName,
+          values.postDescription,
+          values.parentForumId,
           token
         )
         .then((response) => {
-          console.log("Forum res ", response);
+          console.log("Post Res ", response);
           updateValue({
             ...values,
             isSubmitted: false,
             message: response.message,
-            isCreated:
-              response.message === "Forum added success" ? true : false,
+            isPosted: response.message === "Post Added" ? true : false,
           });
         })
         .catch((error) => {
@@ -56,9 +55,9 @@ const ForumControl = () => {
         alignItems: "center",
       }}
     >
-      <ForumPage values={values} handleSubmit={updateValue} />
+      <Post values={values} handleSubmit={updateValue} />
     </div>
   );
 };
 
-export default ForumControl;
+export default PostControl;

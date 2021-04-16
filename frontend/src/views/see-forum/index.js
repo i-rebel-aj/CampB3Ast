@@ -1,31 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, ButtonGroup, ToggleButton, Button } from "react-bootstrap";
 import api from "../../API/api";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
+import { authenticate, isAutheticated } from "../../_helpers";
+
+function buttonFormatter(cell, row) {
+  let forum = `/forum/see/${cell}`;
+  return (
+    <Button href={forum} variant="outline-info">
+      Click
+    </Button>
+  );
+}
 
 const columns = [
   {
-    dataField: "name",
+    dataField: "forumName",
     text: "Forum Name",
     filter: textFilter(),
   },
   {
-    dataField: "collegeId",
-    text: "Forum Description",
+    dataField: "forumDescription",
+    text: "Description",
     filter: textFilter(),
+  },
+  {
+    dataField: "Type",
+    text: "Type",
+  },
+  {
+    dataField: "_id",
+    text: "Id",
+    filter: textFilter(),
+  },
+  {
+    dataField: "forumName",
+    text: "More",
+    formatter: buttonFormatter,
   },
 ];
 
+const radios = [
+  { name: "Created", value: "created" },
+  { name: "Private", value: "private" },
+  { name: "Public", value: "public" },
+];
+
 const SeeForum = () => {
-  const [listItems, updateList] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [radioValue, setRadioValue] = useState("created");
+  const [values, updateForums] = useState({
+    forums: {},
+    isFetched: false,
+  });
+
   useEffect(() => {
+    const { token } = isAutheticated();
     api
-      .getUsers("Student")
+      .getForumsOfLoggedInUser(token)
       .then((response) => {
-        let tempList = [...response.data.users];
-        updateList(tempList);
+        console.log(response);
+        updateForums({ forums: response, isFetched: true });
       })
       .catch((error) => {
         console.log(error);
@@ -35,13 +72,30 @@ const SeeForum = () => {
     <>
       <Row>
         <Col>
-          <BootstrapTable
-            keyField="name"
-            data={listItems}
-            columns={columns}
-            pagination={paginationFactory()}
-            filter={filterFactory()}
-          />
+          <ButtonGroup toggle>
+            {radios.map((radio, idx) => (
+              <ToggleButton
+                key={idx}
+                type="radio"
+                variant="secondary"
+                name="radio"
+                value={radio.value}
+                checked={radioValue === radio.value}
+                onChange={(e) => setRadioValue(e.currentTarget.value)}
+              >
+                {radio.name}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+          {values.isFetched && (
+            <BootstrapTable
+              keyField="name"
+              data={values.forums[radioValue]}
+              columns={columns}
+              pagination={paginationFactory()}
+              filter={filterFactory()}
+            />
+          )}
         </Col>
       </Row>
     </>
