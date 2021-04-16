@@ -24,3 +24,13 @@ exports.getUsersOfAdminInstitute= async (req, res)=>{
         return res.status(500).json({message: 'Server Error', err: err.message})
     }
 }
+exports.getAllLoggedInInstituteUser= async(req, res)=>{
+    req._id=getUserId(req, res)
+    try{
+        const foundUser= await User.findById(req._id)
+        const allUsersOfTheInstitute=await User.find({instituteID: foundUser.instituteID})
+        return res.status(200).json({message: 'Success', users:allUsersOfTheInstitute})
+    }catch(err){
+        return res.status(500).json({message: 'Server Error', err: err.message})
+    }
+}
