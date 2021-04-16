@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   API,
   USERS_OF_ADMIN_INSTITUTE,
+  USERS_OF_USER_INSTITUTE,
   AUTH_LOGIN,
   AUTH_SIGNUP,
   GET_USER,
@@ -14,7 +15,8 @@ import {
   CREATE_GET_GROUP,
   ASSIGN_GROUP_TO_USERS,
   CREATE_FORUM,
-  FORUMS_OF_LOGGEDIN_USER,
+  FORUMS_OF_LOGGEDIN_USER_ASSIGN_FORUM,
+  CREATE_GET_FORUM,
 } from "../constants/apiEndpoints";
 
 import { TEST_URL, BASE_URL } from "../endpoints";
@@ -23,7 +25,7 @@ export default {
   getUsers: (Type, token) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${API}${USERS_OF_ADMIN_INSTITUTE}`,
+      url: `${TEST_URL}${API}${USERS_OF_ADMIN_INSTITUTE}`,
       headers: { "x-auth-token": token },
       params: {
         Type: Type,
@@ -32,14 +34,14 @@ export default {
   getUser: (username) =>
     axios({
       method: "GET",
-      url: `${BASE_URL}${API}${GET_USER}`,
+      url: `${TEST_URL}${API}${GET_USER}`,
       headers: {},
       params: {
         username: username,
       },
     }),
   login: (username, password) =>
-    fetch(`${BASE_URL}${API}${AUTH_LOGIN}`, {
+    fetch(`${TEST_URL}${API}${AUTH_LOGIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -61,7 +63,7 @@ export default {
     console.log("Logged out");
   },
   signUp: (data) =>
-    fetch(`${BASE_URL}${API}${AUTH_SIGNUP}`, {
+    fetch(`${TEST_URL}${API}${AUTH_SIGNUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -92,7 +94,7 @@ export default {
         return error;
       }),
   addCollege: (instituteName, instituteDescription, token) =>
-    fetch(`${BASE_URL}${API}${ADD_COLLEGE}`, {
+    fetch(`${TEST_URL}${API}${ADD_COLLEGE}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -111,7 +113,7 @@ export default {
         return error;
       }),
   createAdmin: (data, token) =>
-    fetch(`${BASE_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${ADD_INSTITUTE_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -135,7 +137,7 @@ export default {
         return error;
       }),
   getInstitutes: (token) =>
-    fetch(`${BASE_URL}${API}${GET_INSTITUTE}`, {
+    fetch(`${TEST_URL}${API}${GET_INSTITUTE}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -150,7 +152,7 @@ export default {
         return error;
       }),
   getAdmins: (token) =>
-    fetch(`${BASE_URL}${API}${GET_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${GET_ADMIN}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -165,7 +167,7 @@ export default {
         return error;
       }),
   assignAdmin: (instituteName, email, token) =>
-    fetch(`${BASE_URL}${API}${ASSIGN_ADMIN}`, {
+    fetch(`${TEST_URL}${API}${ASSIGN_ADMIN}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -184,7 +186,7 @@ export default {
         return error;
       }),
   addGroup: (groupName, groupDescription, token) =>
-    fetch(`${BASE_URL}${API}${CREATE_GET_GROUP}`, {
+    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -203,7 +205,7 @@ export default {
         return error;
       }),
   getGroups: (token) =>
-    fetch(`${BASE_URL}${API}${CREATE_GET_GROUP}`, {
+    fetch(`${TEST_URL}${API}${CREATE_GET_GROUP}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -218,7 +220,7 @@ export default {
         return error;
       }),
   assignGroup: (userids, groupName, token) =>
-    fetch(`${BASE_URL}${API}${ASSIGN_GROUP_TO_USERS}`, {
+    fetch(`${TEST_URL}${API}${ASSIGN_GROUP_TO_USERS}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -237,7 +239,7 @@ export default {
         return error;
       }),
   createForum: (forumName, forumDescription, Type, memberLimit, token) =>
-    fetch(`${BASE_URL}${API}${CREATE_FORUM}`, {
+    fetch(`${TEST_URL}${API}${CREATE_GET_FORUM}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -258,13 +260,58 @@ export default {
         return error;
       }),
   getForumsOfLoggedInUser: (token) =>
-    fetch(`${BASE_URL}${API}${FORUMS_OF_LOGGEDIN_USER}`, {
+    fetch(`${TEST_URL}${API}${FORUMS_OF_LOGGEDIN_USER_ASSIGN_FORUM}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "x-auth-token": token,
       },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getForum: (forumName, token) =>
+    axios({
+      method: "GET",
+      url: `${TEST_URL}${API}${CREATE_GET_FORUM}/`,
+      headers: {
+        "x-auth-token": token,
+      },
+      params: {
+        forumName: forumName,
+      },
+    }),
+  getUsersOfLoggedInUser: (token) =>
+    fetch(`${TEST_URL}${API}${USERS_OF_USER_INSTITUTE}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  assignForum: (userids, forumId, token) =>
+    fetch(`${TEST_URL}${API}${FORUMS_OF_LOGGEDIN_USER_ASSIGN_FORUM}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        userIds: userids,
+        forumId: forumId,
+      }),
     })
       .then((response) => {
         return response.json();

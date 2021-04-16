@@ -15,11 +15,12 @@ import SelectedUsers from "./SelectedUsers";
 var user = [];
 var userDisplay = [];
 
-const AdminAssignGroupControl = ({ handleSubmit, values }) => {
+const AssignForumControl = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
-    group: "",
+    forum: "",
+    forumId: "",
     users: [],
-    groups: [],
+    forums: [],
     error: false,
     message: "",
     isLoading: true,
@@ -28,15 +29,13 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
 
   useEffect(() => {
     const { token } = isAutheticated();
-    /////
-
-    var tempGroups, tempUsers;
+    var tempForums, tempUsers;
     const fetchData = async () => {
       await api
-        .getGroups(token)
+        .getForumsOfLoggedInUser(token)
         .then((response) => {
-          tempGroups = response.groups;
-          console.log("FORUMS", tempGroups);
+          tempForums = response["created"];
+          console.log("FORUMS", tempForums);
         })
         .catch((error) => {
           console.log(error);
@@ -47,12 +46,12 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
             isLoading: false,
           });
         });
-      console.log("1", tempGroups);
+      console.log("1", tempForums);
       await api
-        .getUsers("Student", token)
+        .getUsersOfLoggedInUser(token)
         .then((response) => {
           console.log("Users ", response.users);
-          tempUsers = response.data.users;
+          tempUsers = response.users;
         })
         .catch((error) => {
           console.log(error);
@@ -67,7 +66,7 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
       console.log("2", tempUsers);
       updateCurrentData({
         ...currentData,
-        groups: tempGroups,
+        forums: tempForums,
         users: tempUsers,
         isLoading: false,
       });
@@ -90,28 +89,31 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
       ) : (
         <div>
           <div>
-            <h1>Assign a Group</h1>
+            <h1>Assign a Forum</h1>
           </div>
           <Form>
             <Form.Row>
               <Form.Group as={Col} md="12" controlId="validationFormik0333">
                 <Form.Label>
-                  <strong>Groups</strong>
+                  <strong>Forum</strong>
                 </Form.Label>
                 <Form.Control
                   as="select"
-                  value={currentData.group}
+                  value={currentData.forum}
                   onChange={(e) => {
+                    console.log(e.target.value);
                     updateCurrentData({
                       ...currentData,
-                      group: e.target.value,
+                      forum: e.target.value,
                     });
                   }}
                 >
-                  <option value={""}>{"Select Group"}</option>
-                  {currentData.groups?.map((group) => (
-                    <option value={group.groupName}>{group.groupName}</option>
-                  ))}
+                  <option value={""}>{"Select Forum"}</option>
+                  {currentData.forums
+                    ? currentData.forums?.map((forum) => (
+                        <option value={forum._id}>{forum.forumName}</option>
+                      ))
+                    : null}
                 </Form.Control>
               </Form.Group>
             </Form.Row>
@@ -127,7 +129,7 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
                   onChange={(e) => {
                     if (user.indexOf(e.target.value) === -1) {
                       user.push(e.target.value);
-                      let result = currentData.users.filter((obj) => {
+                      let result = currentData.users?.filter((obj) => {
                         return obj._id === e.target.value;
                       });
                       userDisplay.push(result[0]);
@@ -152,7 +154,7 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
               onClick={() => {
                 handleSubmit({
                   userids: user,
-                  groupName: currentData.group,
+                  forumId: currentData.forum,
                   isSubmitted: true,
                 });
                 user = [];
@@ -181,4 +183,4 @@ const AdminAssignGroupControl = ({ handleSubmit, values }) => {
   );
 };
 
-export default AdminAssignGroupControl;
+export default AssignForumControl;

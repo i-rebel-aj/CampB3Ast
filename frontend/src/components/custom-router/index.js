@@ -10,6 +10,8 @@ import {
   AdminAssignGroup,
   Post,
   Forum,
+  ForumCreate,
+  ForumAssign,
   SeeForum,
   SeePost,
   AdminCreateGroup,
@@ -98,13 +100,21 @@ function CustomRouter() {
         <NavBar user={user} />
         <SuperAdminAssignAdmin />
       </Route>
-      <Route exact path="/forum/create">
+      <Route exact path="/forum/see/:forumName">
         <NavBar user={user} />
         <Forum />
+      </Route>
+      <Route exact path="/forum/create">
+        <NavBar user={user} />
+        <ForumCreate />
       </Route>
       <Route exact path="/forum/see">
         <NavBar user={user} />
         <SeeForum />
+      </Route>
+      <Route exact path="/forum/assign">
+        <NavBar user={user} />
+        <ForumAssign />
       </Route>
       <Route path="/forum/:id/post/create" exact>
         <NavBar user={user} />

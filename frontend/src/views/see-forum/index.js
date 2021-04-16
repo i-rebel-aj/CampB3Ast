@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, ButtonGroup, ToggleButton } from "react-bootstrap";
+import { Row, Col, ButtonGroup, ToggleButton, Button } from "react-bootstrap";
 import api from "../../API/api";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 import { authenticate, isAutheticated } from "../../_helpers";
+
+function buttonFormatter(cell, row) {
+  let forum = `/forum/see/${cell}`;
+  return (
+    <Button href={forum} variant="outline-info">
+      Click
+    </Button>
+  );
+}
 
 const columns = [
   {
@@ -25,6 +34,11 @@ const columns = [
     dataField: "_id",
     text: "Id",
     filter: textFilter(),
+  },
+  {
+    dataField: "forumName",
+    text: "More",
+    formatter: buttonFormatter,
   },
 ];
 
@@ -47,6 +61,7 @@ const SeeForum = () => {
     api
       .getForumsOfLoggedInUser(token)
       .then((response) => {
+        console.log(response);
         updateForums({ forums: response, isFetched: true });
       })
       .catch((error) => {
