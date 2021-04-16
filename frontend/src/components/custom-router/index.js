@@ -8,7 +8,7 @@ import {
   AdminAddUsers,
   AdminSeeGroups,
   AdminAssignGroup,
-  Post,
+  PostCreate,
   Forum,
   ForumCreate,
   ForumAssign,
@@ -118,7 +118,7 @@ function CustomRouter() {
       </Route>
       <Route path="/forum/:id/post/create" exact>
         <NavBar user={user} />
-        <Post />
+        <PostCreate />
       </Route>
       <Route path="/post/see">
         <NavBar user={user} />

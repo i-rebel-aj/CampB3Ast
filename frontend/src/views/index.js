@@ -12,7 +12,7 @@ import SuperAdminSeeAdmin from "./super-admin-see-admins";
 import SuperAdminAssignAdmin from "./super-admin-assign-admin";
 import SuperAdminAddCollege from "./super-admin-add-college";
 import SuperAdminSeeCollege from "./super-admin-see-colleges";
-import Post from "./Post";
+import PostCreate from "./post-create";
 import ForumCreate from "./forum-create";
 import Forum from "./forum";
 import SeeForum from "./see-forum";
@@ -28,7 +28,7 @@ export {
   AdminAddUsers,
   AdminSeeGroups,
   AdminAssignGroup,
-  Post,
+  PostCreate,
   Forum,
   ForumCreate,
   ForumAssign,

@@ -17,6 +17,8 @@ import {
   CREATE_FORUM,
   FORUMS_OF_LOGGEDIN_USER_ASSIGN_FORUM,
   CREATE_GET_FORUM,
+  POST_CREATE,
+  GET_POST_BY_FORUM,
 } from "../constants/apiEndpoints";
 
 import { TEST_URL, BASE_URL } from "../endpoints";
@@ -319,4 +321,35 @@ export default {
       .catch((error) => {
         return error;
       }),
+  createPost: (postName, postDescription, parentForumId, token) =>
+    fetch(`${TEST_URL}${API}${POST_CREATE}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify({
+        postName: postName,
+        postDescription: postDescription,
+        parentForumId: parentForumId,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        return error;
+      }),
+  getPostsByForum: (forumId, token) =>
+    axios({
+      method: "GET",
+      url: `${TEST_URL}${API}${GET_POST_BY_FORUM}/`,
+      headers: {
+        "x-auth-token": token,
+      },
+      params: {
+        forumId: forumId,
+      },
+    }),
 };

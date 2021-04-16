@@ -13,6 +13,8 @@ export const ASSIGN_GROUP_TO_USERS = "/group/user";
 export const CREATE_GET_FORUM = "/forum";
 export const FORUMS_OF_LOGGEDIN_USER_ASSIGN_FORUM = "/forum/user";
 export const USERS_OF_USER_INSTITUTE = "/user/all";
+export const POST_CREATE = "/post";
+export const GET_POST_BY_FORUM = "/post/forum";
 
 export const MESSENGER = "/chatlogin-test";
 

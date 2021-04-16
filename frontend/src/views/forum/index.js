@@ -6,10 +6,12 @@ import {
   Badge,
   Container,
   Spinner,
+  Button,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { authenticate, isAutheticated } from "../../_helpers";
 import api from "../../API/api";
+import SeePosts from "../see-post";
 
 /* const data = {
   username: "ishanarya0",
@@ -56,16 +58,68 @@ function myFunction(data) {
 
 const Forum = () => {
   const { forumName } = useParams();
-  const [forumDetail, updateProfile] = useState({
+  const [forumDetail, updateForum] = useState({
     forumName: "",
     forumDescription: "",
     forumType: "",
+    id: "",
     isLoading: true,
+    posts: [],
   });
   console.log("Forum Name", forumName);
   const { token } = isAutheticated();
   useEffect(() => {
-    api
+    /////
+    var tempForumData, tempPosts;
+    const fetchData = async () => {
+      await api
+        .getForum(forumName, token)
+        .then((response) => {
+          tempForumData = response.data.foundForum;
+        })
+        .catch((error) => {
+          console.log(error);
+          updateForum({
+            ...forumDetail,
+            error: true,
+            message: error,
+            isLoading: false,
+          });
+        });
+      console.log("1", tempForumData._id);
+      let forumId = tempForumData._id;
+      console.log("hjjhjh", forumId);
+      await api
+        .getPostsByForum(forumId, token)
+        .then((response) => {
+          tempPosts = response.data.foundPosts;
+        })
+        .catch((error) => {
+          console.log(error);
+          updateForum({
+            ...forumDetail,
+            error: true,
+            message: error,
+            isLoading: false,
+          });
+        });
+
+      console.log("2", tempPosts);
+      updateForum({
+        ...forumDetail,
+        forumName: tempForumData.forumName,
+        forumDescription: tempForumData.forumDescription,
+        forumType: tempForumData.Type,
+        id: tempForumData._id,
+        posts: tempPosts,
+        isLoading: false,
+      });
+      console.log("Final", tempForumData, tempPosts, forumDetail);
+    };
+    fetchData();
+
+    /////
+    /*    api
       .getForum(forumName, token)
       .then((response) => {
         console.log("USER DATA", response.data.foundForum);
@@ -73,38 +127,50 @@ const Forum = () => {
           forumName: response.data.foundForum.forumName,
           forumDescription: response.data.foundForum.forumDescription,
           forumType: response.data.foundForum.Type,
+          id: response.data.foundForum._id,
           isLoading: false,
         });
       })
       .catch((error) => {
         console.log(error);
-      });
+      }); */
   }, []);
   return (
     <div>
-      <Jumbotron>
-        {forumDetail.isLoading ? (
-          <Row
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 20,
-            }}
-          >
-            <Spinner animation="border" variant="warning" style={{}} />
-          </Row>
-        ) : (
+      {forumDetail.isLoading ? (
+        <Row
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+          }}
+        >
+          <Spinner animation="border" variant="warning" style={{}} />
+        </Row>
+      ) : (
+        <div>
+          <Jumbotron>
+            <Container>
+              <h1>
+                {forumDetail.forumType} {" - "}
+                {forumDetail.forumName}
+              </h1>
+              <Row>
+                <Col>Description: {forumDetail.forumDescription}</Col>
+              </Row>
+              <Button
+                href={`/forum/${forumDetail.id}/post/create`}
+                variant="success"
+              >
+                Add Post
+              </Button>
+            </Container>
+          </Jumbotron>
           <Container>
-            <h1>
-              {forumDetail.forumType} {" - "}
-              {forumDetail.forumName}
-            </h1>
-            <Row>
-              <Col>Description: {forumDetail.forumDescription}</Col>
-            </Row>
+            <SeePosts posts={forumDetail.posts} />
           </Container>
-        )}
-      </Jumbotron>
+        </div>
+      )}
     </div>
   );
 };
