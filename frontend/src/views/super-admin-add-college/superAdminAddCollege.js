@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert, Spinner } from "react-bootstrap";
 
 const SuperAdminAddCollegeControl = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
@@ -56,24 +56,36 @@ const SuperAdminAddCollegeControl = ({ handleSubmit, values }) => {
               />
             </Form.Group>
           </Form.Row>
-
-          <Button
-            onClick={() => {
-              handleSubmit({
-                instituteName: currentData.instituteName,
-                instituteDescription: currentData.instituteDescription,
-                isSubmitted: true,
-              });
-              console.log(currentData);
+          <Form.Row
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            Add College
-          </Button>
-          {values.message && (
-            <Alert variant={values.isAdded ? "success" : "danger"}>
-              {values.message}
-            </Alert>
-          )}
+            <Button
+              onClick={() => {
+                handleSubmit({
+                  instituteName: currentData.instituteName,
+                  instituteDescription: currentData.instituteDescription,
+                  isSubmitted: true,
+                });
+                console.log(currentData);
+              }}
+            >
+              Add College
+            </Button>
+            {values.isSubmitted && (
+              <Spinner animation="border" variant="warning" />
+            )}
+          </Form.Row>
+          <Form.Row style={{ marginTop: 20 }}>
+            {values.message && (
+              <Alert variant={values.isAdded ? "success" : "danger"}>
+                {values.message}
+              </Alert>
+            )}
+          </Form.Row>
         </Form>
       </div>
     </div>

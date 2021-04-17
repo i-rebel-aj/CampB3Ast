@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert, Spinner } from "react-bootstrap";
 
 function Post({ handleSubmit, values }) {
   const [currentData, updateCurrentData] = useState({
@@ -43,7 +43,7 @@ function Post({ handleSubmit, values }) {
                 as="textarea"
                 rows={3}
                 type="text"
-                placeholder="POst Description"
+                placeholder="Post Description"
                 value={currentData.postDescription}
                 onChange={(e) =>
                   updateCurrentData({
@@ -54,25 +54,37 @@ function Post({ handleSubmit, values }) {
               />
             </Form.Group>
           </Form.Row>
-
-          <Button
-            onClick={() => {
-              handleSubmit({
-                ...values,
-                postName: currentData.postName,
-                postDescription: currentData.postDescription,
-                isSubmitted: true,
-              });
-              console.log(currentData);
+          <Form.Row
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            Post
-          </Button>
-          {values.message && (
-            <Alert variant={values.isPosted ? "success" : "danger"}>
-              {values.message}
-            </Alert>
-          )}
+            <Button
+              onClick={() => {
+                handleSubmit({
+                  ...values,
+                  postName: currentData.postName,
+                  postDescription: currentData.postDescription,
+                  isSubmitted: true,
+                });
+                console.log(currentData);
+              }}
+            >
+              Post
+            </Button>
+            {values.isSubmitted && (
+              <Spinner animation="border" variant="warning" />
+            )}
+          </Form.Row>
+          <Form.Row style={{ marginTop: 30 }}>
+            {values.message && (
+              <Alert variant={values.isPosted ? "success" : "danger"}>
+                {values.message}
+              </Alert>
+            )}
+          </Form.Row>
         </Form>
       </div>
     </div>

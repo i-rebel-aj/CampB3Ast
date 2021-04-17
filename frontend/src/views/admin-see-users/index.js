@@ -23,8 +23,8 @@ const columns = [
     filter: textFilter(),
   },
   {
-    dataField: "collegeId",
-    text: "College",
+    dataField: "username",
+    text: "User Name",
     filter: textFilter(),
   },
   {
@@ -66,26 +66,6 @@ const AdminSeeUsers = () => {
       .then((response) => {
         console.log({ ...response });
         let tempList = [...response.data.users];
-        /*         for (const [key, value] of Object.entries(myList)) {
-          let profile = `/profile/${value.username}`;
-          tempList.push(
-            <tr>
-              <td>{key}</td>
-              <td>{value.name}</td>
-              <td>{value.collegeId}</td>
-              <td>{value.course}</td>
-              <td>{value.batch}</td>
-              <td>{value.department}</td>
-              <td>{value.enrolledDate}</td>
-              <td>{value.gender}</td>
-              <td>
-                <Button href={profile} variant="outline-info">
-                  Info
-                </Button>
-              </td>
-            </tr>
-          );
-        } */
         updateList({
           isLoading: false,
           listItems: tempList,
@@ -135,16 +115,18 @@ const AdminSeeUsers = () => {
           </Nav>
         </Col>
         <Col>
-          <Row
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 20,
-            }}
-          >
-            {currentState.isLoading ? (
+          {currentState.isLoading ? (
+            <Row
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
               <Spinner animation="border" variant="warning" style={{}} />
-            ) : (
+            </Row>
+          ) : (
+            <div style={{ padding: 20 }}>
               <BootstrapTable
                 keyField="username"
                 data={currentState.listItems}
@@ -152,8 +134,8 @@ const AdminSeeUsers = () => {
                 pagination={paginationFactory()}
                 filter={filterFactory()}
               />
-            )}
-          </Row>
+            </div>
+          )}
         </Col>
       </Row>
     </>

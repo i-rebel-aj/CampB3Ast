@@ -3,10 +3,10 @@ import {
   Jumbotron,
   Row,
   Col,
-  Badge,
   Container,
   Spinner,
   Button,
+  Badge,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { authenticate, isAutheticated } from "../../_helpers";
@@ -117,23 +117,6 @@ const Forum = () => {
       console.log("Final", tempForumData, tempPosts, forumDetail);
     };
     fetchData();
-
-    /////
-    /*    api
-      .getForum(forumName, token)
-      .then((response) => {
-        console.log("USER DATA", response.data.foundForum);
-        updateProfile({
-          forumName: response.data.foundForum.forumName,
-          forumDescription: response.data.foundForum.forumDescription,
-          forumType: response.data.foundForum.Type,
-          id: response.data.foundForum._id,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      }); */
   }, []);
   return (
     <div>
@@ -152,8 +135,8 @@ const Forum = () => {
           <Jumbotron>
             <Container>
               <h1>
-                {forumDetail.forumType} {" - "}
-                {forumDetail.forumName}
+                {forumDetail.forumName}{" "}
+                <Badge variant="info">{forumDetail.forumType}</Badge>
               </h1>
               <Row>
                 <Col>Description: {forumDetail.forumDescription}</Col>
@@ -161,6 +144,7 @@ const Forum = () => {
               <Button
                 href={`/forum/${forumDetail.id}/post/create`}
                 variant="success"
+                style={{ marginTop: 30 }}
               >
                 Add Post
               </Button>
