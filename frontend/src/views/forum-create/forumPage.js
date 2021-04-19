@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert, Spinner } from "react-bootstrap";
 
 function ForumPage({ handleSubmit, values }) {
   const [currentData, updateCurrentData] = useState({
@@ -99,26 +99,38 @@ function ForumPage({ handleSubmit, values }) {
               </Form.Group>
             </Form.Row>
           )}
-
-          <Button
-            onClick={() => {
-              handleSubmit({
-                forumName: currentData.forumName,
-                forumDescription: currentData.forumDescription,
-                Type: currentData.Type,
-                memberLimit: currentData.memberLimit,
-                isSubmitted: true,
-              });
-              console.log("Current Forum Data", currentData);
+          <Form.Row
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            Submit form
-          </Button>
-          {values.message && (
-            <Alert variant={values.isCreated ? "success" : "danger"}>
-              {values.message}
-            </Alert>
-          )}
+            <Button
+              onClick={() => {
+                handleSubmit({
+                  forumName: currentData.forumName,
+                  forumDescription: currentData.forumDescription,
+                  Type: currentData.Type,
+                  memberLimit: currentData.memberLimit,
+                  isSubmitted: true,
+                });
+                console.log("Current Forum Data", currentData);
+              }}
+            >
+              Submit form
+            </Button>
+            {values.isSubmitted && (
+              <Spinner animation="border" variant="warning" />
+            )}
+          </Form.Row>
+          <Form.Row style={{ marginTop: 20 }}>
+            {values.message && (
+              <Alert variant={values.isCreated ? "success" : "danger"}>
+                {values.message}
+              </Alert>
+            )}
+          </Form.Row>
         </Form>
       </div>
     </div>

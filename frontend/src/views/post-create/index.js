@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { authenticate, isAutheticated } from "../../_helpers";
+import { Link, useHistory } from "react-router-dom";
 import api from "../../API/api";
 
 import Post from "./Post";
 
 const PostControl = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [values, updateValue] = useState({
     postName: "",
     postDescription: "",
@@ -53,9 +55,11 @@ const PostControl = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 50,
       }}
     >
       <Post values={values} handleSubmit={updateValue} />
+      {values.isPosted && history.goBack()}
     </div>
   );
 };

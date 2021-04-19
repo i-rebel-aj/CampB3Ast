@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import ReactPaginate from "react-paginate";
-import { Card, Button, Container } from "react-bootstrap";
+import { Card, Button, Container, Alert } from "react-bootstrap";
+import "../../css/SeePosts.css";
 var util = require("util");
 
-var dataArr = [];
 const variants = [
   "Primary",
   "Secondary",
@@ -26,7 +26,7 @@ const PostList = (props) => {
   console.log("Yoooooo,", props);
   let commentNodes = props.data.map(function (item, index) {
     let variant = variants[Math.floor(Math.random() * variants.length)];
-    if (index > props.offset && index <= props.offset + 10)
+    if (index >= props.offset && index < props.offset + 10)
       return (
         <div>
           <Card
@@ -36,7 +36,7 @@ const PostList = (props) => {
             style={{ width: "100%", alignSelf: "center" }}
             className="mb-2"
           >
-            <Card.Header>Post - {index}</Card.Header>
+            <Card.Header># {index + 1}</Card.Header>
             <Card.Body>
               <Card.Title>{item.postName}</Card.Title>
               <Card.Text>{item.postDescription}</Card.Text>
@@ -67,13 +67,8 @@ class SeePost extends Component {
     this.state = {
       data: props.posts,
       offset: 0,
+      pageCount: props.posts.length / 10,
     };
-  }
-
-  loadCommentsFromServer() {
-    this.setState({
-      data: dataArr,
-    });
   }
 
   componentDidMount() {
@@ -98,18 +93,24 @@ class SeePost extends Component {
         }}
       >
         <PostList data={this.state.data} offset={this.state.offset} />
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={"pagination"}
-          activeClassName={"active"}
-        />
+        {this.state.data.length > 0 ? (
+          <ReactPaginate
+            previousLabel={"Previous "}
+            nextLabel={" Next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+          />
+        ) : (
+          <Alert variant="warning">
+            No posts to display. Would you like to add some?
+          </Alert>
+        )}
       </Container>
     );
   }

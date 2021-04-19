@@ -8,6 +8,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { authenticate, isAutheticated } from "../../_helpers";
 import api from "../../API/api";
 
 /* const data = {
@@ -71,8 +72,9 @@ const Profile = () => {
   });
 
   useEffect(() => {
+    const { token } = isAutheticated();
     api
-      .getUser(username)
+      .getUser(username, token)
       .then((response) => {
         console.log("USER DATA", response.data);
         updateProfile({
@@ -119,7 +121,8 @@ const Profile = () => {
         ) : (
           <Container>
             <h1>
-              {profileState.Type} {profileState.name}
+              {profileState.name}{" "}
+              <Badge variant="info">{profileState.Type}</Badge>
             </h1>
             <Row>
               <Col>Username: {profileState.username}</Col>
@@ -149,8 +152,8 @@ const Profile = () => {
                 <Col>Course Duration: {profileState.courseDuration}</Col>
               ) : null}
             </Row>
-            <br />
-            <Row>{myFunction(profileState.collegeGroup)}</Row>
+            {/*      <br />
+            <Row>{myFunction(profileState.collegeGroup)}</Row> */}
           </Container>
         )}
       </Jumbotron>

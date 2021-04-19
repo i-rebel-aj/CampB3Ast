@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ForumPage from "./forumPage";
 import { authenticate, isAutheticated } from "../../_helpers";
+import { Link, useHistory } from "react-router-dom";
 import api from "../../API/api";
+import { Spinner, Col } from "react-bootstrap";
 
 const ForumControl = () => {
+  const history = useHistory();
   const [values, updateValue] = useState({
     forumName: "",
     forumDescription: "",
@@ -54,9 +57,11 @@ const ForumControl = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 50,
       }}
     >
       <ForumPage values={values} handleSubmit={updateValue} />
+      {values.isCreated && history.push("/forum/see")}
     </div>
   );
 };

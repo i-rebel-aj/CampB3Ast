@@ -33,11 +33,11 @@ export default {
         Type: Type,
       },
     }),
-  getUser: (username) =>
+  getUser: (username, token) =>
     axios({
       method: "GET",
       url: `${BASE_URL}${API}${GET_USER}`,
-      headers: {},
+      headers: { "x-auth-token": token },
       params: {
         username: username,
       },

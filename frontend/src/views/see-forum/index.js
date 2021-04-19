@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, ButtonGroup, ToggleButton, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  ButtonGroup,
+  ToggleButton,
+  Button,
+  Spinner,
+} from "react-bootstrap";
 import api from "../../API/api";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
@@ -24,7 +31,6 @@ const columns = [
   {
     dataField: "forumDescription",
     text: "Description",
-    filter: textFilter(),
   },
   {
     dataField: "Type",
@@ -33,12 +39,31 @@ const columns = [
   {
     dataField: "_id",
     text: "Id",
-    filter: textFilter(),
   },
   {
     dataField: "forumName",
     text: "More",
     formatter: buttonFormatter,
+  },
+];
+
+const columnsPrivate = [
+  {
+    dataField: "forumName",
+    text: "Forum Name",
+    filter: textFilter(),
+  },
+  {
+    dataField: "forumDescription",
+    text: "Description",
+  },
+  {
+    dataField: "Type",
+    text: "Type",
+  },
+  {
+    dataField: "_id",
+    text: "Id",
   },
 ];
 
@@ -72,29 +97,58 @@ const SeeForum = () => {
     <>
       <Row>
         <Col>
-          <ButtonGroup toggle>
-            {radios.map((radio, idx) => (
-              <ToggleButton
-                key={idx}
-                type="radio"
-                variant="secondary"
-                name="radio"
-                value={radio.value}
-                checked={radioValue === radio.value}
-                onChange={(e) => setRadioValue(e.currentTarget.value)}
-              >
-                {radio.name}
-              </ToggleButton>
-            ))}
-          </ButtonGroup>
-          {values.isFetched && (
-            <BootstrapTable
-              keyField="name"
-              data={values.forums[radioValue]}
-              columns={columns}
-              pagination={paginationFactory()}
-              filter={filterFactory()}
-            />
+          <Row
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              backgroundColor: "#eed202",
+              height: 80,
+              padding: 20,
+            }}
+          >
+            <h3>CAMPUS B34ST FORUMS </h3>
+            <Row>
+              <ButtonGroup toggle>
+                {radios.map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    type="radio"
+                    variant="secondary"
+                    name="radio"
+                    value={radio.value}
+                    checked={radioValue === radio.value}
+                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+                <Button href={`/forum/create`} variant="success">
+                  Create Forum
+                </Button>
+              </ButtonGroup>
+            </Row>
+          </Row>
+          {values.isFetched ? (
+            <div style={{ padding: 30 }}>
+              <BootstrapTable
+                keyField="name"
+                data={values.forums[radioValue]}
+                columns={radioValue === "private" ? columnsPrivate : columns}
+                pagination={paginationFactory()}
+                filter={filterFactory()}
+              />
+            </div>
+          ) : (
+            <Row
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 20,
+              }}
+            >
+              <Spinner animation="border" variant="warning" style={{}} />
+            </Row>
           )}
         </Col>
       </Row>

@@ -24,42 +24,47 @@ const SuperAdminAssignAdminControl = ({ handleSubmit, values }) => {
 
   useEffect(() => {
     const { token } = isAutheticated();
-    let tempInstitutes;
-    api
-      .getInstitutes(token)
-      .then((response) => {
-        tempInstitutes = response.institute;
-      })
-      .catch((error) => {
-        console.log(error);
-        updateCurrentData({
-          ...values,
-          error: true,
-          message: error,
-          isLoading: false,
-        });
-      });
+    let tempInstitutes, tempAdmins;
 
-    api
-      .getAdmins(token)
-      .then((response) => {
-        updateCurrentData({
-          ...values,
-          institutes: tempInstitutes,
-          admins: response.admins,
-          isLoading: false,
+    const fetchData = async () => {
+      await api
+        .getInstitutes(token)
+        .then((response) => {
+          tempInstitutes = response.institute;
+        })
+        .catch((error) => {
+          console.log(error);
+          updateCurrentData({
+            ...currentData,
+            error: true,
+            message: error,
+            isLoading: false,
+          });
         });
-        console.log("INS ", currentData.institutes, currentData.admins);
-      })
-      .catch((error) => {
-        console.log(error);
-        updateCurrentData({
-          ...values,
-          error: true,
-          message: error,
-          isLoading: false,
+      await api
+        .getAdmins(token)
+        .then((response) => {
+          tempAdmins = response.admins;
+        })
+        .catch((error) => {
+          console.log(error);
+          updateCurrentData({
+            ...currentData,
+            error: true,
+            message: error,
+            isLoading: false,
+          });
         });
+
+      updateCurrentData({
+        ...currentData,
+        institutes: tempInstitutes,
+        admins: tempAdmins,
+        isLoading: false,
       });
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -131,25 +136,38 @@ const SuperAdminAssignAdminControl = ({ handleSubmit, values }) => {
                 </Form.Control>
               </Form.Group>
             </Form.Row>
-            <Button
-              onClick={() => {
-                handleSubmit({
-                  email: currentData.adminEmail,
-                  instituteName: currentData.instituteName,
-                  isSubmitted: true,
-                });
+            <Form.Row
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              Submit
-            </Button>
-            {values.message && (
-              <Alert variant={values.isAssigned ? "success" : "danger"}>
-                {values.message}
-              </Alert>
-            )}
-            {currentData.error && (
-              <Alert variant="danger">{currentData.message}</Alert>
-            )}
+              <Button
+                onClick={() => {
+                  handleSubmit({
+                    email: currentData.adminEmail,
+                    instituteName: currentData.instituteName,
+                    isSubmitted: true,
+                  });
+                }}
+              >
+                Submit
+              </Button>
+              {values.isSubmitted && (
+                <Spinner animation="border" variant="warning" />
+              )}
+            </Form.Row>
+            <Form.Row style={{ marginTop: 20 }}>
+              {values.message && (
+                <Alert variant={values.isAssigned ? "success" : "danger"}>
+                  {values.message}
+                </Alert>
+              )}
+              {currentData.error && (
+                <Alert variant="danger">{currentData.message}</Alert>
+              )}
+            </Form.Row>
           </Form>
         </div>
       )}

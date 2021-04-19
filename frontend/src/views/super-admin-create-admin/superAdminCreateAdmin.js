@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup, Alert } from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Alert, Spinner } from "react-bootstrap";
 
 const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
   const [currentData, updateCurrentData] = useState({
@@ -15,7 +15,7 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
   return (
     <div>
       <div>
-        <h1>Assign an Admin</h1>
+        <h1>Create new admin</h1>
       </div>
       <Form>
         <Form.Row>
@@ -151,28 +151,40 @@ const SuperAdminCreateAdminControl = ({ handleSubmit, values }) => {
             </Form.Group>
           </Form.Row>
         </Form.Group>
-
-        <Button
-          onClick={() => {
-            handleSubmit({
-              username: currentData.username,
-              password: currentData.password,
-              confirmpass: currentData.confirmpass,
-              name: currentData.name,
-              email: currentData.email,
-              instituteName: currentData.instituteName,
-              gender: currentData.gender,
-              isSubmitted: true,
-            });
+        <Form.Row
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          Add Admin
-        </Button>
-        {values.message && (
-          <Alert variant={values.isCreated ? "success" : "danger"}>
-            {values.message}
-          </Alert>
-        )}
+          <Button
+            onClick={() => {
+              handleSubmit({
+                username: currentData.username,
+                password: currentData.password,
+                confirmpass: currentData.confirmpass,
+                name: currentData.name,
+                email: currentData.email,
+                instituteName: currentData.instituteName,
+                gender: currentData.gender,
+                isSubmitted: true,
+              });
+            }}
+          >
+            Add Admin
+          </Button>
+          {values.isSubmitted && (
+            <Spinner animation="border" variant="warning" />
+          )}
+        </Form.Row>
+        <Form.Row style={{ marginTop: 20 }}>
+          {values.message && (
+            <Alert variant={values.isCreated ? "success" : "danger"}>
+              {values.message}
+            </Alert>
+          )}
+        </Form.Row>
       </Form>
     </div>
   );

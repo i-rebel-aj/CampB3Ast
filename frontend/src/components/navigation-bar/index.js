@@ -29,12 +29,7 @@ function NavBar() {
                 <>
                   {" "}
                   <Nav.Item>
-                    <Nav.Link href="/forum/create">Create Forum</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link href="/forum/:id/post/create">
-                      Create Post
-                    </Nav.Link>
+                    <Nav.Link href="/forum/see">Forums</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
