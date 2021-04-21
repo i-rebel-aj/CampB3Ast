@@ -55,7 +55,7 @@ function CustomRouter() {
             <AdminSeeUsers />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as admin!"} />
         )}
       </Route>
       <Route exact path="/admin/see">
@@ -65,7 +65,7 @@ function CustomRouter() {
             <AdminSeeUsers />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as admin!"} />
         )}
       </Route>
       <Route exact path="/admin/add">
@@ -75,7 +75,7 @@ function CustomRouter() {
             <AdminAddUsers />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as admin!"} />
         )}
       </Route>
       <Route exact path="/admin/group/add">
@@ -85,7 +85,7 @@ function CustomRouter() {
             <AdminCreateGroup />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as admin!"} />
         )}
       </Route>
       <Route exact path="/admin/group/see">
@@ -95,7 +95,7 @@ function CustomRouter() {
             <AdminSeeGroups />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as admin!"} />
         )}
       </Route>
       <Route exact path="/admin/group/assign">
@@ -105,7 +105,7 @@ function CustomRouter() {
             <AdminAssignGroup />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin/institute/add">
@@ -116,7 +116,7 @@ function CustomRouter() {
             <SuperAdminAddCollege />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin/institute/see">
@@ -126,7 +126,7 @@ function CustomRouter() {
             <SuperAdminSeeCollege />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin">
@@ -136,7 +136,7 @@ function CustomRouter() {
             <SuperAdminSeeCollege />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin/admin/see">
@@ -146,7 +146,7 @@ function CustomRouter() {
             <SuperAdminSeeCollege />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin/admin/create">
@@ -156,7 +156,7 @@ function CustomRouter() {
             <SuperAdminCreateAdmin />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/super-admin/admin/assign">
@@ -166,7 +166,7 @@ function CustomRouter() {
             <SuperAdminAssignAdmin />{" "}
           </>
         ) : (
-          <Login msg={"You are not logged in!"} />
+          <Login msg={"You are not logged in as Super Admin!"} />
         )}
       </Route>
       <Route exact path="/forum/see/:forumName">
