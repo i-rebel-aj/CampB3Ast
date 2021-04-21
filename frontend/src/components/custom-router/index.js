@@ -32,12 +32,8 @@ function CustomRouter() {
   dispatch(authSuccess(user));
   return (
     <BrowserRouter>
-      <Route exact path="/">
-        <NavBar user={user} />
-        <Home />
-      </Route>
       <Route exact path="/home">
-        <NavBar user={user} />
+        <NavBar />
         <Home />
       </Route>
       <Route exact path="/register">
@@ -54,75 +50,188 @@ function CustomRouter() {
       </Route>
       <Route exact path="/admin">
         <NavBar user={user} />
-        <AdminSeeUsers />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminSeeUsers />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/admin/see">
         <NavBar user={user} />
-        <AdminSeeUsers />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminSeeUsers />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/admin/add">
         <NavBar user={user} />
-        <AdminAddUsers />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminAddUsers />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/admin/group/add">
         <NavBar user={user} />
-        <AdminCreateGroup />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminCreateGroup />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/admin/group/see">
         <NavBar user={user} />
-        <AdminSeeGroups />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminSeeGroups />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/admin/group/assign">
         <NavBar user={user} />
-        <AdminAssignGroup />
+        {user?.Type == "Admin" ? (
+          <>
+            <AdminAssignGroup />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin/institute/add">
         <NavBar user={user} />
-        <SuperAdminAddCollege />
+
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminAddCollege />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin/institute/see">
         <NavBar user={user} />
-        <SuperAdminSeeCollege />
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminSeeCollege />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin">
         <NavBar user={user} />
-        <SuperAdminSeeCollege />
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminSeeCollege />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin/admin/see">
         <NavBar user={user} />
-        <SuperAdminSeeAdmin />
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminSeeCollege />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin/admin/create">
         <NavBar user={user} />
-        <SuperAdminCreateAdmin />
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminCreateAdmin />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/super-admin/admin/assign">
         <NavBar user={user} />
-        <SuperAdminAssignAdmin />
+        {user?.Type == "Super Admin" ? (
+          <>
+            <SuperAdminAssignAdmin />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/forum/see/:forumName">
         <NavBar user={user} />
-        <Forum />
+        {user ? (
+          <>
+            <Forum />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/forum/create">
         <NavBar user={user} />
-        <ForumCreate />
+        {user ? (
+          <>
+            <ForumCreate />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/forum/see">
         <NavBar user={user} />
-        <SeeForum />
+        {user ? (
+          <>
+            <SeeForum />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
       <Route exact path="/forum/assign">
         <NavBar user={user} />
-        <ForumAssign />
+        {user ? (
+          <>
+            <ForumAssign />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
-      <Route path="/forum/:id/post/create" exact>
+      <Route exact path="/forum/:id/post/create" exact>
         <NavBar user={user} />
-        <PostCreate />
+        {user ? (
+          <>
+            <PostCreate />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
       </Route>
-      <Route path="/post/see">
+      <Route exact path="/post/see">
         <NavBar user={user} />
-        <SeePost />
+        {user ? (
+          <>
+            <SeePost />{" "}
+          </>
+        ) : (
+          <Login msg={"You are not logged in!"} />
+        )}
+      </Route>
+      <Route path="/">
+        <NavBar user={user} />
+        <Home />
       </Route>
     </BrowserRouter>
   );
