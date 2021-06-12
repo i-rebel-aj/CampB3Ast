@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authSuccess, authError } from "../../redux/auth/authActions";
 
-const Login = (props) => {
+const Login = ({ msg }) => {
   const [values, updateValue] = useState({
     username: "",
     password: "",
@@ -75,42 +75,56 @@ const Login = (props) => {
       {" "}
       <div
         style={{
-          backgroundColor: "white",
-          height: window.innerHeight * 0.5,
-          width: window.innerWidth * 0.5,
-          padding: 50,
+          display: "flex",
+          flexDirection: "column",
+          height: window.innerHeight * 0.95,
           justifyContent: "center",
           alignItems: "center",
-          display: "flex",
+          backgroundColor: THEME.turquoiseBlue,
         }}
       >
-        {isAutheticated() ? (
-          <>
-            <Alert variant={"success"}>
-              {`${user?.Type} ${user?.name} logged into Campus B34st!`}
-              {"\n"}
-              <Alert.Link
-                href={
-                  user?.Type == "Super Admin"
-                    ? "/super-admin"
+        <div>
+          <Alert variant={"danger"}>{msg}</Alert>
+        </div>
+        <div
+          style={{
+            backgroundColor: "white",
+            height: window.innerHeight * 0.5,
+            width: window.innerWidth * 0.5,
+            padding: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          {isAutheticated() ? (
+            <>
+              <Alert variant={"success"}>
+                {`${user?.Type} ${user?.name} logged into Campus B34st!`}
+                {"\n"}
+                <Alert.Link
+                  href={
+                    user?.Type == "Super Admin"
+                      ? "/super-admin"
+                      : user?.Type == "Admin"
+                      ? "/admin"
+                      : "/"
+                  }
+                >
+                  Goto
+                  {user?.Type == "Super Admin"
+                    ? " Super Admin Panel"
                     : user?.Type == "Admin"
-                    ? "/admin"
-                    : "/"
-                }
-              >
-                Goto
-                {user?.Type == "Super Admin"
-                  ? " Super Admin Panel"
-                  : user?.Type == "Admin"
-                  ? " Admin Panel"
-                  : " Home"}
-              </Alert.Link>
-              .
-            </Alert>
-          </>
-        ) : (
-          <LoginForm values={values} handleSubmit={updateValue} />
-        )}
+                    ? " Admin Panel"
+                    : " Home"}
+                </Alert.Link>
+                .
+              </Alert>
+            </>
+          ) : (
+            <LoginForm values={values} handleSubmit={updateValue} />
+          )}
+        </div>
       </div>
     </div>
   );
